@@ -1,4 +1,4 @@
-package myapp.SzakdolgozatBE.rest.user;
+package myapp.SzakdolgozatBE.user;
 
 import java.util.List;
 import javax.ejb.EJB;

@@ -1,4 +1,4 @@
-package myapp.SzakdolgozatBE.rest;
+package myapp.SzakdolgozatBE;
 
 
 import javax.ws.rs.Path;
