@@ -1,20 +1,20 @@
-package myapp.SzakdolgozatBE.user;
+package myapp.SzakdolgozatBE.myUser;
 
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
-public class UserService {
+public class MyUserService {
     
-    @Inject UserDAO dao;
+    @Inject MyUserDAO dao;
     
-    public User add(String username, String password) {
+    public MyUser addMyUser(String username, String password) {
         if (dao.isNotTaken(username)) {
-            User tmp = new User();
+            MyUser tmp = new MyUser();
             tmp.setUsername(username);
             tmp.setPassword(password);
-            return dao.add(tmp);
+            return dao.addMyUser(tmp);
         } else {
             throw new NullPointerException();
         }

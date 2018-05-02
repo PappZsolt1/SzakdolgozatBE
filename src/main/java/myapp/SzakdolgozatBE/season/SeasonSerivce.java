@@ -1,0 +1,38 @@
+package myapp.SzakdolgozatBE.season;
+
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import myapp.SzakdolgozatBE.episode.Episode;
+
+@Stateless
+public class SeasonSerivce {
+    
+    @Inject SeasonDAO dao;
+    
+    public Season addSeason(int number, List<Episode> episode) {
+        Season tmp = new Season();
+        tmp.setNumber(number);
+        tmp.setEpisode(episode);
+        return dao.addSeason(tmp);
+    }
+    
+    public Season getSeason(long id) throws NullPointerException {
+        return dao.getSeason(id);
+    }
+    
+    public List<Season> getSeriesSeasons() {
+        //todo
+    }
+    
+    public void deleteSeason(long id) throws NullPointerException {
+        dao.deleteSeason(id);
+    }
+    
+    public Season modifySeason(long id, int number, List<Episode> episode) throws NullPointerException {
+        Season tmp = new Season();
+        tmp.setNumber(number);
+        tmp.setEpisode(episode);
+        return dao.modifySeason(id, tmp);
+    }
+}

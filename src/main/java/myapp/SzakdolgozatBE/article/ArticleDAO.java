@@ -10,20 +10,20 @@ public class ArticleDAO {
     
     EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
     
-    public Article add(Article article) {
+    public Article addArticle(Article article) {
         em.getTransaction().begin();
         em.persist(article);
         em.getTransaction().commit();
         return article;
     }
     
-    public List<Article> getAll() {
-        return em.createNamedQuery("getAll").getResultList();
+    public List<Article> getAllArticles() {
+        return em.createNamedQuery("getAllArticles").getResultList();
     }
     
-    public Article get(long id) throws NullPointerException {
+    public Article getArticle(long id) throws NullPointerException {
         Article tmp = em.find(Article.class, id);
-        if(tmp != null)    
+        if (tmp != null)    
                 return tmp;
         else
             throw new NullPointerException();

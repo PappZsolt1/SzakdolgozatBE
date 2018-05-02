@@ -1,32 +1,32 @@
-package myapp.SzakdolgozatBE.article;
+package myapp.SzakdolgozatBE.season;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import myapp.SzakdolgozatBE.myUser.MyUser;
+import myapp.SzakdolgozatBE.episode.Episode;
 
 @Entity
-@Table(name = "Article")
+@Table(name = "Season")
 @NamedQueries({
-    @NamedQuery(name = "getAllArticles", query = "SELECT a FROM Article a"),
+    @NamedQuery(name = "", query = "")
 })
-public class Article implements Serializable {
+public class Season implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;    
-    private String title;    
-    private String content;  
+    private Long id;
+    private int number;
     
-    @ManyToOne
-    private MyUser myUser;
+    @OneToMany
+    private List<Episode> episode;
 
     public Long getId() {
         return id;
@@ -36,29 +36,21 @@ public class Article implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getNumber() {
+        return number;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
-    public String getContent() {
-        return content;
+    public List<Episode> getEpisode() {
+        return episode;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setEpisode(List<Episode> episode) {
+        this.episode = episode;
     }
-
-    public MyUser getUser() {
-        return myUser;
-    }
-
-    public void setUser(MyUser user) {
-        this.myUser = user;
-    }    
 
     @Override
     public int hashCode() {
@@ -70,10 +62,10 @@ public class Article implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Article)) {
+        if (!(object instanceof Season)) {
             return false;
         }
-        Article other = (Article) object;
+        Season other = (Season) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -82,7 +74,7 @@ public class Article implements Serializable {
 
     @Override
     public String toString() {
-        return "myapp.SzakdolgozatBE.article.Article[ id=" + id + " ]";
+        return "myapp.SzakdolgozatBE.season.Season[ id=" + id + " ]";
     }
     
 }

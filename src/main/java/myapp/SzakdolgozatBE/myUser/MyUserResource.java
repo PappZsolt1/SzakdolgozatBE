@@ -1,8 +1,9 @@
-package myapp.SzakdolgozatBE.user;
+package myapp.SzakdolgozatBE.myUser;
 
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -12,15 +13,15 @@ import javax.ws.rs.core.Response;
 
 @Path("/user")
 @ApplicationScoped
-public class UserResource {
+public class MyUserResource {
     
-    @EJB UserService service;
+    @EJB MyUserService service;
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response add(String username, String password) {
+    public Response addMyUser(@FormParam("username") String username, @FormParam("password") String password) {
         try {
-            User tmp = service.add(username, password);
+            MyUser tmp = service.addMyUser(username, password);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.CONFLICT).build();

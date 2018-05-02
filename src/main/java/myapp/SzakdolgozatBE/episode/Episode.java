@@ -1,4 +1,4 @@
-package myapp.SzakdolgozatBE.user;
+package myapp.SzakdolgozatBE.episode;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -10,19 +10,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Episode")
 @NamedQueries({
-    @NamedQuery(name = "getUsernames", query = "SELECT u.username FROM User u ORDER BY u.username ASC"),
-    @NamedQuery(name = "getUsername", query = "SELECT u.username FROM User u WHERE u.username = :username")
+    @NamedQuery(name = "", query = "")
 })
-public class User implements Serializable {
+public class Episode implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;    
-    private String username;
-    private String password;
+    private Long id;
+    private String title;
+    private double rating;
+    private int releaseYear;
+    private int eLength;
 
     public Long getId() {
         return id;
@@ -32,20 +33,36 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getPassword() {
-        return password;
+    public double getRating() {
+        return rating;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getLength() {
+        return eLength;
+    }
+
+    public void setLength(int length) {
+        this.eLength = length;
     }
 
     @Override
@@ -58,10 +75,10 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Episode)) {
             return false;
         }
-        User other = (User) object;
+        Episode other = (Episode) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -70,7 +87,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "myapp.SzakdolgozatBE.rest.user.User[ id=" + id + " ]";
+        return "myapp.SzakdolgozatBE.episode.Episode[ id=" + id + " ]";
     }
     
 }
