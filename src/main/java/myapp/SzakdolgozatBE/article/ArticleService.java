@@ -1,14 +1,14 @@
 package myapp.SzakdolgozatBE.article;
 
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import myapp.SzakdolgozatBE.user.User;
 
 @Stateless
 public class ArticleService {
     
-    @EJB ArticleDAO dao;
+    @Inject ArticleDAO dao;
     
     public Article add(User user, String title, String content) {
         Article tmp = new Article();
