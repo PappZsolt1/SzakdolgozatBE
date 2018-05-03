@@ -5,6 +5,7 @@
     <class>myapp.SzakdolgozatBE.user.User</class>
     <class>myapp.SzakdolgozatBE.article.Article</class>
     <class>myapp.SzakdolgozatBE.errorReport.ErrorReport</class>
+    <class>myapp.SzakdolgozatBE.comment.Comment</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
     <properties>
