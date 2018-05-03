@@ -22,10 +22,10 @@ public class ErrorReport implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String content;
-    
+    private String content;    
     @ManyToOne
     private User user;
+    private boolean isResolved;
 
     public Long getId() {
         return id;
@@ -50,7 +50,15 @@ public class ErrorReport implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
+    public boolean isIsResolved() {
+        return isResolved;
+    }
+
+    public void setIsResolved(boolean isResolved) {
+        this.isResolved = isResolved;
+    }
+            
     @Override
     public int hashCode() {
         int hash = 0;

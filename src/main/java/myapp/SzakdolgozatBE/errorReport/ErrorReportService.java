@@ -20,4 +20,8 @@ public class ErrorReportService {
     public List<ErrorReport> getAll() {
         return dao.getAll();
     }
+    
+    public void makeResolved(long id) {
+        dao.makeResolved(id);
+    }
 }

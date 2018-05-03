@@ -20,4 +20,17 @@ public class ErrorReportDAO {
     public List<ErrorReport> getAll() {
         return em.createNamedQuery("getAll").getResultList();
     }
+    
+    public ErrorReport getErrorReport(long id) {
+        ErrorReport tmp = em.find(ErrorReport.class, id);
+        return tmp;        
+    }
+    
+    public void makeResolved(long id) {
+        ErrorReport tmp = this.getErrorReport(id);
+        tmp.setIsResolved(true);
+        em.getTransaction().begin();
+        em.merge(tmp);
+        em.getTransaction().commit();        
+    }
 }
