@@ -1,6 +1,7 @@
 package myapp.SzakdolgozatBE.article;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "Article")
 @NamedQueries({
-    @NamedQuery(name = "getAllArticles", query = "SELECT a FROM Article a"),
+    @NamedQuery(name = "getAllArticles", query = "SELECT a FROM Article a ORDER BY a.publishDate DESC"),
 })
 public class Article implements Serializable {
 
@@ -23,8 +26,9 @@ public class Article implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;    
     private String title;    
-    private String content;  
-    
+    private String content;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date publishDate;    
     @ManyToOne
     private MyUser myUser;
 
@@ -52,6 +56,22 @@ public class Article implements Serializable {
         this.content = content;
     }
 
+    public Date getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public MyUser getMyUser() {
+        return myUser;
+    }
+
+    public void setMyUser(MyUser myUser) {
+        this.myUser = myUser;
+    }
+    
     public MyUser getUser() {
         return myUser;
     }

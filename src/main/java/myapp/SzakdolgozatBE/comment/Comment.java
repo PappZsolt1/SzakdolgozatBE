@@ -1,6 +1,7 @@
 package myapp.SzakdolgozatBE.comment;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
@@ -25,6 +28,8 @@ public class Comment implements Serializable {
     private String content;
     @ManyToOne
     private MyUser myUser;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date postDate;
 
     public Long getId() {
         return id;
@@ -56,7 +61,15 @@ public class Comment implements Serializable {
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
     }
-        
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.errorReport;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ public class ErrorReportService {
         ErrorReport tmp = new ErrorReport();
         tmp.setMyUser(myUser);
         tmp.setContent(content);
+        tmp.setSendingDate(new Date());
         return dao.add(tmp);
     }
     

@@ -1,8 +1,9 @@
 package myapp.SzakdolgozatBE.article;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import myapp.SzakdolgozatBE.myUser.MyUser;
+import javax.inject.Inject;
 
 @Stateless
 public class ArticleService {
@@ -13,6 +14,7 @@ public class ArticleService {
         Article tmp = new Article();
         tmp.setTitle(title);
         tmp.setContent(content);
+        tmp.setPublishDate(new Date());
         return dao.addArticle(tmp);
     }
     //user elérés szerverről az aktuális bejelentkező

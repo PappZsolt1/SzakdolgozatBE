@@ -1,6 +1,7 @@
 package myapp.SzakdolgozatBE.errorReport;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "ErrorReport")
 @NamedQueries({
-    @NamedQuery(name = "getAll", query = "SELECT e FROM ErrorReport e")
+    @NamedQuery(name = "getAll", query = "SELECT e FROM ErrorReport e ORDER BY e.sendingDate DESC")
 })
 public class ErrorReport implements Serializable {
 
@@ -26,6 +29,8 @@ public class ErrorReport implements Serializable {
     @ManyToOne
     private MyUser myUser;
     private boolean isResolved;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sendingDate;
 
     public Long getId() {
         return id;
@@ -58,7 +63,15 @@ public class ErrorReport implements Serializable {
     public void setIsResolved(boolean isResolved) {
         this.isResolved = isResolved;
     }
-            
+
+    public Date getSendingDate() {
+        return sendingDate;
+    }
+
+    public void setSendingDate(Date sendingDate) {
+        this.sendingDate = sendingDate;
+    }
+                
     @Override
     public int hashCode() {
         int hash = 0;
