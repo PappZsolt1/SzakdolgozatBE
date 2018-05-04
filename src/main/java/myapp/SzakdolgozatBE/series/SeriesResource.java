@@ -1,4 +1,4 @@
-package myapp.SzakdolgozatBE.movie;
+package myapp.SzakdolgozatBE.series;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -16,31 +16,29 @@ import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.enums.AgeClassification;
 import myapp.SzakdolgozatBE.enums.Genre;
 
-@Path("movie")
+@Path("series")
 @ApplicationScoped
-public class MovieResource {
+public class SeriesResource {
     
-    @EJB MovieService service;
+    @EJB SeriesService service;
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addMovie(@FormParam("title") String title,
-            @FormParam("budget") int budget,
-            @FormParam("length") int length,
+    public Response addSeries(@FormParam("title") String title,
             @FormParam("releaseYear") int releaseYear,
             @FormParam("coverPicture") byte[] coverPicture,
             @FormParam("ageClassification") AgeClassification ageClassification,
             @FormParam("genre") Genre genre) {
-        Movie tmp = service.addMovie(title, budget, length, releaseYear, coverPicture, ageClassification, genre);
+        Series tmp = service.addSeries(title, releaseYear, coverPicture, ageClassification, genre);
         return Response.ok().entity(tmp).build();
     }
     
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovie(@PathParam("id") long id) {
+    public Response getSeries(@PathParam("id") long id) {
         try {
-            Movie tmp = service.getMovie(id);
+            Series tmp = service.getSeries(id);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -49,16 +47,16 @@ public class MovieResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Movie> getAllMovies() {
-        return service.getAllMovies();
+    public List<Series> getAllSeries() {
+        return service.getAllSeries();
     }
     
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteMovie(@PathParam("id") long id) {
+    public Response deleteSeries(@PathParam("id") long id) {
         try {
-            service.deleteMovie(id);
+            service.deleteSeries(id);
             return Response.ok().build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -68,16 +66,14 @@ public class MovieResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyMovie(@PathParam("id") long id,
+    public Response modifySeries(@PathParam("id") long id,
             @FormParam("title") String title,
-            @FormParam("budget") int budget,
-            @FormParam("length") int length,
             @FormParam("releaseYear") int releaseYear,
             @FormParam("coverPicture") byte[] coverPicture,
             @FormParam("ageClassification") AgeClassification ageClassification,
             @FormParam("genre") Genre genre) {
         try {
-            Movie tmp = service.modifyMovie(id, title, budget, length, releaseYear, coverPicture, ageClassification, genre);
+            Series tmp = service.modifySeries(id, title, releaseYear, coverPicture, ageClassification, genre);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

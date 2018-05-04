@@ -20,7 +20,7 @@ public class MyUser implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;    
+    private Long id;    
     private String username;
     private String password;
 

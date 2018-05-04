@@ -1,7 +1,6 @@
-package myapp.SzakdolgozatBE.movie;
+package myapp.SzakdolgozatBE.series;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,11 +15,11 @@ import myapp.SzakdolgozatBE.enums.AgeClassification;
 import myapp.SzakdolgozatBE.enums.Genre;
 
 @Entity
-@Table(name = "Movie")
+@Table(name = "Series")
 @NamedQueries({
-    @NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m")
+    @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s")
 })
-public class Movie implements Serializable {
+public class Series implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,8 +27,6 @@ public class Movie implements Serializable {
     private Long id;
     private String title;
     private double rating;
-    private int budget;
-    private int mLength;
     private int releaseYear;
     
     @Lob
@@ -40,7 +37,7 @@ public class Movie implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Genre genre;
-    
+
     public Long getId() {
         return id;
     }
@@ -63,22 +60,6 @@ public class Movie implements Serializable {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public int getBudget() {
-        return budget;
-    }
-
-    public void setBudget(int budget) {
-        this.budget = budget;
-    }
-
-    public int getLength() {
-        return mLength;
-    }
-
-    public void setLength(int length) {
-        this.mLength = length;
     }
 
     public int getReleaseYear() {
@@ -112,7 +93,7 @@ public class Movie implements Serializable {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,10 +104,10 @@ public class Movie implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Movie)) {
+        if (!(object instanceof Series)) {
             return false;
         }
-        Movie other = (Movie) object;
+        Series other = (Series) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -135,7 +116,7 @@ public class Movie implements Serializable {
 
     @Override
     public String toString() {
-        return "myapp.SzakdolgozatBE.Movie.Movie[ id=" + id + " ]";
+        return "myapp.SzakdolgozatBE.series.Series[ id=" + id + " ]";
     }
     
 }

@@ -10,6 +10,7 @@
     <class>myapp.SzakdolgozatBE.errorReport.ErrorReport</class>
     <class>myapp.SzakdolgozatBE.comment.Comment</class>
     <class>myapp.SzakdolgozatBE.actor.Actor</class>
+    <class>myapp.SzakdolgozatBE.series.Series</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
     <properties>
