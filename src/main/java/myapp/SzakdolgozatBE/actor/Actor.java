@@ -1,37 +1,44 @@
-package myapp.SzakdolgozatBE.article;
+package myapp.SzakdolgozatBE.actor;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import myapp.SzakdolgozatBE.myUser.MyUser;
+import myapp.SzakdolgozatBE.enums.Gender;
 
 @Entity
-@Table(name = "Article")
+@Table(name = "Actor")
 @NamedQueries({
-    @NamedQuery(name = "getAllArticles", query = "SELECT a FROM Article a ORDER BY a.publishDate DESC"),
+    @NamedQuery(name = "", query = "")
 })
-public class Article implements Serializable {
+public class Actor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;    
-    private String title;    
-    private String content;
+    private long id;
+    
+    private String name;
+    
     @Temporal(TemporalType.TIMESTAMP)
-    private Date publishDate;    
-    @ManyToOne
-    private MyUser myUser;
-
+    private Date birthDate;
+    
+    private String birthPlace;
+    
+    private String bio;
+    
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    
     public Long getId() {
         return id;
     }
@@ -40,45 +47,45 @@ public class Article implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public Date getPublishDate() {
-        return publishDate;
+    public String getBirthPlace() {
+        return birthPlace;
     }
 
-    public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
-    public MyUser getMyUser() {
-        return myUser;
+    public String getBio() {
+        return bio;
     }
 
-    public void setMyUser(MyUser myUser) {
-        this.myUser = myUser;
-    }
-    
-    public MyUser getUser() {
-        return myUser;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
-    public void setUser(MyUser user) {
-        this.myUser = user;
-    }    
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
     @Override
     public int hashCode() {
@@ -90,10 +97,10 @@ public class Article implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Article)) {
+        if (!(object instanceof Actor)) {
             return false;
         }
-        Article other = (Article) object;
+        Actor other = (Actor) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +109,7 @@ public class Article implements Serializable {
 
     @Override
     public String toString() {
-        return "myapp.SzakdolgozatBE.article.Article[ id=" + id + " ]";
+        return "myapp.SzakdolgozatBE.actor.Actor[ id=" + id + " ]";
     }
     
 }

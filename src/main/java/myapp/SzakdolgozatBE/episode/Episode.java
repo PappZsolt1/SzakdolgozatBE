@@ -19,7 +19,7 @@ public class Episode implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     private String title;
     private double rating;
     private int releaseYear;
