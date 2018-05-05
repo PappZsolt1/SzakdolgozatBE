@@ -16,7 +16,6 @@ public class TopicService {
         tmp.setTitle(title);
         tmp.setDescription(description);
         tmp.setMyUser(myUser);
-        tmp.setCreateDate(new Date());
         return dao.addTopic(tmp);
     }
     

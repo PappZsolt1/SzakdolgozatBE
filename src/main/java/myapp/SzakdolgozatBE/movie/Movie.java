@@ -27,7 +27,7 @@ public class Movie implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private double rating;
+    private double rating = 5.5;
     private int budget;
     private int mLength;
     private int releaseYear;

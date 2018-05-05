@@ -26,7 +26,7 @@ public class Series implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private double rating;
+    private double rating = 5.5;
     private int releaseYear;
     
     @Lob

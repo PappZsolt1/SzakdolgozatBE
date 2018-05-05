@@ -15,7 +15,6 @@ public class ErrorReportService {
         ErrorReport tmp = new ErrorReport();
         tmp.setMyUser(myUser);
         tmp.setContent(content);
-        tmp.setSendingDate(new Date());
         return dao.add(tmp);
     }
     

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import myapp.SzakdolgozatBE.series.Series;
 
 @RequestScoped
 public class SeasonDAO {
@@ -25,8 +26,8 @@ public class SeasonDAO {
             throw new NullPointerException();
     }
     
-    public List<Season> getSeriesSeasons() {
-        //todo
+    public List<Season> getSeriesSeasons(Series series) {
+        return em.createNamedQuery("getSeriesSeasons").setParameter("series", series).getResultList();
     }
     
     public void deleteSeason(long id) throws NullPointerException {
@@ -39,7 +40,8 @@ public class SeasonDAO {
         Season tmp = this.getSeason(id);
         if (tmp != null) {
             tmp.setNumber(season.getNumber());
-            tmp.setEpisode(season.getEpisode());
+            tmp.setEpisodes(season.getEpisodes());
+            tmp.setSeries(season.getSeries());
             em.getTransaction().begin();
             em.merge(tmp);
             em.getTransaction().commit();

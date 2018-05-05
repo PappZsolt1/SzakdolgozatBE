@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.episode;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -12,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.season.Season;
 
 @Path("episode")
 @ApplicationScoped
@@ -21,8 +23,8 @@ public class EpisodeResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEpisode(String title, int releaseYear, int length) {
-        Episode tmp = service.addEpisode(title, releaseYear, length);
+    public Response addEpisode(String title, Date releaseDate, int length, Season season) {
+        Episode tmp = service.addEpisode(title, releaseDate, length, season);
         return Response.ok().entity(tmp).build();
     }
     
@@ -41,8 +43,8 @@ public class EpisodeResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Episode> getSeasonEpisodes() {
-        //todo
+    public List<Episode> getSeasonEpisodes(Season season) {
+        return service.getSeasonEpisodes(season);
     }
     
     @DELETE
@@ -60,9 +62,9 @@ public class EpisodeResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyEpisode(@PathParam("id") long id, String title, int releaseYear, int length) {
+    public Response modifyEpisode(@PathParam("id") long id, String title, Date releaseDate, int length, Season season) {
         try {
-            Episode tmp = service.modifyEpisode(id, title, releaseYear, length);
+            Episode tmp = service.modifyEpisode(id, title, releaseDate, length, season);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

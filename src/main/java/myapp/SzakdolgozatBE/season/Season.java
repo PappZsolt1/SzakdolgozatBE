@@ -6,16 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.episode.Episode;
+import myapp.SzakdolgozatBE.series.Series;
 
 @Entity
 @Table(name = "Season")
 @NamedQueries({
-    @NamedQuery(name = "", query = "")
+    @NamedQuery(name = "getSeriesSeasons", query = "SELECT s FROM Season s WHERE s.series = :series")
 })
 public class Season implements Serializable {
 
@@ -26,7 +28,10 @@ public class Season implements Serializable {
     private int number;
     
     @OneToMany
-    private List<Episode> episode;
+    private List<Episode> episodes;
+    
+    @ManyToOne
+    private Series series;
 
     public Long getId() {
         return id;
@@ -44,14 +49,22 @@ public class Season implements Serializable {
         this.number = number;
     }
 
-    public List<Episode> getEpisode() {
-        return episode;
+    public List<Episode> getEpisodes() {
+        return episodes;
     }
 
-    public void setEpisode(List<Episode> episode) {
-        this.episode = episode;
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

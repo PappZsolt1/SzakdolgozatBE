@@ -17,7 +17,6 @@ public class MovieService {
         tmp.setBudget(budget);
         tmp.setLength(length);
         tmp.setReleaseYear(releaseYear);
-        tmp.setRating(5.5);
         tmp.setCoverPicture(coverPicture);
         tmp.setAgeClassification(ageClassification);
         tmp.setGenre(genre);

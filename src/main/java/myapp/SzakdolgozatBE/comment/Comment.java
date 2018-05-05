@@ -29,7 +29,7 @@ public class Comment implements Serializable {
     @ManyToOne
     private MyUser myUser;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date postDate;
+    private Date postDate = new Date();
 
     public Long getId() {
         return id;

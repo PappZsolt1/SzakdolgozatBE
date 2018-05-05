@@ -18,7 +18,7 @@ public class ErrorReportDAO {
     }
     
     public List<ErrorReport> getAll() {
-        return em.createNamedQuery("getAll").getResultList();
+        return em.createNamedQuery("getAllErrorReport").getResultList();
     }
     
     public ErrorReport getErrorReport(long id) {

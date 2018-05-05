@@ -15,7 +15,6 @@ public class CommentService {
         Comment tmp = new Comment();
         tmp.setContent(content);
         tmp.setMyUser(myUser);
-        tmp.setPostDate(new Date());
         return dao.addComment(tmp);
     }
     

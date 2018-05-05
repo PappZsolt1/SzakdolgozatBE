@@ -29,7 +29,7 @@ public class Topic implements Serializable {
     private String description;
     private MyUser myUser;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date createDate = new Date();
     
     public Long getId() {
         return id;

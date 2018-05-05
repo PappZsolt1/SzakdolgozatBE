@@ -1,18 +1,23 @@
 package myapp.SzakdolgozatBE.episode;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import myapp.SzakdolgozatBE.season.Season;
 
 @Entity
 @Table(name = "Episode")
 @NamedQueries({
-    @NamedQuery(name = "", query = "")
+    @NamedQuery(name = "getSeasonEpisodes", query = "SELECT e FROM Episode e WHERE e.season = :season")
 })
 public class Episode implements Serializable {
 
@@ -21,9 +26,12 @@ public class Episode implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private double rating;
-    private int releaseYear;
+    private double rating = 5.5;
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate;
     private int eLength;
+    @ManyToOne
+    private Season season;
 
     public Long getId() {
         return id;
@@ -49,12 +57,12 @@ public class Episode implements Serializable {
         this.rating = rating;
     }
 
-    public int getReleaseYear() {
-        return releaseYear;
+    public Date getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public int getLength() {
@@ -65,6 +73,14 @@ public class Episode implements Serializable {
         this.eLength = length;
     }
 
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

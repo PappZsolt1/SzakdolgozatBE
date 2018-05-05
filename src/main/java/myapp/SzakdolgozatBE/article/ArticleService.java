@@ -14,7 +14,6 @@ public class ArticleService {
         Article tmp = new Article();
         tmp.setTitle(title);
         tmp.setContent(content);
-        tmp.setPublishDate(new Date());
         return dao.addArticle(tmp);
     }
     //user elérés szerverről az aktuális bejelentkező

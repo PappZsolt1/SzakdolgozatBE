@@ -28,7 +28,7 @@ public class Article implements Serializable {
     private String title;    
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date publishDate;    
+    private Date publishDate = new Date();
     @ManyToOne
     private MyUser myUser;
 

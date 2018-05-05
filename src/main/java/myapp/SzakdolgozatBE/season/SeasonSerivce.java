@@ -4,16 +4,18 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.episode.Episode;
+import myapp.SzakdolgozatBE.series.Series;
 
 @Stateless
 public class SeasonSerivce {
     
     @Inject SeasonDAO dao;
     
-    public Season addSeason(int number, List<Episode> episode) {
+    public Season addSeason(int number, List<Episode> episodes, Series series) {
         Season tmp = new Season();
         tmp.setNumber(number);
-        tmp.setEpisode(episode);
+        tmp.setEpisodes(episodes);
+        tmp.setSeries(series);
         return dao.addSeason(tmp);
     }
     
@@ -21,18 +23,19 @@ public class SeasonSerivce {
         return dao.getSeason(id);
     }
     
-    public List<Season> getSeriesSeasons() {
-        //todo
+    public List<Season> getSeriesSeasons(Series series) {
+        return dao.getSeriesSeasons(series);
     }
     
     public void deleteSeason(long id) throws NullPointerException {
         dao.deleteSeason(id);
     }
     
-    public Season modifySeason(long id, int number, List<Episode> episode) throws NullPointerException {
+    public Season modifySeason(long id, int number, List<Episode> episodes, Series series) throws NullPointerException {
         Season tmp = new Season();
         tmp.setNumber(number);
-        tmp.setEpisode(episode);
+        tmp.setEpisodes(episodes);
+        tmp.setSeries(series);
         return dao.modifySeason(id, tmp);
     }
 }

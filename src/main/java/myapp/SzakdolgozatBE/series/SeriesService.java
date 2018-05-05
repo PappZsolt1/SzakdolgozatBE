@@ -15,7 +15,6 @@ public class SeriesService {
         Series tmp = new Series();
         tmp.setTitle(title);
         tmp.setReleaseYear(releaseYear);
-        tmp.setRating(5.5);
         tmp.setCoverPicture(coverPicture);
         tmp.setAgeClassification(ageClassification);
         tmp.setGenre(genre);

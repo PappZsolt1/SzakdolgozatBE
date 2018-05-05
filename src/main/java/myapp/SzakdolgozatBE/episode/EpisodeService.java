@@ -1,19 +1,22 @@
 package myapp.SzakdolgozatBE.episode;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.season.Season;
 
 @Stateless
 public class EpisodeService {
     
     @Inject EpisodeDAO dao;
     
-    public Episode addEpisode(String title, int releaseYear, int length) {
+    public Episode addEpisode(String title, Date releaseDate, int length, Season season) {
         Episode tmp = new Episode();
         tmp.setLength(length);
-        tmp.setReleaseYear(releaseYear);
+        tmp.setReleaseDate(releaseDate);
         tmp.setTitle(title);
+        tmp.setSeason(season);
         return dao.addEpisode(tmp);
     }
     
@@ -21,19 +24,20 @@ public class EpisodeService {
         return dao.getEpisode(id);
     }
     
-    public List<Episode> getSeasonEpisodes() {
-        //todo
+    public List<Episode> getSeasonEpisodes(Season season) {
+        return dao.getSeasonEpisodes(season);
     }
     
     public void deleteEpisode(long id) throws NullPointerException {
         dao.deleteEpisode(id);
     }
     
-    public Episode modifyEpisode(long id, String title, int releaseYear, int length) throws NullPointerException {
+    public Episode modifyEpisode(long id, String title, Date releaseDate, int length, Season season) throws NullPointerException {
         Episode tmp = new Episode();
         tmp.setTitle(title);
-        tmp.setReleaseYear(releaseYear);
+        tmp.setReleaseDate(releaseDate);
         tmp.setLength(length);
+        tmp.setSeason(season);
         return dao.modifyEpisode(id, tmp);
     }
     
