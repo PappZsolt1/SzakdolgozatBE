@@ -2,16 +2,19 @@ package myapp.SzakdolgozatBE.episode;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.season.Season;
 
 @Entity
@@ -34,6 +37,9 @@ public class Episode implements Serializable {
     private int eLength;
     @ManyToOne
     private Season season;
+    
+    @ManyToMany //todo
+    private List<Actor> actors;
 
     public Long getId() {
         return id;
@@ -99,6 +105,14 @@ public class Episode implements Serializable {
 
     public void setSeason(Season season) {
         this.season = season;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
     }
     
     @Override

@@ -2,18 +2,22 @@ package myapp.SzakdolgozatBE.actor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.enums.Gender;
+import myapp.SzakdolgozatBE.episode.Episode;
+import myapp.SzakdolgozatBE.movie.Movie;
 
 @Entity
 @Table(name = "Actor")
@@ -38,6 +42,12 @@ public class Actor implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    
+    @ManyToMany(mappedBy = "actors")
+    private List<Movie> movies;
+    
+    @ManyToMany(mappedBy = "actors")
+    private List<Episode> episodes;
     
     public Long getId() {
         return id;
@@ -85,6 +95,22 @@ public class Actor implements Serializable {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
     @Override

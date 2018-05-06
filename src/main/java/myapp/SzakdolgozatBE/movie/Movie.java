@@ -2,6 +2,7 @@ package myapp.SzakdolgozatBE.movie;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.enums.AgeClassification;
 import myapp.SzakdolgozatBE.enums.Genre;
 
@@ -42,6 +45,9 @@ public class Movie implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Genre genre;
+    
+    @ManyToMany //todo
+    private List<Actor> actors;
     
     public Long getId() {
         return id;
@@ -131,6 +137,14 @@ public class Movie implements Serializable {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
     }
 
     @Override
