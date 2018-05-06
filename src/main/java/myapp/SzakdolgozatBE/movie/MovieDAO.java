@@ -52,7 +52,7 @@ public class MovieDAO {
         } else throw new NullPointerException();
     }
     
-    public void changeRating(long id, double rating) {
+    public void changeRating(long id, int rating) {
         Movie tmp = this.getMovie(id);
         tmp.setRating(rating);
         em.getTransaction().begin();

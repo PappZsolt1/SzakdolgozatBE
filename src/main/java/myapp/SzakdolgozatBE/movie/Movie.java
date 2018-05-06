@@ -27,7 +27,9 @@ public class Movie implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private double rating = 5.5;
+    private int numberOfRatings;
+    private int sumOfRatings;
+    private double rating;
     private int budget;
     private int mLength;
     private int releaseYear;
@@ -57,12 +59,30 @@ public class Movie implements Serializable {
         this.title = title;
     }
 
+    public int getNumberOfRatings() {
+        return numberOfRatings;
+    }
+
+    public void setNumberOfRatings(int numberOfRatings) {
+        this.numberOfRatings = numberOfRatings;
+    }
+
+    public int getSumOfRatings() {
+        return sumOfRatings;
+    }
+
+    public void setSumOfRatings(int sumOfRatings) {
+        this.sumOfRatings = sumOfRatings;
+    }
+    
     public double getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setRating(int rating) {
+        numberOfRatings += 1;
+        sumOfRatings += rating;
+        this.rating = sumOfRatings / numberOfRatings;
     }
 
     public int getBudget() {

@@ -50,9 +50,9 @@ public class SeriesDAO {
         } else throw new NullPointerException();
     }
     
-    public void changeRating(long id, double rating) {
+    public void changeRating(long id) {
         Series tmp = this.getSeries(id);
-        tmp.setRating(rating);
+        em.createNamedQuery("getEpisodeRatings"); //todo
         em.getTransaction().begin();
         em.merge(tmp);
         em.getTransaction().commit();

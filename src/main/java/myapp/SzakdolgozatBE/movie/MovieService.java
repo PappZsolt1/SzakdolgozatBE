@@ -47,7 +47,7 @@ public class MovieService {
         return dao.modifyMovie(id, tmp);
     }
     
-    public void changeRating(long id, double rating) {
+    public void changeRating(long id, int rating) {
         dao.changeRating(id, rating);
     }
 }

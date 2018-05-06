@@ -50,7 +50,7 @@ public class EpisodeDAO {
         } else throw new NullPointerException();
     }
     
-    public void changeRating(long id, double rating) {
+    public void changeRating(long id, int rating) {
         Episode tmp = this.getEpisode(id);
         tmp.setRating(rating);
         em.getTransaction().begin();

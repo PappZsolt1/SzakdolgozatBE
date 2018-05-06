@@ -41,7 +41,7 @@ public class EpisodeService {
         return dao.modifyEpisode(id, tmp);
     }
     
-    public void changeRating(long id, double rating) {
+    public void changeRating(long id, int rating) {
         dao.changeRating(id, rating);
     }
 }

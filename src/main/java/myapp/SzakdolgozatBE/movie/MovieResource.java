@@ -85,7 +85,7 @@ public class MovieResource {
     }
     
     //todo
-    public void changeRating(long id, double rating) {
+    public void changeRating(long id, int rating) {
         service.changeRating(id, rating);
     }
 }

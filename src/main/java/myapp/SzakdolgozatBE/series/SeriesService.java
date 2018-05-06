@@ -43,7 +43,7 @@ public class SeriesService {
         return dao.modifySeries(id, tmp);
     }
     
-    public void changeRating(long id, double rating) {
-        dao.changeRating(id, rating);
+    public void changeRating(long id) {
+        dao.changeRating(id);
     }
 }

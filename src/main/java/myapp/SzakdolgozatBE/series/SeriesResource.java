@@ -79,9 +79,4 @@ public class SeriesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
-    //todo
-    public void changeRating(long id, double rating) {
-        service.changeRating(id, rating);
-    }
 }

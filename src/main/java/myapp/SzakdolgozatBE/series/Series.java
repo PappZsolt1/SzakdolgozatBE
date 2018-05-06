@@ -17,7 +17,8 @@ import myapp.SzakdolgozatBE.enums.Genre;
 @Entity
 @Table(name = "Series")
 @NamedQueries({
-    @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s")
+    @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s"),
+    @NamedQuery(name = "getEpisodeRatings", query = "") // todo
 })
 public class Series implements Serializable {
 
@@ -26,7 +27,7 @@ public class Series implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private double rating = 5.5;
+    private double rating;
     private int releaseYear;
     
     @Lob
