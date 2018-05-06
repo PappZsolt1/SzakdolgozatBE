@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,6 +28,7 @@ public class Topic implements Serializable {
     private Long id;
     private String title;
     private String description;
+    @ManyToOne
     private MyUser myUser;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate = new Date();

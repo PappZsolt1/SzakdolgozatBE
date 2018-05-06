@@ -25,9 +25,8 @@ public class SeasonResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addSeason(@FormParam("number") int number,
-            @FormParam("episodes") List<Episode> episodes,
             @FormParam("series") Series series) {
-        Season tmp = service.addSeason(number, episodes, series);
+        Season tmp = service.addSeason(number, series);
         return Response.ok().entity(tmp).build();
     }
     
@@ -66,10 +65,9 @@ public class SeasonResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response modifySeason(@PathParam("id") long id,
             @FormParam("number") int number,
-            @FormParam("episodes") List<Episode> episodes,
             @FormParam("series") Series series) {
         try {
-            Season tmp = service.modifySeason(id, number, episodes, series);
+            Season tmp = service.modifySeason(id, number, series);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

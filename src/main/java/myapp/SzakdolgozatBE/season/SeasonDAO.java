@@ -40,7 +40,6 @@ public class SeasonDAO {
         Season tmp = this.getSeason(id);
         if (tmp != null) {
             tmp.setNumber(season.getNumber());
-            tmp.setEpisodes(season.getEpisodes());
             tmp.setSeries(season.getSeries());
             em.getTransaction().begin();
             em.merge(tmp);

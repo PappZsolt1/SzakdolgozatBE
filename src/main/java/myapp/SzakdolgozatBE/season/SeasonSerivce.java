@@ -11,10 +11,9 @@ public class SeasonSerivce {
     
     @Inject SeasonDAO dao;
     
-    public Season addSeason(int number, List<Episode> episodes, Series series) {
+    public Season addSeason(int number, Series series) {
         Season tmp = new Season();
         tmp.setNumber(number);
-        tmp.setEpisodes(episodes);
         tmp.setSeries(series);
         return dao.addSeason(tmp);
     }
@@ -31,10 +30,9 @@ public class SeasonSerivce {
         dao.deleteSeason(id);
     }
     
-    public Season modifySeason(long id, int number, List<Episode> episodes, Series series) throws NullPointerException {
+    public Season modifySeason(long id, int number, Series series) throws NullPointerException {
         Season tmp = new Season();
         tmp.setNumber(number);
-        tmp.setEpisodes(episodes);
         tmp.setSeries(series);
         return dao.modifySeason(id, tmp);
     }
