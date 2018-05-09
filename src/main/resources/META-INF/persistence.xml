@@ -2,6 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="SzakdolgozatPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <!-- -->
     <class>myapp.SzakdolgozatBE.article.Article</class>
     <class>myapp.SzakdolgozatBE.myUser.MyUser</class>
     <class>myapp.SzakdolgozatBE.movie.Movie</class>
@@ -12,6 +13,9 @@
     <class>myapp.SzakdolgozatBE.actor.Actor</class>
     <class>myapp.SzakdolgozatBE.series.Series</class>
     <class>myapp.SzakdolgozatBE.topic.Topic</class>
+    <class>myapp.SzakdolgozatBE.gender.Gender</class>
+    <class>myapp.SzakdolgozatBE.genre.Genre</class>
+    <class>myapp.SzakdolgozatBE.ageClassification.AgeClassification</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
     <properties>

@@ -25,10 +25,10 @@ public class CommentResource {
         return Response.ok().entity(tmp).build();
     }
     
-    @GET
+    /*@GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Comment> getxxxComments () {
         //todo
-    }
+    }*/
 }

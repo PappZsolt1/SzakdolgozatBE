@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import myapp.SzakdolgozatBE.enums.Gender;
+import myapp.SzakdolgozatBE.gender.Gender;
 
 @Path("actor")
 @ApplicationScoped
@@ -45,11 +45,11 @@ public class ActorResource {
         }
     }
     
-    @GET
+    /*@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Actor> getxxxActors() {
         //todo
-    }
+    }*/
     
     @DELETE
     @Path("/{id}")

@@ -26,9 +26,9 @@ public class ActorDAO {
         }
     }
 
-    public List<Actor> getxxxActors() {
+    /*public List<Actor> getxxxActors() {
         //todo
-    }
+    }*/
 
     public void deleteActor(long id) throws NullPointerException {
         em.getTransaction().begin();

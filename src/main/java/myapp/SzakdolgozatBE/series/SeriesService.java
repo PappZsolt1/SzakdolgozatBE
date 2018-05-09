@@ -3,8 +3,8 @@ package myapp.SzakdolgozatBE.series;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import myapp.SzakdolgozatBE.enums.AgeClassification;
-import myapp.SzakdolgozatBE.enums.Genre;
+import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
+import myapp.SzakdolgozatBE.genre.Genre;
 
 @Stateless
 public class SeriesService {

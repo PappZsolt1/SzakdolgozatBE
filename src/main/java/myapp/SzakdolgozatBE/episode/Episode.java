@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -37,8 +39,11 @@ public class Episode implements Serializable {
     private int eLength;
     @ManyToOne
     private Season season;
-    
-    @ManyToMany //todo
+
+    @ManyToMany
+    @JoinTable(name = "Episode_Actor",
+            joinColumns = @JoinColumn(name = "Episode_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
     private List<Actor> actors;
 
     public Long getId() {
@@ -72,7 +77,7 @@ public class Episode implements Serializable {
     public void setSumOfRatings(int sumOfRatings) {
         this.sumOfRatings = sumOfRatings;
     }
-    
+
     public double getRating() {
         return rating;
     }
@@ -114,7 +119,7 @@ public class Episode implements Serializable {
     public void setActors(List<Actor> actors) {
         this.actors = actors;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -139,5 +144,5 @@ public class Episode implements Serializable {
     public String toString() {
         return "myapp.SzakdolgozatBE.episode.Episode[ id=" + id + " ]";
     }
-    
+
 }

@@ -18,7 +18,7 @@ public class CommentService {
         return dao.addComment(tmp);
     }
     
-    public List<Comment> getxxxComments () {
+    /*public List<Comment> getxxxComments () {
         //todo
-    }
+    }*/
 }

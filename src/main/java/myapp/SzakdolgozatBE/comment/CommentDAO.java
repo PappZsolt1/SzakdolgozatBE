@@ -17,7 +17,7 @@ public class CommentDAO {
         return comment;
     }
     
-    public List<Comment> getxxxComments () {
+    /*public List<Comment> getxxxComments () {
         //todo
-    }
+    }*/
 }

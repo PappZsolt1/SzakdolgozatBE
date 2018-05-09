@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import myapp.SzakdolgozatBE.enums.Gender;
+import myapp.SzakdolgozatBE.gender.Gender;
 
 @Stateless
 public class ActorService {
@@ -25,9 +25,9 @@ public class ActorService {
         return dao.getActor(id);
     }
     
-    public List<Actor> getxxxActors() {
+    /*public List<Actor> getxxxActors() {
         //todo
-    }
+    }*/
     
     public void deleteActor(long id) throws NullPointerException {
         dao.deleteActor(id);

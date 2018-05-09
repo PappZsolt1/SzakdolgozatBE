@@ -17,7 +17,7 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Comment")
 @NamedQueries({
-    @NamedQuery(name = "", query = "")
+    //@NamedQuery(name = "", query = "")
 })
 public class Comment implements Serializable {
 

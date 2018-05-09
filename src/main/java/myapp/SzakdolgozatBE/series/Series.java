@@ -2,23 +2,22 @@ package myapp.SzakdolgozatBE.series;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import myapp.SzakdolgozatBE.enums.AgeClassification;
-import myapp.SzakdolgozatBE.enums.Genre;
+import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
+import myapp.SzakdolgozatBE.genre.Genre;
 
 @Entity
 @Table(name = "Series")
 @NamedQueries({
     @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s"),
-    @NamedQuery(name = "getEpisodeRatings", query = "") // todo
+    //@NamedQuery(name = "getEpisodeRatings", query = "") // todo
 })
 public class Series implements Serializable {
 
@@ -33,10 +32,10 @@ public class Series implements Serializable {
     @Lob
     private byte[] coverPicture;
     
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private AgeClassification ageClassification;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Genre genre;
 
     public Long getId() {

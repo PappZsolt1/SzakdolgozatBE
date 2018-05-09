@@ -1,22 +1,22 @@
 package myapp.SzakdolgozatBE.movie;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.actor.Actor;
-import myapp.SzakdolgozatBE.enums.AgeClassification;
-import myapp.SzakdolgozatBE.enums.Genre;
+import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
+import myapp.SzakdolgozatBE.genre.Genre;
 
 @Entity
 @Table(name = "Movie")
@@ -36,19 +36,22 @@ public class Movie implements Serializable {
     private int budget;
     private int mLength;
     private int releaseYear;
-    
+
     @Lob
     private byte[] coverPicture;
-    
-    @Enumerated(EnumType.STRING)
+
+    @ManyToOne
     private AgeClassification ageClassification;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Genre genre;
-    
-    @ManyToMany //todo
+
+    @ManyToMany
+    @JoinTable(name = "Movie_Actor",
+            joinColumns = @JoinColumn(name = "Movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
     private List<Actor> actors;
-    
+
     public Long getId() {
         return id;
     }
@@ -80,7 +83,7 @@ public class Movie implements Serializable {
     public void setSumOfRatings(int sumOfRatings) {
         this.sumOfRatings = sumOfRatings;
     }
-    
+
     public double getRating() {
         return rating;
     }
@@ -171,5 +174,5 @@ public class Movie implements Serializable {
     public String toString() {
         return "myapp.SzakdolgozatBE.Movie.Movie[ id=" + id + " ]";
     }
-    
+
 }
