@@ -89,7 +89,7 @@ public class Movie implements Serializable {
     }
 
     public void setRating(int rating) {
-        numberOfRatings += 1;
+        numberOfRatings++;
         sumOfRatings += rating;
         this.rating = sumOfRatings / numberOfRatings;
     }

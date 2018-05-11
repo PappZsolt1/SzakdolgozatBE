@@ -1,7 +1,6 @@
 package myapp.SzakdolgozatBE.season;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.series.Series;
 
 @Entity
@@ -26,10 +23,7 @@ public class Season implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int number;
-    
-    @OneToMany
-    private List<Episode> episodes;
-    
+        
     @ManyToOne
     private Series series;
 
@@ -47,14 +41,6 @@ public class Season implements Serializable {
 
     public void setNumber(int number) {
         this.number = number;
-    }
-
-    public List<Episode> getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(List<Episode> episodes) {
-        this.episodes = episodes;
     }
 
     public Series getSeries() {
