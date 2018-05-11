@@ -10,6 +10,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+//enum
 @Entity
 @Table(name = "Gender")
 @NamedQueries({

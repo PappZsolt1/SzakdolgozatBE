@@ -1,4 +1,4 @@
-package myapp.SzakdolgozatBE.gender;
+package myapp.SzakdolgozatBE.genre;
 
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -6,39 +6,39 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 @RequestScoped
-public class GenderDAO {
+public class GenreDAO {
     
     EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
     
-    public Gender getGender(long id) throws NullPointerException {
-        Gender tmp = em.find(Gender.class, id);
+    public Genre getGenre(long id) throws NullPointerException {
+        Genre tmp = em.find(Genre.class, id);
         if(tmp != null)    
                 return tmp;
         else
             throw new NullPointerException();
     }
     
-    public List<Gender> getAllGenders() {
-        return em.createNamedQuery("getAllGenders").getResultList();
+    public List<Genre> getAllGenres() {
+        return em.createNamedQuery("getAllGenres").getResultList();
     }
     
-    public Gender addGender(Gender gender) {
+    public Genre addGenre(Genre genre) {
         em.getTransaction().begin();
-        em.persist(gender);
+        em.persist(genre);
         em.getTransaction().commit();
-        return gender;
+        return genre;
     }
     
-    public void deleteGender(long id) {
+    public void deleteGenre(long id) {
         em.getTransaction().begin();
-        em.remove(this.getGender(id));
+        em.remove(this.getGenre(id));
         em.getTransaction().commit();
     }
     
-    public Gender modifyGender(long id, Gender gender) throws NullPointerException {
-        Gender tmp = this.getGender(id);
+    public Genre modifyGenre(long id, Genre genre) throws NullPointerException {
+        Genre tmp = this.getGenre(id);
         if (tmp != null) {
-            tmp.setName(gender.getName());
+            tmp.setName(genre.getName());
             em.getTransaction().begin();
             em.merge(tmp);
             em.getTransaction().commit();

@@ -10,10 +10,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+//enum
 @Entity
 @Table(name = "AgeClassification")
 @NamedQueries({
-    //@NamedQuery(name = "", query = "")
+    @NamedQuery(name = "getAllAgeClassifications", query = "SELECT a FROM AgeClassification a")
 })
 public class AgeClassification implements Serializable {
     @Id

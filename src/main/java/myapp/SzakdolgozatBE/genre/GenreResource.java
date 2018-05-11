@@ -1,4 +1,4 @@
-package myapp.SzakdolgozatBE.gender;
+package myapp.SzakdolgozatBE.genre;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -14,18 +14,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/gender")
+@Path("genre")
 @ApplicationScoped
-public class GenderResource {
+public class GenreResource {
     
-    @EJB GenderService service;
+    @EJB GenreService service;
     
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGender(@PathParam("id") long id) {
+    public Response getGenre(@PathParam("id") long id) {
         try{
-            Gender tmp = service.getGender(id);            
+            Genre tmp = service.getGenre(id);            
             return Response.ok().entity(tmp).build();
         }
         catch(Throwable t){
@@ -35,31 +35,31 @@ public class GenderResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Gender> getAllGenders() {
-        return service.getAllGenders();
+    public List<Genre> getAllGenres() {
+        return service.getAllGenres();
     }
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addGender(@FormParam("name") String name) {
-        Gender tmp = service.addGender(name);
+    public Response addGenre(@FormParam("name") String name) {
+        Genre tmp = service.addGenre(name);
         return Response.ok().entity(tmp).build();
     }
     
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteGender(@PathParam("id") long id) {
-        service.deleteGender(id);
+    public Response deleteGenre(@PathParam("id") long id) {
+        service.deleteGenre(id);
         return Response.ok().build();
     }
     
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyGender(@PathParam("id") long id, @PathParam("name") String name) {
+    public Response modifyGenre(@PathParam("id") long id, @PathParam("name") String name) {
         try{
-            Gender tmp = service.modifyGender(id, name);            
+            Genre tmp = service.modifyGenre(id, name);            
             return Response.ok().entity(tmp).build();
         }
         catch(Throwable t){
