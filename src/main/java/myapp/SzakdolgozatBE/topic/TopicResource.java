@@ -12,7 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Path("topic")
 @ApplicationScoped
@@ -22,10 +21,8 @@ public class TopicResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTopic(@FormParam("title") String title,
-            @FormParam("description") String description,
-            @FormParam("myUser") MyUser myUser) {
-        Topic tmp = service.addTopic(title, description, myUser);
+    public Response addTopic(@FormParam("title") String title, @FormParam("description") String description) {
+        Topic tmp = service.addTopic(title, description);
         return Response.ok().entity(tmp).build();
     }
     

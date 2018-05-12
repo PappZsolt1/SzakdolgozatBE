@@ -11,11 +11,10 @@ public class TopicService {
     
     @Inject TopicDAO dao;
     
-    public Topic addTopic(String title, String description, MyUser myUser) {
+    public Topic addTopic(String title, String description) {
         Topic tmp = new Topic();
         tmp.setTitle(title);
         tmp.setDescription(description);
-        tmp.setMyUser(myUser);
         return dao.addTopic(tmp);
     }
     

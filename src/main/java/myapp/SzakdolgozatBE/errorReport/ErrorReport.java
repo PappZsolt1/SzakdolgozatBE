@@ -17,7 +17,9 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "ErrorReport")
 @NamedQueries({
-    @NamedQuery(name = "getAllErrorReport", query = "SELECT e FROM ErrorReport e ORDER BY e.sendingDate ASC")
+    @NamedQuery(name = "getAllErrorReports", query = "SELECT e FROM ErrorReport e ORDER BY e.sendingDate ASC"),
+    @NamedQuery(name = "getResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = TRUE ORDER BY e.sendingDate ASC"),
+    @NamedQuery(name = "getNotResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = FALSE ORDER BY e.sendingDate ASC")
 })
 public class ErrorReport implements Serializable {
 
@@ -28,7 +30,7 @@ public class ErrorReport implements Serializable {
     private String content;    
     @ManyToOne
     private MyUser myUser;
-    private boolean isResolved;
+    private boolean resolved;
     @Temporal(TemporalType.TIMESTAMP)
     private Date sendingDate = new Date();
 
@@ -56,12 +58,12 @@ public class ErrorReport implements Serializable {
         this.myUser = myUser;
     }
 
-    public boolean isIsResolved() {
-        return isResolved;
+    public boolean isResolved() {
+        return resolved;
     }
 
-    public void setIsResolved(boolean isResolved) {
-        this.isResolved = isResolved;
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
 
     public Date getSendingDate() {

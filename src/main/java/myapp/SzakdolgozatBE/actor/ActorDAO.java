@@ -36,7 +36,7 @@ public class ActorDAO {
         em.getTransaction().commit();
     }
 
-    public Actor modifyOne(long id, Actor actor) throws NullPointerException {
+    public Actor modifyActor(long id, Actor actor) throws NullPointerException {
         Actor tmp = this.getActor(id);
         if (tmp != null) {
             tmp.setBio(actor.getBio());

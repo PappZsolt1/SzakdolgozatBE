@@ -13,8 +13,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
-import myapp.SzakdolgozatBE.genre.Genre;
 
 @Path("series")
 @ApplicationScoped
@@ -27,9 +25,9 @@ public class SeriesResource {
     public Response addSeries(@FormParam("title") String title,
             @FormParam("releaseYear") int releaseYear,
             @FormParam("coverPicture") byte[] coverPicture,
-            @FormParam("ageClassification") AgeClassification ageClassification,
-            @FormParam("genre") Genre genre) {
-        Series tmp = service.addSeries(title, releaseYear, coverPicture, ageClassification, genre);
+            @FormParam("ageClassificationId") long ageClassificationId,
+            @FormParam("genreId") long genreId) {
+        Series tmp = service.addSeries(title, releaseYear, coverPicture, ageClassificationId, genreId);
         return Response.ok().entity(tmp).build();
     }
     
@@ -70,10 +68,10 @@ public class SeriesResource {
             @FormParam("title") String title,
             @FormParam("releaseYear") int releaseYear,
             @FormParam("coverPicture") byte[] coverPicture,
-            @FormParam("ageClassification") AgeClassification ageClassification,
-            @FormParam("genre") Genre genre) {
+            @FormParam("ageClassificationId") long ageClassificationId,
+            @FormParam("genreId") long genreId) {
         try {
-            Series tmp = service.modifySeries(id, title, releaseYear, coverPicture, ageClassification, genre);
+            Series tmp = service.modifySeries(id, title, releaseYear, coverPicture, ageClassificationId, genreId);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

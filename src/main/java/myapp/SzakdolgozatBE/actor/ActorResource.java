@@ -14,7 +14,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import myapp.SzakdolgozatBE.gender.Gender;
 
 @Path("actor")
 @ApplicationScoped
@@ -28,8 +27,8 @@ public class ActorResource {
             @FormParam("birthDate") Date birthDate,
             @FormParam("birthPlace") String birthPlace,
             @FormParam("bio") String bio,
-            @FormParam("gender") Gender gender) {
-        Actor tmp = service.addActor(name, birthDate, birthPlace, bio, gender);
+            @FormParam("genderId") long genderId) {
+        Actor tmp = service.addActor(name, birthDate, birthPlace, bio, genderId);
         return Response.ok().entity(tmp).build();
     }
     
@@ -66,14 +65,14 @@ public class ActorResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyOne(@FormParam("id") long id,
+    public Response modifyActor(@PathParam("id") long id,
             @FormParam("name") String name,
             @FormParam("birthDate") Date birthDate,
             @FormParam("birthPlace") String birthPlace,
             @FormParam("bio") String bio,
-            @FormParam("gender") Gender gender) {
+            @FormParam("genderId") long genderId) {
         try {
-            Actor tmp = service.modifyOne(id, name, birthDate, birthPlace, bio, gender);
+            Actor tmp = service.modifyActor(id, name, birthDate, birthPlace, bio, genderId);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

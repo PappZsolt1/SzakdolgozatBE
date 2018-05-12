@@ -21,15 +21,30 @@ public class ErrorReportResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addErrorReport(@FormParam("content") String content, MyUser myUser) {
-        ErrorReport tmp = service.add(myUser, content);
+    public Response addErrorReport(@FormParam("content") String content) {
+        ErrorReport tmp = service.add(content);
         return Response.ok().entity(tmp).build();
     }
     
+    @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ErrorReport> getAllErrorReports() {
-        return service.getAll();
+        return service.getAllErrorReports();
+    }
+    
+    @Path("/resolved")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ErrorReport> getResolvedErrorReports() {
+        return service.getResolvedErrorReports();
+    }
+    
+    @Path("/notresolved")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ErrorReport> getNotResolvedErrorReports() {
+        return service.getNotResolvedErrorReports();
     }
     
     @PUT

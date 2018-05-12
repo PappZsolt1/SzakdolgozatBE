@@ -3,21 +3,23 @@ package myapp.SzakdolgozatBE.series;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
-import myapp.SzakdolgozatBE.genre.Genre;
+import myapp.SzakdolgozatBE.ageClassification.AgeClassificationService;
+import myapp.SzakdolgozatBE.genre.GenreService;
 
 @Stateless
 public class SeriesService {
     
     @Inject SeriesDAO dao;
+    @Inject AgeClassificationService ageClassificationService;
+    @Inject GenreService genreService;
     
-    public Series addSeries(String title, int releaseYear, byte[] coverPicture, AgeClassification ageClassification, Genre genre) {
+    public Series addSeries(String title, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         Series tmp = new Series();
         tmp.setTitle(title);
         tmp.setReleaseYear(releaseYear);
         tmp.setCoverPicture(coverPicture);
-        tmp.setAgeClassification(ageClassification);
-        tmp.setGenre(genre);
+        tmp.setAgeClassification(ageClassificationService.getAgeClassification(ageClassificationId));
+        tmp.setGenre(genreService.getGenre(genreId));
         return dao.addSeries(tmp);
     }
     
@@ -33,13 +35,13 @@ public class SeriesService {
         dao.deleteSeries(id);
     }
     
-    public Series modifySeries(long id, String title, int releaseYear, byte[] coverPicture, AgeClassification ageClassification, Genre genre) throws NullPointerException {
+    public Series modifySeries(long id, String title, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) throws NullPointerException {
         Series tmp = new Series();
         tmp.setTitle(title);
         tmp.setReleaseYear(releaseYear);
         tmp.setCoverPicture(coverPicture);
-        tmp.setAgeClassification(ageClassification);
-        tmp.setGenre(genre);
+        tmp.setAgeClassification(ageClassificationService.getAgeClassification(ageClassificationId));
+        tmp.setGenre(genreService.getGenre(genreId));
         return dao.modifySeries(id, tmp);
     }
     

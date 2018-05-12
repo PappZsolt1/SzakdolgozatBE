@@ -18,7 +18,7 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Topic")
 @NamedQueries({
-    @NamedQuery(name = "getAllTopics", query = "SELECT t FROM Topic t")
+    @NamedQuery(name = "getAllTopics", query = "SELECT t FROM Topic t")//todo
 })
 public class Topic implements Serializable {
 

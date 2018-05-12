@@ -10,16 +10,41 @@ public class ArticleService {
     
     @Inject ArticleDAO dao;
     
-    public Article addArticle(String title, String content) {
+    public Article saveArticle(String title, String content) {
         Article tmp = new Article();
         tmp.setTitle(title);
         tmp.setContent(content);
-        return dao.addArticle(tmp);
+        tmp.setSaved(true);
+        return dao.saveArticle(tmp);
     }
     //user elérés szerverről az aktuális bejelentkező
     
-    public List<Article> getAllArticles() {
-        return dao.getAllArticles();
+    public Article publishNewArticle(String title, String content) {
+        Article tmp = new Article();
+        tmp.setTitle(title);
+        tmp.setContent(content);
+        tmp.setPublishDate(new Date());
+        tmp.setPublished(true);
+        return dao.publishNewArticle(tmp);
+    }
+    
+    public Article publishSavedArticle(long id, String title, String content) {
+        Article tmp = new Article();
+        tmp.setTitle(title);
+        tmp.setContent(content);
+        return dao.publishSavedArticle(tmp, id);
+    }
+    
+    public List<Article> getSavedArticles() {
+        return dao.getSavedArticles();
+    }
+    
+    public List<Article> getPublishedArticles() {
+        return dao.getPublishedArticles();
+    }
+    
+    public void deleteArticle(long id) {
+        dao.deleteArticle(id);
     }
     
     public Article getArticle(long id) throws NullPointerException {

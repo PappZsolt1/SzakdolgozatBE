@@ -13,8 +13,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import myapp.SzakdolgozatBE.episode.Episode;
-import myapp.SzakdolgozatBE.series.Series;
 
 @Path("season")
 @ApplicationScoped
@@ -25,8 +23,8 @@ public class SeasonResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addSeason(@FormParam("number") int number,
-            @FormParam("series") Series series) {
-        Season tmp = service.addSeason(number, series);
+            @FormParam("seriesId") long seriesId) {
+        Season tmp = service.addSeason(number, seriesId);
         return Response.ok().entity(tmp).build();
     }
     
@@ -44,8 +42,8 @@ public class SeasonResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Season> getSeriesSeasons(Series series) {
-        return service.getSeriesSeasons(series);
+    public List<Season> getSeriesSeasons(@FormParam("seriesId") long seriesId) {
+        return service.getSeriesSeasons(seriesId);
     }
     
     @DELETE
@@ -65,9 +63,9 @@ public class SeasonResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response modifySeason(@PathParam("id") long id,
             @FormParam("number") int number,
-            @FormParam("series") Series series) {
+            @FormParam("seriesId") long seriesId) {
         try {
-            Season tmp = service.modifySeason(id, number, series);
+            Season tmp = service.modifySeason(id, number, seriesId);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

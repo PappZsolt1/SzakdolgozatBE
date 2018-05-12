@@ -11,15 +11,22 @@ public class ErrorReportService {
     
     @Inject ErrorReportDAO dao;
  
-    public ErrorReport add(MyUser myUser, String content) {
+    public ErrorReport add(String content) {
         ErrorReport tmp = new ErrorReport();
-        tmp.setMyUser(myUser);
         tmp.setContent(content);
         return dao.add(tmp);
     }
     
-    public List<ErrorReport> getAll() {
-        return dao.getAll();
+    public List<ErrorReport> getAllErrorReports() {
+        return dao.getAllErrorReports();
+    }
+    
+    public List<ErrorReport> getResolvedErrorReports() {
+        return dao.getResolvedErrorReports();
+    }
+    
+    public List<ErrorReport> getNotResolvedErrorReports() {
+        return dao.getNotResolvedErrorReports();
     }
     
     public void makeResolved(long id) {

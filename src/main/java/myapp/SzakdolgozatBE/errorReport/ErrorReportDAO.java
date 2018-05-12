@@ -17,8 +17,16 @@ public class ErrorReportDAO {
         return errorReport;
     }
     
-    public List<ErrorReport> getAll() {
-        return em.createNamedQuery("getAllErrorReport").getResultList();
+    public List<ErrorReport> getAllErrorReports() {
+        return em.createNamedQuery("getAllErrorReports").getResultList();
+    }
+    
+    public List<ErrorReport> getResolvedErrorReports() {
+        return em.createNamedQuery("getResolvedErrorReports").getResultList();
+    }
+    
+    public List<ErrorReport> getNotResolvedErrorReports() {
+        return em.createNamedQuery("getNotResolvedErrorReports").getResultList();
     }
     
     public ErrorReport getErrorReport(long id) {
@@ -28,7 +36,7 @@ public class ErrorReportDAO {
     
     public void makeResolved(long id) {
         ErrorReport tmp = this.getErrorReport(id);
-        tmp.setIsResolved(true);
+        tmp.setResolved(true);
         em.getTransaction().begin();
         em.merge(tmp);
         em.getTransaction().commit();        

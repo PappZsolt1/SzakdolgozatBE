@@ -17,7 +17,8 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Article")
 @NamedQueries({
-    @NamedQuery(name = "getAllArticles", query = "SELECT a FROM Article a ORDER BY a.publishDate DESC"),
+    @NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE ORDER BY a.publishDate DESC"),
+    @NamedQuery(name = "getPublishedArticles", query = "SELECT a FROM Article a WHERE a.published = TRUE ORDER BY a.publishDate DESC")
 })
 public class Article implements Serializable {
 
@@ -28,9 +29,11 @@ public class Article implements Serializable {
     private String title;    
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date publishDate = new Date();
+    private Date publishDate;
     @ManyToOne
     private MyUser myUser;
+    private boolean published;
+    private boolean saved;
 
     public Long getId() {
         return id;
@@ -72,14 +75,22 @@ public class Article implements Serializable {
         this.myUser = myUser;
     }
     
-    public MyUser getUser() {
-        return myUser;
+    public boolean isPublished() {
+        return published;
     }
 
-    public void setUser(MyUser user) {
-        this.myUser = user;
-    }    
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
 
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

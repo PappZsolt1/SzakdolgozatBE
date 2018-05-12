@@ -4,20 +4,21 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import myapp.SzakdolgozatBE.gender.Gender;
+import myapp.SzakdolgozatBE.gender.GenderDAO;
 
 @Stateless
 public class ActorService {
     
     @Inject ActorDAO dao;
+    @Inject GenderDAO genderDao;
     
-    public Actor addActor(String name, Date birthDate, String birthPlace, String bio, Gender gender) {
+    public Actor addActor(String name, Date birthDate, String birthPlace, String bio, long genderId) {
         Actor tmp = new Actor();
         tmp.setName(name);
         tmp.setBirthDate(birthDate);
         tmp.setBirthPlace(birthPlace);
         tmp.setBio(bio);
-        tmp.setGender(gender);
+        tmp.setGender(genderDao.getGender(genderId));
         return dao.addActor(tmp);
     }
     
@@ -33,13 +34,13 @@ public class ActorService {
         dao.deleteActor(id);
     }
     
-    public Actor modifyOne(long id, String name, Date birthDate, String birthPlace, String bio, Gender gender) throws NullPointerException {
+    public Actor modifyActor(long id, String name, Date birthDate, String birthPlace, String bio, long genderId) throws NullPointerException {
         Actor tmp = new Actor();
         tmp.setName(name);
         tmp.setBirthDate(birthDate);
         tmp.setBirthPlace(birthPlace);
         tmp.setBio(bio);
-        tmp.setGender(gender);
-        return dao.modifyOne(id, tmp);
+        tmp.setGender(genderDao.getGender(genderId));
+        return dao.modifyActor(id, tmp);
     }
 }
