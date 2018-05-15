@@ -28,8 +28,8 @@ public class ErrorReport implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String content;    
-    @ManyToOne
-    private MyUser myUser;
+    //@ManyToOne
+    //private MyUser myUser;
     private boolean resolved;
     @Temporal(TemporalType.TIMESTAMP)
     private Date sendingDate = new Date();
@@ -50,13 +50,13 @@ public class ErrorReport implements Serializable {
         this.content = content;
     }
 
-    public MyUser getMyUser() {
+    /*public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
-    }
+    }*/
 
     public boolean isResolved() {
         return resolved;
