@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Stateless
 public class ErrorReportService {
@@ -14,6 +13,10 @@ public class ErrorReportService {
     public ErrorReport add(String content) {
         ErrorReport tmp = new ErrorReport();
         tmp.setContent(content);
+        tmp.setSendingDate(new Date());
+        tmp.setResolved(false);
+        System.out.println("service");
+        System.out.println(content);
         return dao.add(tmp);
     }
     

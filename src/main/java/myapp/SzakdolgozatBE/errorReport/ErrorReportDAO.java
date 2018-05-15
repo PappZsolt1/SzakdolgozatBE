@@ -16,7 +16,8 @@ public class ErrorReportDAO {
         //em.getTransaction().begin();
         em.persist(errorReport);
         //em.getTransaction().commit();
-        System.out.println("a");
+        System.out.println("dao");
+        System.out.println(errorReport.getContent());
         return errorReport;
     }
     

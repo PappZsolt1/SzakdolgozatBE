@@ -32,7 +32,7 @@ public class ErrorReport implements Serializable {
     //private MyUser myUser;
     private boolean resolved;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date sendingDate = new Date();
+    private Date sendingDate;
 
     public Long getId() {
         return id;

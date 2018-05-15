@@ -24,7 +24,9 @@ public class ErrorReportResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addErrorReport(String content) {
-        ErrorReport tmp = service.add(content);
+        System.out.println("resource");
+        System.out.println(content);
+        ErrorReport tmp = service.add(content);        
         return Response.ok().entity(tmp).build();
     }
     
@@ -32,6 +34,7 @@ public class ErrorReportResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ErrorReport> getAllErrorReports() {
+        System.out.println("getall");
         return service.getAllErrorReports();
     }
     
