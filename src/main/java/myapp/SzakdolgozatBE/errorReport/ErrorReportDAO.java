@@ -13,9 +13,9 @@ public class ErrorReportDAO {
     EntityManager em;// = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
     
     public ErrorReport add(ErrorReport errorReport) {
-        //em.getTransaction().begin();
+        em.getTransaction().begin();
         em.persist(errorReport);
-        //em.getTransaction().commit();
+        em.getTransaction().commit();
         System.out.println("dao");
         System.out.println(errorReport.getContent());
         return errorReport;
