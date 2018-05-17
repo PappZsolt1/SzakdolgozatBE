@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -15,7 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("actor")
+@Path("/actor")
 @ApplicationScoped
 public class ActorResource {
     
@@ -23,12 +24,14 @@ public class ActorResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addActor(@FormParam("name") String name,
-            @FormParam("birthDate") Date birthDate,
-            @FormParam("birthPlace") String birthPlace,
-            @FormParam("bio") String bio,
-            @FormParam("genderId") long genderId) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addActor(String name, Date birthDate, String birthPlace, String bio, long genderId) {
         Actor tmp = service.addActor(name, birthDate, birthPlace, bio, genderId);
+        System.out.println("name");
+        System.out.println("birthDate");
+        System.out.println("birthPlace");
+        System.out.println("bio");
+        System.out.println("genderId");
         return Response.ok().entity(tmp).build();
     }
     
