@@ -3,13 +3,14 @@ package myapp.SzakdolgozatBE.season;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import myapp.SzakdolgozatBE.series.Series;
 
 @RequestScoped
 public class SeasonDAO {
     
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
     
     public Season addSeason(Season season) {
         em.getTransaction().begin();

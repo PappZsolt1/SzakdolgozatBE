@@ -3,8 +3,6 @@ package myapp.SzakdolgozatBE.errorReport;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -22,10 +20,7 @@ public class ErrorReportResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addErrorReport(String content) {
-        System.out.println("resource");
-        System.out.println(content);
         ErrorReport tmp = service.add(content);        
         return Response.ok().entity(tmp).build();
     }
@@ -34,7 +29,6 @@ public class ErrorReportResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ErrorReport> getAllErrorReports() {
-        System.out.println("getall");
         return service.getAllErrorReports();
     }
     

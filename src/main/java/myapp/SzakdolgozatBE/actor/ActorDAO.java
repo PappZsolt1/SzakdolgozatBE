@@ -3,12 +3,13 @@ package myapp.SzakdolgozatBE.actor;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class ActorDAO {
 
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
 
     public Actor addActor(Actor actor) {
         em.getTransaction().begin();

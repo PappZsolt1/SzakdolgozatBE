@@ -1,7 +1,6 @@
 package myapp.SzakdolgozatBE.actor;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -65,18 +64,12 @@ public class Actor implements Serializable {
         this.name = name;
     }
 
-    public String getBirthDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        return sdf.format(birthDate);
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        try {
-            this.birthDate = sdf.parse(birthDate);
-        } catch (Exception e) {
-        }
-
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getBirthPlace() {

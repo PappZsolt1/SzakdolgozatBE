@@ -3,12 +3,13 @@ package myapp.SzakdolgozatBE.genre;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class GenreDAO {
     
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
     
     public Genre getGenre(long id) throws NullPointerException {
         Genre tmp = em.find(Genre.class, id);

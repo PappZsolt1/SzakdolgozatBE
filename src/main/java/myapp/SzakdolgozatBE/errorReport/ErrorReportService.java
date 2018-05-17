@@ -15,8 +15,6 @@ public class ErrorReportService {
         tmp.setContent(content);
         tmp.setSendingDate(new Date());
         tmp.setResolved(false);
-        System.out.println("service");
-        System.out.println(content);
         return dao.add(tmp);
     }
     

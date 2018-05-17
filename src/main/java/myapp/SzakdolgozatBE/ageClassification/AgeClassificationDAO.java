@@ -3,13 +3,14 @@ package myapp.SzakdolgozatBE.ageClassification;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class AgeClassificationDAO {
     
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
-    
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
+
     public AgeClassification getAgeClassification(long id) throws NullPointerException {
         AgeClassification tmp = em.find(AgeClassification.class, id);
         if(tmp != null)    

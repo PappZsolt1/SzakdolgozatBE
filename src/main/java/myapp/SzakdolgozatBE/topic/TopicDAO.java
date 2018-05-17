@@ -3,12 +3,13 @@ package myapp.SzakdolgozatBE.topic;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class TopicDAO {
 
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
 
     public Topic addTopic(Topic topic) {
         em.getTransaction().begin();

@@ -3,12 +3,13 @@ package myapp.SzakdolgozatBE.comment;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class CommentDAO {
     
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
     
     public Comment addComment(Comment comment) {
         em.getTransaction().begin();

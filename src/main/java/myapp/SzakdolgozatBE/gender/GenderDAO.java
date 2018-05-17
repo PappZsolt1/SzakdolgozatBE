@@ -3,12 +3,13 @@ package myapp.SzakdolgozatBE.gender;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class GenderDAO {
     
-    EntityManager em = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    @PersistenceContext(unitName = "SzakdolgozatPU")
+    EntityManager em;
     
     public Gender getGender(long id) throws NullPointerException {
         Gender tmp = em.find(Gender.class, id);

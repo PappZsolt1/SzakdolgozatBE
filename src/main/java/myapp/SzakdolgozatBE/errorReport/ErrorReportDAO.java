@@ -3,7 +3,6 @@ package myapp.SzakdolgozatBE.errorReport;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 @RequestScoped
@@ -16,8 +15,6 @@ public class ErrorReportDAO {
         em.getTransaction().begin();
         em.persist(errorReport);
         em.getTransaction().commit();
-        System.out.println("dao");
-        System.out.println(errorReport.getContent());
         return errorReport;
     }
     
@@ -41,8 +38,8 @@ public class ErrorReportDAO {
     public void makeResolved(long id) {
         ErrorReport tmp = this.getErrorReport(id);
         tmp.setResolved(true);
-        //em.getTransaction().begin();
+        em.getTransaction().begin();
         em.merge(tmp);
-        //em.getTransaction().commit();        
+        em.getTransaction().commit();        
     }
 }
