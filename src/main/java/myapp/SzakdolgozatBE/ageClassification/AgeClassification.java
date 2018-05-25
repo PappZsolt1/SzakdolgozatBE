@@ -1,6 +1,7 @@
 package myapp.SzakdolgozatBE.ageClassification;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import myapp.SzakdolgozatBE.movie.Movie;
+import myapp.SzakdolgozatBE.series.Series;
 
 //enum
 @Entity
@@ -17,11 +21,18 @@ import javax.persistence.Table;
     @NamedQuery(name = "getAllAgeClassifications", query = "SELECT a FROM AgeClassification a")
 })
 public class AgeClassification implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String name;
+
+    @OneToMany(mappedBy = "ageClassification")
+    private List<Movie> movies;
+    
+    @OneToMany(mappedBy = "ageClassification")
+    private List<Series> series;
 
     public Long getId() {
         return id;
@@ -37,6 +48,22 @@ public class AgeClassification implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public List<Series> getSeries() {
+        return series;
+    }
+
+    public void setSeries(List<Series> series) {
+        this.series = series;
     }
 
     @Override

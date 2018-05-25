@@ -1,17 +1,22 @@
 package myapp.SzakdolgozatBE.series;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
 import myapp.SzakdolgozatBE.genre.Genre;
+import myapp.SzakdolgozatBE.season.Season;
 
 @Entity
 @Table(name = "Series")
@@ -22,21 +27,30 @@ import myapp.SzakdolgozatBE.genre.Genre;
 public class Series implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     private String title;
+    
     private double rating;
+    
     private int releaseYear;
     
     @Lob
     private byte[] coverPicture;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ageClassification_id")
     private AgeClassification ageClassification;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
     private Genre genre;
+    
+    @OneToMany(mappedBy = "series")
+    private List<Season> seasons;
 
     public Long getId() {
         return id;
@@ -92,6 +106,14 @@ public class Series implements Serializable {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(List<Season> seasons) {
+        this.seasons = seasons;
     }
     
     @Override

@@ -1,6 +1,7 @@
 package myapp.SzakdolgozatBE.gender;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import myapp.SzakdolgozatBE.actor.Actor;
 
 //enum
 @Entity
@@ -17,11 +20,15 @@ import javax.persistence.Table;
     @NamedQuery(name = "getAllGenders", query = "SELECT g FROM Gender g")
 })
 public class Gender implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     private String name;
+    
+    @OneToMany(mappedBy = "gender")
+    private List<Actor> actors;
 
     public Long getId() {
         return id;
@@ -37,6 +44,14 @@ public class Gender implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
     }
 
     @Override

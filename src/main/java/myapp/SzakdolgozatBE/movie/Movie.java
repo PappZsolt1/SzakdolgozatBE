@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.movie;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,24 +27,34 @@ import myapp.SzakdolgozatBE.genre.Genre;
 public class Movie implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     private String title;
+    
     private int numberOfRatings;
+    
     private int sumOfRatings;
+    
     private double rating;
+    
     private int budget;
+    
     private int mLength;
+    
     private int releaseYear;
 
     @Lob
     private byte[] coverPicture;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ageClassification_id")
     private AgeClassification ageClassification;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @ManyToMany

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,17 +28,26 @@ import myapp.SzakdolgozatBE.season.Season;
 public class Episode implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     private String title;
+    
     private int numberOfRatings;
+    
     private int sumOfRatings;
+    
     private double rating;
+    
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
+    
     private int eLength;
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "season_id")
     private Season season;
 
     @ManyToMany

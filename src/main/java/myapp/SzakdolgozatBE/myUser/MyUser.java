@@ -1,13 +1,18 @@
 package myapp.SzakdolgozatBE.myUser;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import myapp.SzakdolgozatBE.article.Article;
+import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.topic.Topic;
 
 @Entity
 @Table(name = "MyUser")
@@ -18,11 +23,23 @@ import javax.persistence.Table;
 public class MyUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;    
+    private Long id;
+    
     private String username;
+    
     private String password;
+    
+    @OneToMany(mappedBy = "myUser")
+    private List<Article> articles;
+    
+    @OneToMany(mappedBy = "myUser")
+    private List<Comment> comments;
+    
+    @OneToMany(mappedBy = "myUser")
+    private List<Topic> topics;
 
     public Long getId() {
         return id;
@@ -46,6 +63,30 @@ public class MyUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 
     @Override
