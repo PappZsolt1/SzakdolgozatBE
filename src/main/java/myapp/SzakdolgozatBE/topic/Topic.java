@@ -2,6 +2,7 @@ package myapp.SzakdolgozatBE.topic;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 
@@ -40,6 +43,9 @@ public class Topic implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate = new Date();
+    
+    @OneToMany(mappedBy = "topic")
+    private List<Comment> comments;
     
     public Long getId() {
         return id;
@@ -79,6 +85,14 @@ public class Topic implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
         
     @Override

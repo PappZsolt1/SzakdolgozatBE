@@ -14,9 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
+import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.genre.Genre;
 
 @Entity
@@ -62,6 +64,9 @@ public class Movie implements Serializable {
             joinColumns = @JoinColumn(name = "Movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
     private List<Actor> actors;
+    
+    @OneToMany(mappedBy = "movie")
+    private List<Comment> comments;
 
     public Long getId() {
         return id;
@@ -159,6 +164,14 @@ public class Movie implements Serializable {
 
     public void setActors(List<Actor> actors) {
         this.actors = actors;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

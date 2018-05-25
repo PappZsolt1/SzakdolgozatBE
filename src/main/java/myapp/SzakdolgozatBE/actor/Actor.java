@@ -13,9 +13,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.gender.Gender;
 import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.movie.Movie;
@@ -51,6 +53,9 @@ public class Actor implements Serializable {
     
     @ManyToMany(mappedBy = "actors")
     private List<Episode> episodes;
+    
+    @OneToMany(mappedBy = "actor")
+    private List<Comment> comments;
     
     public Long getId() {
         return id;
@@ -114,6 +119,14 @@ public class Actor implements Serializable {
 
     public void setEpisodes(List<Episode> episodes) {
         this.episodes = episodes;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

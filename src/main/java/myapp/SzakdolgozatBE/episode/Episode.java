@@ -14,10 +14,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.actor.Actor;
+import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.season.Season;
 
 @Entity
@@ -55,6 +57,9 @@ public class Episode implements Serializable {
             joinColumns = @JoinColumn(name = "Episode_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
     private List<Actor> actors;
+    
+    @OneToMany(mappedBy = "episode")
+    private List<Comment> comments;
 
     public Long getId() {
         return id;
@@ -128,6 +133,14 @@ public class Episode implements Serializable {
 
     public void setActors(List<Actor> actors) {
         this.actors = actors;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
