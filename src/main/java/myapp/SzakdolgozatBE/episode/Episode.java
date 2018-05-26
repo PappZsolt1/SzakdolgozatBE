@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.rating.Rating;
 import myapp.SzakdolgozatBE.season.Season;
 
 @Entity
@@ -60,6 +61,9 @@ public class Episode implements Serializable {
     
     @OneToMany(mappedBy = "episode")
     private List<Comment> comments;
+    
+    @OneToMany(mappedBy = "episode")
+    private List<Rating> ratings;
 
     public Long getId() {
         return id;
@@ -141,6 +145,14 @@ public class Episode implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override

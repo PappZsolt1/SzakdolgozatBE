@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.rating.Rating;
 import myapp.SzakdolgozatBE.topic.Topic;
 
 @Entity
@@ -40,6 +41,9 @@ public class MyUser implements Serializable {
     
     @OneToMany(mappedBy = "myUser")
     private List<Topic> topics;
+    
+    @OneToMany(mappedBy = "myUser")
+    private List<Rating> ratings;
 
     public Long getId() {
         return id;
@@ -87,6 +91,14 @@ public class MyUser implements Serializable {
 
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override

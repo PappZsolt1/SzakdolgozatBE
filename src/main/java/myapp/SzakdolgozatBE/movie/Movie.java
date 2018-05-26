@@ -20,6 +20,7 @@ import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.genre.Genre;
+import myapp.SzakdolgozatBE.rating.Rating;
 
 @Entity
 @Table(name = "Movie")
@@ -67,6 +68,9 @@ public class Movie implements Serializable {
     
     @OneToMany(mappedBy = "movie")
     private List<Comment> comments;
+    
+    @OneToMany(mappedBy = "movie")
+    private List<Rating> ratings;
 
     public Long getId() {
         return id;
@@ -172,6 +176,14 @@ public class Movie implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override
