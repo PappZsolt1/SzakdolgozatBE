@@ -20,13 +20,13 @@ import myapp.SzakdolgozatBE.actor.Actor;
     @NamedQuery(name = "getAllGenders", query = "SELECT g FROM Gender g")
 })
 public class Gender implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String name;
-    
+
     @OneToMany(mappedBy = "gender")
     private List<Actor> actors;
 

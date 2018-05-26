@@ -44,8 +44,7 @@ public class Episode implements Serializable {
     
     private double rating;
     
-    @Temporal(TemporalType.DATE)
-    private Date releaseDate;
+    private String releaseDate;
     
     private int eLength;
     
@@ -107,11 +106,11 @@ public class Episode implements Serializable {
         this.rating = sumOfRatings / numberOfRatings;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 

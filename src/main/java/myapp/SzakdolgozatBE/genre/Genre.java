@@ -21,16 +21,16 @@ import myapp.SzakdolgozatBE.series.Series;
     @NamedQuery(name = "getAllGenres", query = "SELECT g FROM Genre g")
 })
 public class Genre implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String name;
-    
+
     @OneToMany(mappedBy = "genre")
     private List<Movie> movies;
-    
+
     @OneToMany(mappedBy = "genre")
     private List<Series> series;
 

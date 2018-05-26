@@ -30,7 +30,7 @@ public class TopicDAO {
             throw new NullPointerException();
         }
     }
-    
+
     public void deleteTopic(long id) throws NullPointerException {
         em.getTransaction().begin();
         em.remove(this.getTopic(id));

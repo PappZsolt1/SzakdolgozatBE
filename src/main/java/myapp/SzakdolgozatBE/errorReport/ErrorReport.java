@@ -1,18 +1,13 @@
 package myapp.SzakdolgozatBE.errorReport;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "ErrorReport")
@@ -33,10 +28,11 @@ public class ErrorReport implements Serializable {
     
     //@ManyToOne
     //private MyUser myUser;
+    
     private boolean resolved;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date sendingDate;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String sendingDate;
 
     public Long getId() {
         return id;
@@ -70,11 +66,11 @@ public class ErrorReport implements Serializable {
         this.resolved = resolved;
     }
 
-    public Date getSendingDate() {
+    public String getSendingDate() {
         return sendingDate;
     }
 
-    public void setSendingDate(Date sendingDate) {
+    public void setSendingDate(String sendingDate) {
         this.sendingDate = sendingDate;
     }
                 

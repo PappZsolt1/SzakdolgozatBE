@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -23,14 +22,14 @@ public class ArticleResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response saveArticle(@FormParam("title") String title, @FormParam("content") String content) {
+    public Response saveArticle(String title, String content) {
         Article tmp = service.saveArticle(title, content);
         return Response.ok().entity(tmp).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response publishNewArticle(@FormParam("title") String title, @FormParam("content") String content) {
+    public Response publishNewArticle(String title, String content) {
         Article tmp = service.publishNewArticle(title, content);
         return Response.ok().entity(tmp).build();
     }
@@ -38,7 +37,7 @@ public class ArticleResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response publishSavedArticle(@PathParam("id") long id, @FormParam("title") String title, @FormParam("content") String content) {
+    public Response publishSavedArticle(@PathParam("id") long id, String title, String content) {
         Article tmp = service.publishSavedArticle(id, title, content);
         return Response.ok().entity(tmp).build();
     }

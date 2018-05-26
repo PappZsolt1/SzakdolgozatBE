@@ -30,7 +30,7 @@ public class ArticleDAO {
         Article tmp = this.getArticle(id);
         tmp.setTitle(article.getTitle());
         tmp.setContent(article.getContent());
-        tmp.setPublishDate(new Date());
+        tmp.setPublishDate(article.getPublishDate());
         tmp.setSaved(false);
         tmp.setPublished(true);
         em.getTransaction().begin();
@@ -39,8 +39,8 @@ public class ArticleDAO {
         return tmp;
     }
 
-    public List<Article> getSavedArticles() {
-        return em.createNamedQuery("getSavedArticles").getResultList();
+    public List<Article> getSavedArticles(long userId) {
+        return em.createNamedQuery("getSavedArticles").setParameter("userId", userId).getResultList();
     }
 
     public List<Article> getPublishedArticles() {

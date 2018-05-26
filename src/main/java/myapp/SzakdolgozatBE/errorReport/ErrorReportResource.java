@@ -15,37 +15,38 @@ import javax.ws.rs.core.Response;
 @Path("/errorreport")
 @ApplicationScoped
 public class ErrorReportResource {
-    
-    @EJB ErrorReportService service;
-    
+
+    @EJB
+    ErrorReportService service;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addErrorReport(String content) {
-        ErrorReport tmp = service.add(content);        
+        ErrorReport tmp = service.add(content);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ErrorReport> getAllErrorReports() {
         return service.getAllErrorReports();
     }
-    
+
     @Path("/resolved")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ErrorReport> getResolvedErrorReports() {
         return service.getResolvedErrorReports();
     }
-    
+
     @Path("/notresolved")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ErrorReport> getNotResolvedErrorReports() {
         return service.getNotResolvedErrorReports();
     }
-    
+
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

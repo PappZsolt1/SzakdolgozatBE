@@ -12,10 +12,10 @@ import javax.ws.rs.core.Response;
 @Path("/rating")
 @ApplicationScoped
 public class RatingResource {
-    
+
     @EJB
     RatingService service;
-    
+
     @POST
     @Path("/movie")
     @Produces(MediaType.APPLICATION_JSON)
@@ -23,7 +23,7 @@ public class RatingResource {
         Rating tmp = service.addMovieRating(rating, mId);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @POST
     @Path("/episode")
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +31,7 @@ public class RatingResource {
         Rating tmp = service.addEpisodeRating(rating, eId);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @GET
     @Path("/movie")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +43,7 @@ public class RatingResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @GET
     @Path("/episode")
     @Produces(MediaType.APPLICATION_JSON)

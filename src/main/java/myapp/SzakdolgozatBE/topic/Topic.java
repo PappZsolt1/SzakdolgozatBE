@@ -41,8 +41,7 @@ public class Topic implements Serializable {
     @JoinColumn(name = "myUser_id")
     private MyUser myUser;    
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate = new Date();
+    private String createDate;
     
     @OneToMany(mappedBy = "topic")
     private List<Comment> comments;
@@ -79,11 +78,11 @@ public class Topic implements Serializable {
         this.myUser = myUser;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

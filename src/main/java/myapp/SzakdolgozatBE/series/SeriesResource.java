@@ -17,20 +17,17 @@ import javax.ws.rs.core.Response;
 @Path("series")
 @ApplicationScoped
 public class SeriesResource {
-    
-    @EJB SeriesService service;
-    
+
+    @EJB
+    SeriesService service;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addSeries(@FormParam("title") String title,
-            @FormParam("releaseYear") int releaseYear,
-            @FormParam("coverPicture") byte[] coverPicture,
-            @FormParam("ageClassificationId") long ageClassificationId,
-            @FormParam("genreId") long genreId) {
+    public Response addSeries(String title, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         Series tmp = service.addSeries(title, releaseYear, coverPicture, ageClassificationId, genreId);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,13 +39,13 @@ public class SeriesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Series> getAllSeries() {
         return service.getAllSeries();
     }
-    
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,16 +57,11 @@ public class SeriesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifySeries(@PathParam("id") long id,
-            @FormParam("title") String title,
-            @FormParam("releaseYear") int releaseYear,
-            @FormParam("coverPicture") byte[] coverPicture,
-            @FormParam("ageClassificationId") long ageClassificationId,
-            @FormParam("genreId") long genreId) {
+    public Response modifySeries(@PathParam("id") long id, String title, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         try {
             Series tmp = service.modifySeries(id, title, releaseYear, coverPicture, ageClassificationId, genreId);
             return Response.ok().entity(tmp).build();

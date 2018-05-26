@@ -6,9 +6,10 @@ import javax.inject.Inject;
 
 @Stateless
 public class MyUserService {
-    
-    @Inject MyUserDAO dao;
-    
+
+    @Inject
+    MyUserDAO dao;
+
     public MyUser addMyUser(String username, String password) {
         if (dao.isNotTaken(username)) {
             MyUser tmp = new MyUser();
@@ -19,13 +20,13 @@ public class MyUserService {
             throw new NullPointerException();
         }
     }
-    
+
     public List<String> getUsernames() {
         return dao.getUsernames();
     }
-    
+
     public boolean isNotTaken(String username) {
         return dao.isNotTaken(username);
     }
-    
+
 }

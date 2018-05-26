@@ -16,22 +16,23 @@ import javax.ws.rs.core.Response;
 @Path("topic")
 @ApplicationScoped
 public class TopicResource {
-    
-    @EJB TopicService service;
-    
+
+    @EJB
+    TopicService service;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTopic(@FormParam("title") String title, @FormParam("description") String description) {
+    public Response addTopic(String title, String description) {
         Topic tmp = service.addTopic(title, description);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Topic> getAllTopics() {
         return service.getAllTopics();
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +44,7 @@ public class TopicResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

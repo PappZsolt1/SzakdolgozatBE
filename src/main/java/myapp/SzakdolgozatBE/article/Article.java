@@ -1,7 +1,6 @@
 package myapp.SzakdolgozatBE.article;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,15 +13,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "Article")
 @NamedQueries({
-    @NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE ORDER BY a.publishDate DESC"),
+    @NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE AND a.myUser = :userId ORDER BY a.publishDate DESC"),
     @NamedQuery(name = "getPublishedArticles", query = "SELECT a FROM Article a WHERE a.published = TRUE ORDER BY a.publishDate DESC")
 })
 public class Article implements Serializable {
@@ -37,8 +34,7 @@ public class Article implements Serializable {
     
     private String content;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date publishDate;
+    private String publishDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
@@ -75,11 +71,11 @@ public class Article implements Serializable {
         this.content = content;
     }
 
-    public Date getPublishDate() {
+    public String getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
 

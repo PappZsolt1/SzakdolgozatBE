@@ -30,7 +30,7 @@ public class AgeClassification implements Serializable {
 
     @OneToMany(mappedBy = "ageClassification")
     private List<Movie> movies;
-    
+
     @OneToMany(mappedBy = "ageClassification")
     private List<Series> series;
 

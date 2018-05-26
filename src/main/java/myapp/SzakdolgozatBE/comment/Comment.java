@@ -40,8 +40,7 @@ public class Comment implements Serializable {
     @JoinColumn(name = "myUser_id")
     private MyUser myUser;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date postDate = new Date();
+    private String postDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
@@ -87,11 +86,11 @@ public class Comment implements Serializable {
         this.myUser = myUser;
     }
 
-    public Date getPostDate() {
+    public String getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(Date postDate) {
+    public void setPostDate(String postDate) {
         this.postDate = postDate;
     }
 

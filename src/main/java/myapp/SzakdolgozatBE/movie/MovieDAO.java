@@ -7,35 +7,36 @@ import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class MovieDAO {
-    
+
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
-    
+
     public Movie addMovie(Movie movie) {
         em.getTransaction().begin();
         em.persist(movie);
         em.getTransaction().commit();
         return movie;
     }
-    
+
     public Movie getMovie(long id) throws NullPointerException {
         Movie tmp = em.find(Movie.class, id);
-        if (tmp != null)    
-                return tmp;
-        else
+        if (tmp != null) {
+            return tmp;
+        } else {
             throw new NullPointerException();
+        }
     }
-    
-    public List<Movie> getAllMovies () {
+
+    public List<Movie> getAllMovies() {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
-    
+
     public void deleteMovie(long id) throws NullPointerException {
         em.getTransaction().begin();
         em.remove(this.getMovie(id));
         em.getTransaction().commit();
     }
-    
+
     public Movie modifyMovie(long id, Movie movie) throws NullPointerException {
         Movie tmp = this.getMovie(id);
         if (tmp != null) {
@@ -50,9 +51,11 @@ public class MovieDAO {
             em.merge(tmp);
             em.getTransaction().commit();
             return tmp;
-        } else throw new NullPointerException();
+        } else {
+            throw new NullPointerException();
+        }
     }
-    
+
     public void changeRating(long id, int rating) {
         Movie tmp = this.getMovie(id);
         tmp.setRating(rating);

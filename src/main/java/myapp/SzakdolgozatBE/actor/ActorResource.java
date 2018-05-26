@@ -20,7 +20,8 @@ import javax.ws.rs.core.Response;
 @ApplicationScoped
 public class ActorResource {
     
-    @EJB ActorService service;
+    @EJB
+    ActorService service;
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)

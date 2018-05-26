@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.article;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -10,21 +11,24 @@ public class ArticleService {
     
     @Inject ArticleDAO dao;
     
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
+    
     public Article saveArticle(String title, String content) {
         Article tmp = new Article();
         tmp.setTitle(title);
         tmp.setContent(content);
         tmp.setSaved(true);
+        //tmp.setMyUser(myUser);
         return dao.saveArticle(tmp);
     }
-    //user elérés szerverről az aktuális bejelentkező
     
     public Article publishNewArticle(String title, String content) {
         Article tmp = new Article();
         tmp.setTitle(title);
         tmp.setContent(content);
-        tmp.setPublishDate(new Date());
+        tmp.setPublishDate(sdf.format(new Date()));
         tmp.setPublished(true);
+        //tmp.setMyUser(myUser);
         return dao.publishNewArticle(tmp);
     }
     
@@ -32,11 +36,12 @@ public class ArticleService {
         Article tmp = new Article();
         tmp.setTitle(title);
         tmp.setContent(content);
+        tmp.setPublishDate(sdf.format(new Date()));
         return dao.publishSavedArticle(tmp, id);
     }
     
     public List<Article> getSavedArticles() {
-        return dao.getSavedArticles();
+        return dao.getSavedArticles(1);//todo
     }
     
     public List<Article> getPublishedArticles() {

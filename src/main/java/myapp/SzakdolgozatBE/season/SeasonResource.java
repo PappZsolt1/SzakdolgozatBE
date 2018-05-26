@@ -17,17 +17,17 @@ import javax.ws.rs.core.Response;
 @Path("season")
 @ApplicationScoped
 public class SeasonResource {
-    
-    @EJB SeasonSerivce service;
-    
+
+    @EJB
+    SeasonSerivce service;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addSeason(@FormParam("number") int number,
-            @FormParam("seriesId") long seriesId) {
+    public Response addSeason(int number, long seriesId) {
         Season tmp = service.addSeason(number, seriesId);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,13 +39,13 @@ public class SeasonResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Season> getSeriesSeasons(@FormParam("seriesId") long seriesId) {
+    public List<Season> getSeriesSeasons(long seriesId) {
         return service.getSeriesSeasons(seriesId);
     }
-    
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -57,13 +57,11 @@ public class SeasonResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifySeason(@PathParam("id") long id,
-            @FormParam("number") int number,
-            @FormParam("seriesId") long seriesId) {
+    public Response modifySeason(@PathParam("id") long id, int number, long seriesId) {
         try {
             Season tmp = service.modifySeason(id, number, seriesId);
             return Response.ok().entity(tmp).build();

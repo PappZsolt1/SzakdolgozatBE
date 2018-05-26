@@ -1,7 +1,6 @@
 package myapp.SzakdolgozatBE.actor;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.gender.Gender;
 import myapp.SzakdolgozatBE.episode.Episode;
@@ -37,8 +34,7 @@ public class Actor implements Serializable {
     
     private String name;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthDate;
+    private String birthDate;
     
     private String birthPlace;
     
@@ -73,11 +69,11 @@ public class Actor implements Serializable {
         this.name = name;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

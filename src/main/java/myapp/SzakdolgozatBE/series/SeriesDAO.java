@@ -10,32 +10,33 @@ public class SeriesDAO {
 
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
-    
+
     public Series addSeries(Series series) {
         em.getTransaction().begin();
         em.persist(series);
         em.getTransaction().commit();
         return series;
     }
-    
+
     public Series getSeries(long id) throws NullPointerException {
         Series tmp = em.find(Series.class, id);
-        if (tmp != null)    
-                return tmp;
-        else
+        if (tmp != null) {
+            return tmp;
+        } else {
             throw new NullPointerException();
+        }
     }
-    
-    public List<Series> getAllSeries () {
+
+    public List<Series> getAllSeries() {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
-    
+
     public void deleteSeries(long id) throws NullPointerException {
         em.getTransaction().begin();
         em.remove(this.getSeries(id));
         em.getTransaction().commit();
     }
-    
+
     public Series modifySeries(long id, Series series) throws NullPointerException {
         Series tmp = this.getSeries(id);
         if (tmp != null) {
@@ -48,9 +49,11 @@ public class SeriesDAO {
             em.merge(tmp);
             em.getTransaction().commit();
             return tmp;
-        } else throw new NullPointerException();
+        } else {
+            throw new NullPointerException();
+        }
     }
-    
+
     public void changeRating(long id) {
         Series tmp = this.getSeries(id);
         em.createNamedQuery("getEpisodeRatings"); //todo

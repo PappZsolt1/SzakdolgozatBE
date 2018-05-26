@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,22 +16,17 @@ import javax.ws.rs.core.Response;
 @Path("movie")
 @ApplicationScoped
 public class MovieResource {
-    
-    @EJB MovieService service;
-    
+
+    @EJB
+    MovieService service;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addMovie(@FormParam("title") String title,
-            @FormParam("budget") int budget,
-            @FormParam("length") int length,
-            @FormParam("releaseYear") int releaseYear,
-            @FormParam("coverPicture") byte[] coverPicture,
-            @FormParam("ageClassificationId") long ageClassificationId,
-            @FormParam("genreId") long genreId) {
+    public Response addMovie(String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         Movie tmp = service.addMovie(title, budget, length, releaseYear, coverPicture, ageClassificationId, genreId);
         return Response.ok().entity(tmp).build();
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,13 +38,13 @@ public class MovieResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Movie> getAllMovies() {
         return service.getAllMovies();
     }
-    
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,18 +56,11 @@ public class MovieResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyMovie(@PathParam("id") long id,
-            @FormParam("title") String title,
-            @FormParam("budget") int budget,
-            @FormParam("length") int length,
-            @FormParam("releaseYear") int releaseYear,
-            @FormParam("coverPicture") byte[] coverPicture,
-            @FormParam("ageClassificationId") long ageClassificationId,
-            @FormParam("genreId") long genreId) {
+    public Response modifyMovie(@PathParam("id") long id, String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         try {
             Movie tmp = service.modifyMovie(id, title, budget, length, releaseYear, coverPicture, ageClassificationId, genreId);
             return Response.ok().entity(tmp).build();
@@ -81,11 +68,11 @@ public class MovieResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     @PUT
     @Path("/rating/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void changeRating(@PathParam("id") long id, @FormParam("rating") int rating) {
+    public void changeRating(@PathParam("id") long id, int rating) {
         service.changeRating(id, rating);
     }
 }
