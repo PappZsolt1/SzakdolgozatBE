@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.movie;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -70,6 +71,7 @@ public class Movie implements Serializable {
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "movie")
+    @JsonManagedReference
     private List<Rating> ratings;
 
     public Long getId() {

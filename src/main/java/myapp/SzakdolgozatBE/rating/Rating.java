@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.rating;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +19,8 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Rating")
 @NamedQueries({
-    @NamedQuery(name = "getMovieRating", query = "SELECT r FROM Rating r WHERE r.myUser = :uid AND r.movie = :mid"),
-    @NamedQuery(name = "getEpisodeRating", query = "SELECT r FROM Rating r WHERE r.myUser = :uid AND r.episode = :eid")
+    @NamedQuery(name = "getMovieRating", query = "SELECT r FROM Rating r WHERE r.myUser = :user AND r.movie = :movie"),
+    @NamedQuery(name = "getEpisodeRating", query = "SELECT r FROM Rating r WHERE r.myUser = :user AND r.episode = :episode")
 })
 public class Rating implements Serializable {
 
@@ -33,10 +34,12 @@ public class Rating implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
+    @JsonBackReference
     private MyUser myUser;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
+    @JsonBackReference
     private Movie movie;
     
     @ManyToOne(fetch = FetchType.LAZY)

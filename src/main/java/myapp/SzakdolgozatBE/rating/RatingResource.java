@@ -19,25 +19,25 @@ public class RatingResource {
     @POST
     @Path("/movie")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addMovieRating(byte rating, long mId) {
-        Rating tmp = service.addMovieRating(rating, mId);
+    public Response addMovieRating(byte rating, long movieId) {
+        Rating tmp = service.addMovieRating(rating, movieId);
         return Response.ok().entity(tmp).build();
     }
 
     @POST
     @Path("/episode")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEpisodeRating(byte rating, long eId) {
-        Rating tmp = service.addEpisodeRating(rating, eId);
+    public Response addEpisodeRating(byte rating, long episodeId) {
+        Rating tmp = service.addEpisodeRating(rating, episodeId);
         return Response.ok().entity(tmp).build();
     }
 
     @GET
     @Path("/movie")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovieRating(long mId) {
+    public Response getMovieRating(long movieId) {
         try {
-            Rating tmp = service.getMovieRating(mId);
+            Rating tmp = service.getMovieRating(movieId);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -47,9 +47,9 @@ public class RatingResource {
     @GET
     @Path("/episode")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEpisodeRating(long eId) {
+    public Response getEpisodeRating(long episodeId) {
         try {
-            Rating tmp = service.getEpisodeRating(eId);
+            Rating tmp = service.getEpisodeRating(episodeId);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

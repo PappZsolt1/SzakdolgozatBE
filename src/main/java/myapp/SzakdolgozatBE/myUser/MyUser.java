@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.myUser;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -43,6 +44,7 @@ public class MyUser implements Serializable {
     private List<Topic> topics;
     
     @OneToMany(mappedBy = "myUser")
+    @JsonManagedReference
     private List<Rating> ratings;
 
     public Long getId() {

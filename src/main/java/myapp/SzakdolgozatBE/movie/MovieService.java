@@ -18,7 +18,7 @@ public class MovieService {
     @Inject
     GenreService genreService;
 
-    public Movie addMovie(String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
+    /*public Movie addMovie(String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         Movie tmp = new Movie();
         tmp.setTitle(title);
         tmp.setBudget(budget);
@@ -28,6 +28,10 @@ public class MovieService {
         tmp.setAgeClassification(ageClassificationService.getAgeClassification(ageClassificationId));
         tmp.setGenre(genreService.getGenre(genreId));
         return dao.addMovie(tmp);
+    }*/
+    
+    public Movie addMovie(Movie movie) {
+        return dao.addMovie(movie);
     }
 
     public Movie getMovie(long id) throws NullPointerException {

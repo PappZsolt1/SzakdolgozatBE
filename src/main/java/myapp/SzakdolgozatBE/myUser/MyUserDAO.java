@@ -18,6 +18,10 @@ public class MyUserDAO {
         return myUser;
     }
     
+    public MyUser getMyUser(long id) {
+        return em.find(MyUser.class, id);
+    }
+    
     public List<String> getUsernames() {
         return em.createNamedQuery("getUsernames").getResultList();
     }

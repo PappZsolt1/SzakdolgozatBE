@@ -20,10 +20,17 @@ public class MovieResource {
     @EJB
     MovieService service;
 
-    @POST
+    /*@POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMovie(String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
         Movie tmp = service.addMovie(title, budget, length, releaseYear, coverPicture, ageClassificationId, genreId);
+        return Response.ok().entity(tmp).build();
+    }*/
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addMovie(Movie movie) {
+        Movie tmp = service.addMovie(movie);
         return Response.ok().entity(tmp).build();
     }
 

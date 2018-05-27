@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
+import myapp.SzakdolgozatBE.myUser.MyUserDAO;
 
 @Stateless
 public class RatingService {
@@ -12,32 +13,35 @@ public class RatingService {
     RatingDAO dao;
     
     @Inject
-    MovieDAO movieDAO;
+    MovieDAO movieDao;
     
     @Inject
-    EpisodeDAO episodeDAO;
+    EpisodeDAO episodeDao;
+    
+    @Inject
+    MyUserDAO myUserDao;
 
-    public Rating addMovieRating(byte rating, long mId) {
+    public Rating addMovieRating(byte rating, long movieId) {
         Rating tmp = new Rating();
         tmp.setRating(rating);
-        tmp.setMovie(movieDAO.getMovie(mId));
+        tmp.setMovie(movieDao.getMovie(movieId));
         //tmp.setMyUser(myUser);
         return dao.addRating(tmp);
     }
 
-    public Rating addEpisodeRating(byte rating, long eId) {
+    public Rating addEpisodeRating(byte rating, long episodeId) {
         Rating tmp = new Rating();
         tmp.setRating(rating);
-        tmp.setEpisode(episodeDAO.getEpisode(eId));
+        tmp.setEpisode(episodeDao.getEpisode(episodeId));
         //tmp.setMyUser(myUser);
         return dao.addRating(tmp);
     }
 
-    public Rating getMovieRating(long mId) throws NullPointerException {
-        return dao.getMovieRating(1, mId);//todo
+    public Rating getMovieRating(long movieId) throws NullPointerException {
+        return dao.getMovieRating(myUserDao.getMyUser(1), movieDao.getMovie(movieId));//todo
     }
 
-    public Rating getEpisodeRating(long eId) throws NullPointerException {
-        return dao.getEpisodeRating(1, eId);//todo
+    public Rating getEpisodeRating(long episodeId) throws NullPointerException {
+        return dao.getEpisodeRating(myUserDao.getMyUser(1), episodeDao.getEpisode(episodeId));//todo
     }
 }

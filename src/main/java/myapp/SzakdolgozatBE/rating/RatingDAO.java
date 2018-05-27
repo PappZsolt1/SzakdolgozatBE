@@ -3,6 +3,9 @@ package myapp.SzakdolgozatBE.rating;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import myapp.SzakdolgozatBE.episode.Episode;
+import myapp.SzakdolgozatBE.movie.Movie;
+import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @RequestScoped
 public class RatingDAO {
@@ -17,8 +20,8 @@ public class RatingDAO {
         return rating;
     }
 
-    public Rating getMovieRating(long uId, long mId) throws NullPointerException {
-        Rating tmp = (Rating) em.createNamedQuery("getMovieRating").setParameter("uid", uId).setParameter("mid", mId).getSingleResult();
+    public Rating getMovieRating(MyUser user, Movie movie) throws NullPointerException {
+        Rating tmp = (Rating) em.createNamedQuery("getMovieRating").setParameter("user", user).setParameter("movie", movie).getSingleResult();
         if (tmp != null) {
             return tmp;
         } else {
@@ -26,8 +29,8 @@ public class RatingDAO {
         }
     }
 
-    public Rating getEpisodeRating(long uId, long eId) throws NullPointerException {
-        Rating tmp = (Rating) em.createNamedQuery("getEpisodeRating").setParameter("uid", uId).setParameter("eid", eId).getSingleResult();
+    public Rating getEpisodeRating(MyUser user, Episode episode) throws NullPointerException {
+        Rating tmp = (Rating) em.createNamedQuery("getEpisodeRating").setParameter("user", user).setParameter("episode", episode).getSingleResult();
         if (tmp != null) {
             return tmp;
         } else {
