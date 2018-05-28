@@ -18,14 +18,8 @@ public class ActorService {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
-    public Actor addActor(String name, Date birthDate, String birthPlace, String bio, long genderId) {
-        Actor tmp = new Actor();
-        tmp.setName(name);
-        tmp.setBirthDate(sdf.format(birthDate));
-        tmp.setBirthPlace(birthPlace);
-        tmp.setBio(bio);
-        tmp.setGender(genderDao.getGender(genderId));
-        return dao.addActor(tmp);
+    public Actor addActor(Actor actor) {
+        return dao.addActor(actor);
     }
 
     public Actor getActor(long id) throws NullPointerException {

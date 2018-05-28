@@ -25,14 +25,10 @@ public class ActorResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addActor(String name, Date birthDate, String birthPlace, String bio, long genderId) {
-        Actor tmp = service.addActor(name, birthDate, birthPlace, bio, genderId);
-        System.out.println("name");
-        System.out.println("birthDate");
-        System.out.println("birthPlace");
-        System.out.println("bio");
-        System.out.println("genderId");
+    //@Consumes(MediaType.APPLICATION_JSON)
+    public Response addActor(Actor actor) {
+        System.out.println(actor.getName() + actor.getBirthPlace() + actor.getBio());
+        Actor tmp = service.addActor(actor);
         return Response.ok().entity(tmp).build();
     }
     

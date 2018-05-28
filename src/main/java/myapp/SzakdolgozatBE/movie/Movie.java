@@ -71,7 +71,7 @@ public class Movie implements Serializable {
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "movie")
-    @JsonManagedReference
+    @JsonManagedReference(value = "movie-rating")
     private List<Rating> ratings;
 
     public Long getId() {

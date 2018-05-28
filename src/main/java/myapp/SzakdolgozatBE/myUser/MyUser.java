@@ -44,7 +44,7 @@ public class MyUser implements Serializable {
     private List<Topic> topics;
     
     @OneToMany(mappedBy = "myUser")
-    @JsonManagedReference
+    @JsonManagedReference(value = "myuser-rating")
     private List<Rating> ratings;
 
     public Long getId() {
