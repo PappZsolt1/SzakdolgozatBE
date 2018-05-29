@@ -48,11 +48,21 @@ public class ArticleService {
         return dao.getPublishedArticles();
     }
     
-    public void deleteArticle(long id) {
-        dao.deleteArticle(id);
+    public void deleteArticle(long id) throws NullPointerException {
+        Article tmp = dao.getArticle(id);
+        if (tmp != null) {
+            dao.deleteArticle(id);
+        } else {
+            throw new NullPointerException();
+        }
     }
     
     public Article getArticle(long id) throws NullPointerException {
-        return dao.getArticle(id);
+        Article tmp = dao.getArticle(id);
+        if (tmp != null) {
+            return tmp;
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

@@ -23,7 +23,12 @@ public class ActorService {
     }
 
     public Actor getActor(long id) throws NullPointerException {
-        return dao.getActor(id);
+        Actor tmp = dao.getActor(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            return tmp;
+        }
     }
 
     /*public List<Actor> getxxxActors() {
@@ -31,16 +36,25 @@ public class ActorService {
     }*/
     
     public void deleteActor(long id) throws NullPointerException {
-        dao.deleteActor(id);
+        Actor tmp = dao.getActor(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            dao.deleteActor(id);
+        }
     }
 
-    public Actor modifyActor(long id, String name, Date birthDate, String birthPlace, String bio, long genderId) throws NullPointerException {
-        Actor tmp = new Actor();
-        tmp.setName(name);
-        tmp.setBirthDate(sdf.format(birthDate));
-        tmp.setBirthPlace(birthPlace);
-        tmp.setBio(bio);
-        tmp.setGender(genderDao.getGender(genderId));
-        return dao.modifyActor(id, tmp);
+    public Actor modifyActor(long id, Actor actor) throws NullPointerException {
+        Actor tmp = dao.getActor(id);
+        if (tmp != null) {
+            tmp.setBio(actor.getBio());
+            tmp.setBirthDate(actor.getBirthDate());
+            tmp.setBirthPlace(actor.getBirthPlace());
+            tmp.setName(actor.getName());
+            tmp.setGender(actor.getGender());
+            return dao.modifyActor(tmp);
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

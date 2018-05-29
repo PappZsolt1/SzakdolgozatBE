@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.genre;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +30,11 @@ public class Genre implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "genre")
+    @JsonBackReference(value = "movie-genre")
     private List<Movie> movies;
 
     @OneToMany(mappedBy = "genre")
+    @JsonBackReference(value = "series-genre")
     private List<Series> series;
 
     public Long getId() {

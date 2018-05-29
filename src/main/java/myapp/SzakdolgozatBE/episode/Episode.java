@@ -1,7 +1,8 @@
 package myapp.SzakdolgozatBE.episode;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.rating.Rating;
@@ -50,18 +49,22 @@ public class Episode implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "season_id")
+    @JsonBackReference(value = "season-episode")
     private Season season;
 
     @ManyToMany
     @JoinTable(name = "Episode_Actor",
             joinColumns = @JoinColumn(name = "Episode_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
+    @JsonManagedReference(value = "episode-actor")
     private List<Actor> actors;
     
     @OneToMany(mappedBy = "episode")
+    @JsonManagedReference(value = "episode-comment")
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "episode")
+    @JsonManagedReference(value = "episode-rating")
     private List<Rating> ratings;
 
     public Long getId() {

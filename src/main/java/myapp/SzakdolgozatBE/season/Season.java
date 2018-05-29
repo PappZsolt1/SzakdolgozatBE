@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.season;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -33,9 +35,11 @@ public class Season implements Serializable {
         
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id")
+    @JsonBackReference(value = "series-season")
     private Series series;
     
     @OneToMany(mappedBy = "season")
+    @JsonManagedReference(value = "season-episode")
     private List<Episode> episodes;
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.article;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -37,6 +38,7 @@ public class Article implements Serializable {
     private String publishDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference(value = "article-myUser")
     @JoinColumn(name = "myUser_id")
     private MyUser myUser;
     
@@ -45,6 +47,7 @@ public class Article implements Serializable {
     private boolean saved;
     
     @OneToMany(mappedBy = "article")
+    @JsonManagedReference(value = "article-comment")
     private List<Comment> comments;
 
     public Long getId() {

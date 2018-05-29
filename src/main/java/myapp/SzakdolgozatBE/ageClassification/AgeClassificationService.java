@@ -11,7 +11,12 @@ public class AgeClassificationService {
     AgeClassificationDAO dao;
 
     public AgeClassification getAgeClassification(long id) throws NullPointerException {
-        return dao.getAgeClassification(id);
+        AgeClassification tmp = dao.getAgeClassification(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            return tmp;
+        }
     }
 
     public List<AgeClassification> getAllAgeClassifications() {
@@ -24,13 +29,22 @@ public class AgeClassificationService {
         return dao.addAgeClassification(tmp);
     }
 
-    public void deleteAgeClassification(long id) {
-        dao.deleteAgeClassification(id);
+    public void deleteAgeClassification(long id) throws NullPointerException {
+        AgeClassification tmp = dao.getAgeClassification(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            dao.deleteAgeClassification(id);
+        }
     }
 
     public AgeClassification modifyAgeClassification(long id, String name) throws NullPointerException {
-        AgeClassification tmp = new AgeClassification();
-        tmp.setName(name);
-        return dao.modifyAgeClassification(id, tmp);
+        AgeClassification tmp = dao.getAgeClassification(id);
+        if (tmp != null) {
+            tmp.setName(name);
+            return dao.modifyAgeClassification(tmp);
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

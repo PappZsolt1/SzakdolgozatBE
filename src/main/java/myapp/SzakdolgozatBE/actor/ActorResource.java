@@ -1,12 +1,8 @@
 package myapp.SzakdolgozatBE.actor;
 
-import java.util.Date;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -25,9 +21,7 @@ public class ActorResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    //@Consumes(MediaType.APPLICATION_JSON)
     public Response addActor(Actor actor) {
-        System.out.println(actor.getName() + actor.getBirthPlace() + actor.getBio());
         Actor tmp = service.addActor(actor);
         return Response.ok().entity(tmp).build();
     }
@@ -65,14 +59,9 @@ public class ActorResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyActor(@PathParam("id") long id,
-            @FormParam("name") String name,
-            @FormParam("birthDate") Date birthDate,
-            @FormParam("birthPlace") String birthPlace,
-            @FormParam("bio") String bio,
-            @FormParam("genderId") long genderId) {
+    public Response modifyActor(@PathParam("id") long id, Actor actor) {
         try {
-            Actor tmp = service.modifyActor(id, name, birthDate, birthPlace, bio, genderId);
+            Actor tmp = service.modifyActor(id, actor);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

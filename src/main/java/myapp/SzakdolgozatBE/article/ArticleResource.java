@@ -58,8 +58,12 @@ public class ArticleResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteArticle(@PathParam("id") long id) {
-        service.deleteArticle(id);
-        return Response.ok().build();
+        try {
+            service.deleteArticle(id);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     @GET

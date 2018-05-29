@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.article;
 
-import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
@@ -53,12 +52,7 @@ public class ArticleDAO {
         em.getTransaction().commit();
     }
 
-    public Article getArticle(long id) throws NullPointerException {
-        Article tmp = em.find(Article.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Article getArticle(long id) {
+        return em.find(Article.class, id);        
     }
 }

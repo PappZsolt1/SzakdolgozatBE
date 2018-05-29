@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.series;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -43,13 +44,16 @@ public class Series implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ageClassification_id")
+    @JsonManagedReference(value = "series-ageClassification")
     private AgeClassification ageClassification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
+    @JsonManagedReference(value = "series-genre")
     private Genre genre;
     
     @OneToMany(mappedBy = "series")
+    @JsonManagedReference(value = "series-season")
     private List<Season> seasons;
 
     public Long getId() {

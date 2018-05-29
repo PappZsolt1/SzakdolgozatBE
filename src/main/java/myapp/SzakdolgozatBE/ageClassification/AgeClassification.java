@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.ageClassification;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +30,11 @@ public class AgeClassification implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "ageClassification")
+    @JsonBackReference(value = "movie-ageClassification")
     private List<Movie> movies;
 
     @OneToMany(mappedBy = "ageClassification")
+    @JsonBackReference(value = "series-ageClassification")
     private List<Series> series;
 
     public Long getId() {

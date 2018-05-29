@@ -34,7 +34,7 @@ public class Rating implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
-    @JsonBackReference(value = "myuser-rating")
+    @JsonBackReference(value = "myUser-rating")
     private MyUser myUser;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,6 +44,7 @@ public class Rating implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "episode_id")
+    @JsonBackReference(value = "episode-rating")
     private Episode episode;
 
     public Long getId() {

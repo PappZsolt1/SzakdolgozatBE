@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.gender;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class Gender implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "gender")
+    @JsonBackReference(value = "actor-gender")
     private List<Actor> actors;
 
     public Long getId() {

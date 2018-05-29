@@ -1,7 +1,8 @@
 package myapp.SzakdolgozatBE.comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.episode.Episode;
@@ -38,28 +37,34 @@ public class Comment implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
+    @JsonManagedReference(value = "comment-myUser")
     private MyUser myUser;
     
     private String postDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
+    @JsonBackReference(value = "movie-comment")
     private Movie movie;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "episode_id")
+    @JsonBackReference(value = "episode-comment")
     private Episode episode;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_id")
+    @JsonBackReference(value = "actor-comment")
     private Actor actor;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
+    @JsonBackReference(value = "article-comment")
     private Article article;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
+    @JsonBackReference(value = "topic-comment")
     private Topic topic;
 
     public Long getId() {

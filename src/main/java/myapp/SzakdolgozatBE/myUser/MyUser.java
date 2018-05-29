@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.myUser;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.errorReport.ErrorReport;
 import myapp.SzakdolgozatBE.rating.Rating;
 import myapp.SzakdolgozatBE.topic.Topic;
 
@@ -35,17 +37,24 @@ public class MyUser implements Serializable {
     private String password;
     
     @OneToMany(mappedBy = "myUser")
+    @JsonBackReference(value = "article-myUser")
     private List<Article> articles;
     
     @OneToMany(mappedBy = "myUser")
+    @JsonBackReference(value = "comment-myUser")
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "myUser")
+    @JsonBackReference(value = "topic-myUser")
     private List<Topic> topics;
     
     @OneToMany(mappedBy = "myUser")
-    @JsonManagedReference(value = "myuser-rating")
+    @JsonManagedReference(value = "myUser-rating")
     private List<Rating> ratings;
+    
+    @OneToMany(mappedBy = "myUser")
+    @JsonBackReference(value = "errorReport-myUser")
+    private List<ErrorReport> errorReports;
 
     public Long getId() {
         return id;
@@ -101,6 +110,14 @@ public class MyUser implements Serializable {
 
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public List<ErrorReport> getErrorReports() {
+        return errorReports;
+    }
+
+    public void setErrorReports(List<ErrorReport> errorReports) {
+        this.errorReports = errorReports;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package myapp.SzakdolgozatBE.topic;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,8 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
@@ -39,11 +37,13 @@ public class Topic implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
+    @JsonManagedReference(value = "topic-myUser")
     private MyUser myUser;    
     
     private String createDate;
     
     @OneToMany(mappedBy = "topic")
+    @JsonManagedReference(value = "topic-comment")
     private List<Comment> comments;
     
     public Long getId() {

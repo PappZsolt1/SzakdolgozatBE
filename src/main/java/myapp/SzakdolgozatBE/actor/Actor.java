@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.actor;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -42,15 +44,19 @@ public class Actor implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gender_id")
+    @JsonManagedReference(value = "actor-gender")
     private Gender gender;
     
     @ManyToMany(mappedBy = "actors")
+    @JsonBackReference(value = "movie-actor")
     private List<Movie> movies;
     
     @ManyToMany(mappedBy = "actors")
+    @JsonBackReference(value = "episode-actor")
     private List<Episode> episodes;
     
     @OneToMany(mappedBy = "actor")
+    @JsonManagedReference(value = "actor-comment")
     private List<Comment> comments;
     
     public Long getId() {

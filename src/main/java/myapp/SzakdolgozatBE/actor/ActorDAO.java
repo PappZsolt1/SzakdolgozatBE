@@ -18,39 +18,24 @@ public class ActorDAO {
         return actor;
     }
 
-    public Actor getActor(long id) throws NullPointerException {
-        Actor tmp = em.find(Actor.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Actor getActor(long id) {
+        return em.find(Actor.class, id);
     }
 
     /*public List<Actor> getxxxActors() {
         //todo
     }*/
-
-    public void deleteActor(long id) throws NullPointerException {
+    
+    public void deleteActor(long id) {
         em.getTransaction().begin();
         em.remove(this.getActor(id));
         em.getTransaction().commit();
     }
 
-    public Actor modifyActor(long id, Actor actor) throws NullPointerException {
-        Actor tmp = this.getActor(id);
-        if (tmp != null) {
-            tmp.setBio(actor.getBio());
-            tmp.setBirthDate(actor.getBirthDate());
-            tmp.setBirthPlace(actor.getBirthPlace());
-            tmp.setName(actor.getName());
-            tmp.setGender(actor.getGender());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Actor modifyActor(Actor actor) {
+        em.getTransaction().begin();
+        em.merge(actor);
+        em.getTransaction().commit();
+        return actor;
     }
 }

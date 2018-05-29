@@ -1,13 +1,18 @@
 package myapp.SzakdolgozatBE.errorReport;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "ErrorReport")
@@ -26,12 +31,13 @@ public class ErrorReport implements Serializable {
     
     private String content;
     
-    //@ManyToOne
-    //private MyUser myUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "myUser_id")
+    @JsonManagedReference(value = "errorReport-myUser")
+    private MyUser myUser;
     
     private boolean resolved;
     
-    //@Temporal(TemporalType.TIMESTAMP)
     private String sendingDate;
 
     public Long getId() {
@@ -50,13 +56,13 @@ public class ErrorReport implements Serializable {
         this.content = content;
     }
 
-    /*public MyUser getMyUser() {
+    public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
-    }*/
+    }
 
     public boolean isResolved() {
         return resolved;

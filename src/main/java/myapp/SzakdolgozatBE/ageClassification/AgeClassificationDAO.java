@@ -11,13 +11,8 @@ public class AgeClassificationDAO {
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
 
-    public AgeClassification getAgeClassification(long id) throws NullPointerException {
-        AgeClassification tmp = em.find(AgeClassification.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public AgeClassification getAgeClassification(long id) {
+        return em.find(AgeClassification.class, id);
     }
 
     public List<AgeClassification> getAllAgeClassifications() {
@@ -37,16 +32,10 @@ public class AgeClassificationDAO {
         em.getTransaction().commit();
     }
 
-    public AgeClassification modifyAgeClassification(long id, AgeClassification ageClassification) throws NullPointerException {
-        AgeClassification tmp = this.getAgeClassification(id);
-        if (tmp != null) {
-            tmp.setName(ageClassification.getName());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public AgeClassification modifyAgeClassification(AgeClassification ageClassification) {
+        em.getTransaction().begin();
+        em.merge(ageClassification);
+        em.getTransaction().commit();
+        return ageClassification;
     }
 }

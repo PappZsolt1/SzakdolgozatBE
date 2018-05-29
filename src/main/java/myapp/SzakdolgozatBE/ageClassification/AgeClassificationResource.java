@@ -49,8 +49,12 @@ public class AgeClassificationResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteAgeClassification(@PathParam("id") long id) {
-        service.deleteAgeClassification(id);
-        return Response.ok().build();
+        try {
+            service.deleteAgeClassification(id);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @PUT
