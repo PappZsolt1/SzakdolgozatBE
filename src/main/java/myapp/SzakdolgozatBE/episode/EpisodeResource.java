@@ -23,8 +23,8 @@ public class EpisodeResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEpisode(String title, Date releaseDate, int length, long seasonId) {
-        Episode tmp = service.addEpisode(title, releaseDate, length, seasonId);
+    public Response addEpisode(Episode episode) {
+        Episode tmp = service.addEpisode(episode);
         return Response.ok().entity(tmp).build();
     }
 
@@ -61,9 +61,9 @@ public class EpisodeResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyEpisode(@PathParam("id") long id, String title, Date releaseDate, int length, long seasonId) {
+    public Response modifyEpisode(@PathParam("id") long id, Episode episode) {
         try {
-            Episode tmp = service.modifyEpisode(id, title, releaseDate, length, seasonId);
+            Episode tmp = service.modifyEpisode(id, episode);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

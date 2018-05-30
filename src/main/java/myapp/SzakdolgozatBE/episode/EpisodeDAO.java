@@ -19,39 +19,25 @@ public class EpisodeDAO {
         return episode;
     }
 
-    public Episode getEpisode(long id) throws NullPointerException {
-        Episode tmp = em.find(Episode.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Episode getEpisode(long id) {
+        return em.find(Episode.class, id);        
     }
 
     public List<Episode> getSeasonEpisodes(Season season) {
         return em.createNamedQuery("getSeasonEpisodes").setParameter("season", season).getResultList();
     }
 
-    public void deleteEpisode(long id) throws NullPointerException {
+    public void deleteEpisode(long id) {
         em.getTransaction().begin();
         em.remove(this.getEpisode(id));
         em.getTransaction().commit();
     }
 
-    public Episode modifyEpisode(long id, Episode episode) throws NullPointerException {
-        Episode tmp = this.getEpisode(id);
-        if (tmp != null) {
-            tmp.setLength(episode.getLength());
-            tmp.setReleaseDate(episode.getReleaseDate());
-            tmp.setTitle(episode.getTitle());
-            tmp.setSeason(episode.getSeason());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Episode modifyEpisode(Episode episode) {
+        em.getTransaction().begin();
+        em.merge(episode);
+        em.getTransaction().commit();
+        return episode;
     }
 
     public void changeRating(long id, int rating) {

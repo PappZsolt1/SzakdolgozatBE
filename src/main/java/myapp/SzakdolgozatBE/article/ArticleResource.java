@@ -38,8 +38,12 @@ public class ArticleResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response publishSavedArticle(@PathParam("id") long id, String title, String content) {
-        Article tmp = service.publishSavedArticle(id, title, content);
-        return Response.ok().entity(tmp).build();
+        try {
+            Article tmp = service.publishSavedArticle(id, title, content);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET

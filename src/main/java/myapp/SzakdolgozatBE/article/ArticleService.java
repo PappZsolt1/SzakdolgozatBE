@@ -32,12 +32,18 @@ public class ArticleService {
         return dao.publishNewArticle(tmp);
     }
     
-    public Article publishSavedArticle(long id, String title, String content) {
-        Article tmp = new Article();
-        tmp.setTitle(title);
-        tmp.setContent(content);
-        tmp.setPublishDate(sdf.format(new Date()));
-        return dao.publishSavedArticle(tmp, id);
+    public Article publishSavedArticle(long id, String title, String content) throws NullPointerException {
+        Article tmp = dao.getArticle(id);
+        if (tmp != null) {
+            tmp.setTitle(title);
+            tmp.setContent(content);
+            tmp.setPublishDate(sdf.format(new Date()));
+            tmp.setSaved(false);
+            tmp.setPublished(true);
+            return dao.publishSavedArticle(tmp, id);
+        } else {
+            throw new NullPointerException();
+        }        
     }
     
     public List<Article> getSavedArticles() {

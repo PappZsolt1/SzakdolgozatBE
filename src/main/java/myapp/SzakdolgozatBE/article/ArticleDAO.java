@@ -26,16 +26,10 @@ public class ArticleDAO {
     }
 
     public Article publishSavedArticle(Article article, long id) {
-        Article tmp = this.getArticle(id);
-        tmp.setTitle(article.getTitle());
-        tmp.setContent(article.getContent());
-        tmp.setPublishDate(article.getPublishDate());
-        tmp.setSaved(false);
-        tmp.setPublished(true);
         em.getTransaction().begin();
-        em.merge(tmp);
+        em.merge(article);
         em.getTransaction().commit();
-        return tmp;
+        return article;
     }
 
     public List<Article> getSavedArticles(long userId) {

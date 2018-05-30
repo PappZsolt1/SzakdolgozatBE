@@ -51,7 +51,11 @@ public class ErrorReportResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response makeResolved(@PathParam("id") long id) {
-        service.makeResolved(id);
-        return Response.ok().build();
+        try {
+            service.makeResolved(id);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

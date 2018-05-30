@@ -31,15 +31,12 @@ public class ErrorReportDAO {
     }
 
     public ErrorReport getErrorReport(long id) {
-        ErrorReport tmp = em.find(ErrorReport.class, id);
-        return tmp;
+        return em.find(ErrorReport.class, id);
     }
 
-    public void makeResolved(long id) {
-        ErrorReport tmp = this.getErrorReport(id);
-        tmp.setResolved(true);
+    public void makeResolved(ErrorReport errorReport) {
         em.getTransaction().begin();
-        em.merge(tmp);
+        em.merge(errorReport);
         em.getTransaction().commit();
     }
 }

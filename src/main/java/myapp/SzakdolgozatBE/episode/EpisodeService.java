@@ -18,17 +18,17 @@ public class EpisodeService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd.");
 
-    public Episode addEpisode(String title, Date releaseDate, int length, long seasonId) {
-        Episode tmp = new Episode();
-        tmp.setLength(length);
-        tmp.setReleaseDate(sdf.format(releaseDate));
-        tmp.setTitle(title);
-        tmp.setSeason(seasonDAO.getSeason(seasonId));
-        return dao.addEpisode(tmp);
+    public Episode addEpisode(Episode episode) {
+        return dao.addEpisode(episode);
     }
 
     public Episode getEpisode(long id) throws NullPointerException {
-        return dao.getEpisode(id);
+        Episode tmp = dao.getEpisode(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            return tmp;
+        }
     }
 
     public List<Episode> getSeasonEpisodes(long seasonId) {
@@ -36,16 +36,26 @@ public class EpisodeService {
     }
 
     public void deleteEpisode(long id) throws NullPointerException {
-        dao.deleteEpisode(id);
+        Episode tmp = dao.getEpisode(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            dao.deleteEpisode(id);
+        }
     }
 
-    public Episode modifyEpisode(long id, String title, Date releaseDate, int length, long seasonId) throws NullPointerException {
-        Episode tmp = new Episode();
-        tmp.setTitle(title);
-        tmp.setReleaseDate(sdf.format(releaseDate));
-        tmp.setLength(length);
-        tmp.setSeason(seasonDAO.getSeason(seasonId));
-        return dao.modifyEpisode(id, tmp);
+    public Episode modifyEpisode(long id, Episode episode) throws NullPointerException {
+        Episode tmp = dao.getEpisode(id);
+        if (tmp != null) {
+            tmp.setTitle(episode.getTitle());
+            tmp.setReleaseDate(episode.getReleaseDate());
+            tmp.setLength(episode.getLength());
+            tmp.setSeason(episode.getSeason());
+            tmp.setActors(episode.getActors());
+            return dao.modifyEpisode(tmp);
+        } else {
+            throw new NullPointerException();
+        }
     }
 
     public void changeRating(long id, int rating) {

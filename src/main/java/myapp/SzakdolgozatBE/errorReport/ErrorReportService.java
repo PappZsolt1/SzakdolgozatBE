@@ -34,7 +34,13 @@ public class ErrorReportService {
         return dao.getNotResolvedErrorReports();
     }
     
-    public void makeResolved(long id) {
-        dao.makeResolved(id);
+    public void makeResolved(long id) throws NullPointerException {
+        ErrorReport tmp = dao.getErrorReport(id);
+        if (tmp != null) {
+            tmp.setResolved(true);
+            dao.makeResolved(tmp);
+        } else {
+            throw new NullPointerException();
+        }        
     }
 }
