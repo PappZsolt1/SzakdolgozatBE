@@ -62,7 +62,7 @@ public class SeriesService {
 
     public void changeRating(long id) {
         Series tmp = dao.getSeries(id);
-        int numberOfRatings = 0;
+        double numberOfRatings = 0;
         int sumOfRatings = 0;
         if (tmp != null) {
             for (Season season : tmp.getSeasons()) {
