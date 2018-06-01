@@ -11,13 +11,8 @@ public class GenreDAO {
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
 
-    public Genre getGenre(long id) throws NullPointerException {
-        Genre tmp = em.find(Genre.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Genre getGenre(long id) {
+        return em.find(Genre.class, id);
     }
 
     public List<Genre> getAllGenres() {
@@ -37,16 +32,10 @@ public class GenreDAO {
         em.getTransaction().commit();
     }
 
-    public Genre modifyGenre(long id, Genre genre) throws NullPointerException {
-        Genre tmp = this.getGenre(id);
-        if (tmp != null) {
-            tmp.setName(genre.getName());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Genre modifyGenre(Genre genre) {
+        em.getTransaction().begin();
+        em.merge(genre);
+        em.getTransaction().commit();
+        return genre;
     }
 }

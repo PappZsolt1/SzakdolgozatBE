@@ -22,16 +22,11 @@ public class TopicDAO {
         return em.createNamedQuery("getAllTopics").getResultList();
     }
 
-    public Topic getTopic(long id) throws NullPointerException {
-        Topic tmp = em.find(Topic.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Topic getTopic(long id) {
+        return em.find(Topic.class, id);
     }
 
-    public void deleteTopic(long id) throws NullPointerException {
+    public void deleteTopic(long id) {
         em.getTransaction().begin();
         em.remove(this.getTopic(id));
         em.getTransaction().commit();

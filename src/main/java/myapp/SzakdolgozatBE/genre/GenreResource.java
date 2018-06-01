@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -50,8 +49,12 @@ public class GenreResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteGenre(@PathParam("id") long id) {
-        service.deleteGenre(id);
-        return Response.ok().build();
+        try {
+            service.deleteGenre(id);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @PUT

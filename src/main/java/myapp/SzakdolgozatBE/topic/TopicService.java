@@ -29,10 +29,20 @@ public class TopicService {
     }
 
     public Topic getTopic(long id) throws NullPointerException {
-        return dao.getTopic(id);
+        Topic tmp = dao.getTopic(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            return tmp;
+        }
     }
 
     public void deleteTopic(long id) throws NullPointerException {
-        dao.deleteTopic(id);
+        Topic tmp = dao.getTopic(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            dao.deleteTopic(id);
+        }
     }
 }

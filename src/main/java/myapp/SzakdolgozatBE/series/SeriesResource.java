@@ -23,8 +23,8 @@ public class SeriesResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addSeries(String title, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
-        Series tmp = service.addSeries(title, releaseYear, coverPicture, ageClassificationId, genreId);
+    public Response addSeries(Series series) {
+        Series tmp = service.addSeries(series);
         return Response.ok().entity(tmp).build();
     }
 
@@ -61,9 +61,9 @@ public class SeriesResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifySeries(@PathParam("id") long id, String title, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
+    public Response modifySeries(@PathParam("id") long id, Series series) {
         try {
-            Series tmp = service.modifySeries(id, title, releaseYear, coverPicture, ageClassificationId, genreId);
+            Series tmp = service.modifySeries(id, series);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

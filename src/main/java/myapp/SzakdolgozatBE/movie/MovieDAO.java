@@ -18,42 +18,25 @@ public class MovieDAO {
         return movie;
     }
 
-    public Movie getMovie(long id) throws NullPointerException {
-        Movie tmp = em.find(Movie.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Movie getMovie(long id) {
+        return em.find(Movie.class, id);        
     }
 
     public List<Movie> getAllMovies() {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
 
-    public void deleteMovie(long id) throws NullPointerException {
+    public void deleteMovie(long id) {
         em.getTransaction().begin();
         em.remove(this.getMovie(id));
         em.getTransaction().commit();
     }
 
-    public Movie modifyMovie(long id, Movie movie) throws NullPointerException {
-        Movie tmp = this.getMovie(id);
-        if (tmp != null) {
-            tmp.setAgeClassification(movie.getAgeClassification());
-            tmp.setBudget(movie.getBudget());
-            tmp.setCoverPicture(movie.getCoverPicture());
-            tmp.setGenre(movie.getGenre());
-            tmp.setLength(movie.getLength());
-            tmp.setReleaseYear(movie.getReleaseYear());
-            tmp.setTitle(movie.getTitle());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Movie modifyMovie(Movie movie) throws NullPointerException {
+        em.getTransaction().begin();
+        em.merge(movie);
+        em.getTransaction().commit();
+        return movie;
     }
 
     public void changeRating(long id, int rating) {

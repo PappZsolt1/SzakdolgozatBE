@@ -19,13 +19,6 @@ public class MovieResource {
 
     @EJB
     MovieService service;
-
-    /*@POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addMovie(String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
-        Movie tmp = service.addMovie(title, budget, length, releaseYear, coverPicture, ageClassificationId, genreId);
-        return Response.ok().entity(tmp).build();
-    }*/
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -67,9 +60,9 @@ public class MovieResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyMovie(@PathParam("id") long id, String title, int budget, int length, int releaseYear, byte[] coverPicture, long ageClassificationId, long genreId) {
+    public Response modifyMovie(@PathParam("id") long id, Movie movie) {
         try {
-            Movie tmp = service.modifyMovie(id, title, budget, length, releaseYear, coverPicture, ageClassificationId, genreId);
+            Movie tmp = service.modifyMovie(id, movie);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

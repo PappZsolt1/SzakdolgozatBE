@@ -11,7 +11,12 @@ public class GenderService {
     GenderDAO dao;
 
     public Gender getGender(long id) throws NullPointerException {
-        return dao.getGender(id);
+        Gender tmp = dao.getGender(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            return tmp;
+        }
     }
 
     public List<Gender> getAllGenders() {
@@ -24,13 +29,22 @@ public class GenderService {
         return dao.addGender(tmp);
     }
 
-    public void deleteGender(long id) {
-        dao.deleteGender(id);
+    public void deleteGender(long id) throws NullPointerException {
+        Gender tmp = dao.getGender(id);
+        if (tmp == null) {
+            throw new NullPointerException();
+        } else {
+            dao.deleteGender(id);
+        }
     }
 
     public Gender modifyGender(long id, String name) throws NullPointerException {
-        Gender tmp = new Gender();
-        tmp.setName(name);
-        return dao.modifyGender(id, tmp);
+        Gender tmp = dao.getGender(id);
+        if (tmp != null) {
+            tmp.setName(name);
+            return dao.modifyGender(tmp);
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

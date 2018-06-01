@@ -10,7 +10,7 @@ public class MyUserService {
     @Inject
     MyUserDAO dao;
 
-    public MyUser addMyUser(String username, String password) {
+    public MyUser addMyUser(String username, String password) throws NullPointerException {
         if (dao.isNotTaken(username)) {
             MyUser tmp = new MyUser();
             tmp.setUsername(username);

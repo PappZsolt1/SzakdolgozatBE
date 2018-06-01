@@ -20,21 +20,11 @@ public class RatingDAO {
         return rating;
     }
 
-    public Rating getMovieRating(MyUser user, Movie movie) throws NullPointerException {
-        Rating tmp = (Rating) em.createNamedQuery("getMovieRating").setParameter("user", user).setParameter("movie", movie).getSingleResult();
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Rating getMovieRating(MyUser user, Movie movie) {
+        return (Rating) em.createNamedQuery("getMovieRating").setParameter("user", user).setParameter("movie", movie).getSingleResult();
     }
 
-    public Rating getEpisodeRating(MyUser user, Episode episode) throws NullPointerException {
-        Rating tmp = (Rating) em.createNamedQuery("getEpisodeRating").setParameter("user", user).setParameter("episode", episode).getSingleResult();
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Rating getEpisodeRating(MyUser user, Episode episode) {
+        return (Rating) em.createNamedQuery("getEpisodeRating").setParameter("user", user).setParameter("episode", episode).getSingleResult();
     }
 }

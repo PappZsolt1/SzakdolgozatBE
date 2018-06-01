@@ -18,40 +18,25 @@ public class SeriesDAO {
         return series;
     }
 
-    public Series getSeries(long id) throws NullPointerException {
-        Series tmp = em.find(Series.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Series getSeries(long id) {
+        return em.find(Series.class, id);
     }
 
     public List<Series> getAllSeries() {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
 
-    public void deleteSeries(long id) throws NullPointerException {
+    public void deleteSeries(long id) {
         em.getTransaction().begin();
         em.remove(this.getSeries(id));
         em.getTransaction().commit();
     }
 
-    public Series modifySeries(long id, Series series) throws NullPointerException {
-        Series tmp = this.getSeries(id);
-        if (tmp != null) {
-            tmp.setAgeClassification(series.getAgeClassification());
-            tmp.setCoverPicture(series.getCoverPicture());
-            tmp.setGenre(series.getGenre());
-            tmp.setReleaseYear(series.getReleaseYear());
-            tmp.setTitle(series.getTitle());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Series modifySeries(Series series) {
+        em.getTransaction().begin();
+        em.merge(series);
+        em.getTransaction().commit();
+        return series;
     }
 
     public void changeRating(long id) {

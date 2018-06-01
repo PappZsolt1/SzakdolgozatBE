@@ -2,7 +2,9 @@ package myapp.SzakdolgozatBE.rating;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
+import myapp.SzakdolgozatBE.movie.Movie;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
 import myapp.SzakdolgozatBE.myUser.MyUserDAO;
 
@@ -38,10 +40,20 @@ public class RatingService {
     }
 
     public Rating getMovieRating(long movieId) throws NullPointerException {
-        return dao.getMovieRating(myUserDao.getMyUser(1), movieDao.getMovie(movieId));//todo
+        Movie tmp = movieDao.getMovie(movieId);
+        if (tmp != null) {
+            return dao.getMovieRating(myUserDao.getMyUser(1), movieDao.getMovie(movieId));//todo
+        } else {
+            throw new NullPointerException();
+        }
     }
 
     public Rating getEpisodeRating(long episodeId) throws NullPointerException {
-        return dao.getEpisodeRating(myUserDao.getMyUser(1), episodeDao.getEpisode(episodeId));//todo
+        Episode tmp = episodeDao.getEpisode(episodeId);
+        if (tmp != null) {
+            return dao.getEpisodeRating(myUserDao.getMyUser(1), episodeDao.getEpisode(episodeId));//todo
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

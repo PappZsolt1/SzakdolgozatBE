@@ -12,12 +12,7 @@ public class GenderDAO {
     EntityManager em;
 
     public Gender getGender(long id) throws NullPointerException {
-        Gender tmp = em.find(Gender.class, id);
-        if (tmp != null) {
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+        return em.find(Gender.class, id);
     }
 
     public List<Gender> getAllGenders() {
@@ -37,16 +32,10 @@ public class GenderDAO {
         em.getTransaction().commit();
     }
 
-    public Gender modifyGender(long id, Gender gender) throws NullPointerException {
-        Gender tmp = this.getGender(id);
-        if (tmp != null) {
-            tmp.setName(gender.getName());
-            em.getTransaction().begin();
-            em.merge(tmp);
-            em.getTransaction().commit();
-            return tmp;
-        } else {
-            throw new NullPointerException();
-        }
+    public Gender modifyGender(Gender gender) {
+        em.getTransaction().begin();
+        em.merge(gender);
+        em.getTransaction().commit();
+        return gender;
     }
 }

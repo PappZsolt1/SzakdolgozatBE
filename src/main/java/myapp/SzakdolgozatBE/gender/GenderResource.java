@@ -49,8 +49,12 @@ public class GenderResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteGender(@PathParam("id") long id) {
-        service.deleteGender(id);
-        return Response.ok().build();
+        try {
+            service.deleteGender(id);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @PUT
