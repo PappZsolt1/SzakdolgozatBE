@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.episode;
 
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -13,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.rating.RatingService;
+import myapp.SzakdolgozatBE.series.SeriesService;
 
 @Path("episode")
 @ApplicationScoped
@@ -20,6 +21,12 @@ public class EpisodeResource {
 
     @EJB
     EpisodeService service;
+    
+    @EJB
+    RatingService ratingService;
+    
+    @EJB
+    SeriesService seriesService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -73,7 +80,15 @@ public class EpisodeResource {
     @PUT
     @Path("/rating/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void changeRating(@PathParam("id") long id, int rating) {
-        service.changeRating(id, rating);
+    public Response changeRating(@PathParam("id") long id, int rating) {
+        try {
+            service.changeRating(id, rating);
+            ratingService.addMovieRating((byte) rating, id);
+            long seriesId = service.getEpisode(id).getSeason().getSeries().getId();
+            seriesService.changeRating(seriesId);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

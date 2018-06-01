@@ -104,9 +104,7 @@ public class Episode implements Serializable {
     }
 
     public void setRating(int rating) {
-        numberOfRatings++;
-        sumOfRatings += rating;
-        this.rating = sumOfRatings / numberOfRatings;
+        this.rating = rating;
     }
 
     public String getReleaseDate() {

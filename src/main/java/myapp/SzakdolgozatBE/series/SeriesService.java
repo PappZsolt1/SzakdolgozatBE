@@ -4,7 +4,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationService;
+import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.genre.GenreService;
+import myapp.SzakdolgozatBE.season.Season;
 
 @Stateless
 public class SeriesService {
@@ -59,6 +61,20 @@ public class SeriesService {
     }
 
     public void changeRating(long id) {
-        dao.changeRating(id);
+        Series tmp = dao.getSeries(id);
+        int numberOfRatings = 0;
+        int sumOfRatings = 0;
+        if (tmp != null) {
+            for (Season season : tmp.getSeasons()) {
+                for (Episode episode: season.getEpisodes()) {
+                    numberOfRatings++;
+                    sumOfRatings += episode.getRating();
+                }
+            }
+            tmp.setRating(sumOfRatings / numberOfRatings);
+            dao.changeRating(tmp);
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

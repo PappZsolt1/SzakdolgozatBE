@@ -40,11 +40,9 @@ public class EpisodeDAO {
         return episode;
     }
 
-    public void changeRating(long id, int rating) {
-        Episode tmp = this.getEpisode(id);
-        tmp.setRating(rating);
+    public void changeRating(Episode episode) {
         em.getTransaction().begin();
-        em.merge(tmp);
+        em.merge(episode);
         em.getTransaction().commit();
     }
 }

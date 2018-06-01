@@ -58,7 +58,17 @@ public class EpisodeService {
         }
     }
 
-    public void changeRating(long id, int rating) {
-        dao.changeRating(id, rating);
+    public void changeRating(long id, int rating) throws NullPointerException {
+         Episode tmp = dao.getEpisode(id);
+        if (tmp != null) {
+            int numberOfRatings = tmp.getNumberOfRatings();
+            int sumOfRatings = tmp.getSumOfRatings();
+            tmp.setNumberOfRatings(numberOfRatings + 1);
+            tmp.setSumOfRatings(sumOfRatings + rating);
+            tmp.setRating(sumOfRatings / numberOfRatings);
+            dao.changeRating(tmp);
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

@@ -39,11 +39,9 @@ public class SeriesDAO {
         return series;
     }
 
-    public void changeRating(long id) {
-        Series tmp = this.getSeries(id);
-        em.createNamedQuery("getEpisodeRatings"); //todo
+    public void changeRating(Series series) {        
         em.getTransaction().begin();
-        em.merge(tmp);
+        em.merge(series);
         em.getTransaction().commit();
     }
 }

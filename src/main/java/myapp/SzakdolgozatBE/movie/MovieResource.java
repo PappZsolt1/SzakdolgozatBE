@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.rating.RatingService;
 
 @Path("movie")
 @ApplicationScoped
@@ -19,7 +20,10 @@ public class MovieResource {
 
     @EJB
     MovieService service;
-    
+
+    @EJB
+    RatingService ratingService;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMovie(Movie movie) {
@@ -72,7 +76,13 @@ public class MovieResource {
     @PUT
     @Path("/rating/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void changeRating(@PathParam("id") long id, int rating) {
-        service.changeRating(id, rating);
+    public Response changeRating(@PathParam("id") long id, int rating) {
+        try {
+            service.changeRating(id, rating);
+            ratingService.addMovieRating((byte) rating, id);
+            return Response.ok().build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

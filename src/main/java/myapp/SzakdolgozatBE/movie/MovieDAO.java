@@ -39,11 +39,9 @@ public class MovieDAO {
         return movie;
     }
 
-    public void changeRating(long id, int rating) {
-        Movie tmp = this.getMovie(id);
-        tmp.setRating(rating);
+    public void changeRating(Movie movie) {
         em.getTransaction().begin();
-        em.merge(tmp);
+        em.merge(movie);
         em.getTransaction().commit();
     }
 }
