@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
-@Table(name = "ErrorReport")
+@Table(name = "ERRORREPORT")
 @NamedQueries({
     @NamedQuery(name = "getAllErrorReports", query = "SELECT e FROM ErrorReport e ORDER BY e.sendingDate ASC"),
     @NamedQuery(name = "getResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = TRUE ORDER BY e.sendingDate ASC"),
@@ -32,7 +32,7 @@ public class ErrorReport implements Serializable {
     private String content;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "myUser_id")
+    @JoinColumn(name = "MYUSER_ID")
     @JsonManagedReference(value = "errorReport-myUser")
     private MyUser myUser;
     
