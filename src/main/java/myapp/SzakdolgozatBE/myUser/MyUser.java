@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.errorReport.ErrorReport;
+import myapp.SzakdolgozatBE.privateMessage.PrivateMessage;
 import myapp.SzakdolgozatBE.rating.Rating;
 import myapp.SzakdolgozatBE.topic.Topic;
 
@@ -55,6 +56,14 @@ public class MyUser implements Serializable {
     @OneToMany(mappedBy = "myUser")
     @JsonBackReference(value = "errorReport-myUser")
     private List<ErrorReport> errorReports;
+    
+    @OneToMany(mappedBy = "myUser")
+    @JsonManagedReference(value = "myUser-privateMessagesSent")
+    private List<PrivateMessage> privateMessagesSent;
+    
+    @OneToMany(mappedBy = "myUser")
+    @JsonManagedReference(value = "myUser-privateMessagesReceived")
+    private List<PrivateMessage> privateMessagesReceived;
 
     public Long getId() {
         return id;
@@ -118,6 +127,22 @@ public class MyUser implements Serializable {
 
     public void setErrorReports(List<ErrorReport> errorReports) {
         this.errorReports = errorReports;
+    }
+
+    public List<PrivateMessage> getPrivateMessagesSent() {
+        return privateMessagesSent;
+    }
+
+    public void setPrivateMessagesSent(List<PrivateMessage> privateMessagesSent) {
+        this.privateMessagesSent = privateMessagesSent;
+    }
+
+    public List<PrivateMessage> getPrivateMessagesReceived() {
+        return privateMessagesReceived;
+    }
+
+    public void setPrivateMessagesReceived(List<PrivateMessage> privateMessagesReceived) {
+        this.privateMessagesReceived = privateMessagesReceived;
     }
 
     @Override

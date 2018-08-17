@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.rating.RatingService;
 
-@Path("movie")
+@Path("/movie")
 @ApplicationScoped
 public class MovieResource {
 

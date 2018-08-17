@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.rating.RatingService;
 import myapp.SzakdolgozatBE.series.SeriesService;
 
-@Path("episode")
+@Path("/episode")
 @ApplicationScoped
 public class EpisodeResource {
 

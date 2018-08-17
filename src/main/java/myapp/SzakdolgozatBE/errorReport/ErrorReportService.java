@@ -41,6 +41,6 @@ public class ErrorReportService {
             dao.makeResolved(tmp);
         } else {
             throw new NullPointerException();
-        }        
+        }
     }
 }
