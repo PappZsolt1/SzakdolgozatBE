@@ -57,11 +57,11 @@ public class MyUser implements Serializable {
     @JsonBackReference(value = "errorReport-myUser")
     private List<ErrorReport> errorReports;
     
-    @OneToMany(mappedBy = "myUser")
+    @OneToMany(mappedBy = "sender")
     @JsonManagedReference(value = "myUser-privateMessagesSent")
     private List<PrivateMessage> privateMessagesSent;
     
-    @OneToMany(mappedBy = "myUser")
+    @OneToMany(mappedBy = "addressee")
     @JsonManagedReference(value = "myUser-privateMessagesReceived")
     private List<PrivateMessage> privateMessagesReceived;
 

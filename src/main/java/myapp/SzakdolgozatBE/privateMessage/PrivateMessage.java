@@ -35,12 +35,12 @@ public class PrivateMessage implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "myUser-privateMessagesSent")
-    @JoinColumn(name = "myUser_id")
+    @JoinColumn(name = "sender_id")
     private MyUser sender;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "myUser-privateMessagesReceived")
-    @JoinColumn(name = "myUser_id")
+    @JoinColumn(name = "addressee_id")
     private MyUser addressee;
 
     public Long getId() {
