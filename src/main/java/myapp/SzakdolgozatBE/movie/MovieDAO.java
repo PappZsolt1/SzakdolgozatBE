@@ -19,7 +19,7 @@ public class MovieDAO {
     }
 
     public Movie getMovie(long id) {
-        return em.find(Movie.class, id);        
+        return em.find(Movie.class, id);
     }
 
     public List<Movie> getAllMovies() {

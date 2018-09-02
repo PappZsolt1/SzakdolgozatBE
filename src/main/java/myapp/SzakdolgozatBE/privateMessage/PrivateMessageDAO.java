@@ -28,11 +28,7 @@ public class PrivateMessageDAO {
         em.getTransaction().commit();
     }
     
-    public List<PrivateMessage> getSentPrivateMessages() {
-        return em.createNamedQuery("getSentPrivateMessages").getResultList(); //todo
-    }
-    
-    public List<PrivateMessage> getReceivedPrivateMessages() {
-        return em.createNamedQuery("getReceivedPrivateMessages").getResultList(); //todo
+    public List<PrivateMessage> getConversationPrivateMessages() {
+        return em.createNamedQuery("getAllPrivateMessages").getResultList(); //todo
     }
 }

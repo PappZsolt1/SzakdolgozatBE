@@ -32,11 +32,7 @@ public class PrivateMessageService {
         }
     }
     
-    public List<PrivateMessage> getSentPrivateMessages() {
-        return dao.getSentPrivateMessages();
-    }
-    
-    public List<PrivateMessage> getReceivedPrivateMessages() {
-        return dao.getReceivedPrivateMessages();
+    public List<PrivateMessage> getConversationPrivateMessages() {
+        return dao.getConversationPrivateMessages();
     }
 }

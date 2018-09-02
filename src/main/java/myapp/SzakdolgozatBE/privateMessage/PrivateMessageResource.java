@@ -41,14 +41,7 @@ public class PrivateMessageResource {
     @GET
     @Path("/sent")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PrivateMessage> getSentPrivateMessages() {
-        return service.getSentPrivateMessages();
-    }
-    
-    @GET
-    @Path("/received")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<PrivateMessage> getReceivedPrivateMessages() {
-        return service.getReceivedPrivateMessages();
+    public List<PrivateMessage> getConversationPrivateMessages() {
+        return service.getConversationPrivateMessages();
     }
 }

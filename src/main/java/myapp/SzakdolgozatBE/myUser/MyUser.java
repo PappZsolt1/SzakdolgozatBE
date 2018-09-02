@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.conversation.Conversation;
 import myapp.SzakdolgozatBE.errorReport.ErrorReport;
 import myapp.SzakdolgozatBE.privateMessage.PrivateMessage;
 import myapp.SzakdolgozatBE.rating.Rating;
@@ -64,7 +65,15 @@ public class MyUser implements Serializable {
     @OneToMany(mappedBy = "addressee")
     @JsonManagedReference(value = "myUser-privateMessagesReceived")
     private List<PrivateMessage> privateMessagesReceived;
+    
+    @OneToMany(mappedBy = "userA")
+    @JsonManagedReference(value = "myUserA-conversation")
+    private List<Conversation> conversationsA;
 
+    @OneToMany(mappedBy = "userB")
+    @JsonManagedReference(value = "myUserB-conversation")
+    private List<Conversation> conversationsB;
+    
     public Long getId() {
         return id;
     }
@@ -143,6 +152,22 @@ public class MyUser implements Serializable {
 
     public void setPrivateMessagesReceived(List<PrivateMessage> privateMessagesReceived) {
         this.privateMessagesReceived = privateMessagesReceived;
+    }
+
+    public List<Conversation> getConversationsA() {
+        return conversationsA;
+    }
+
+    public void setConversationsA(List<Conversation> conversationsA) {
+        this.conversationsA = conversationsA;
+    }
+
+    public List<Conversation> getConversationsB() {
+        return conversationsB;
+    }
+
+    public void setConversationsB(List<Conversation> conversationsB) {
+        this.conversationsB = conversationsB;
     }
 
     @Override

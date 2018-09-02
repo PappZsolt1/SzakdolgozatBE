@@ -17,6 +17,7 @@
     <class>myapp.SzakdolgozatBE.ageClassification.AgeClassification</class>
     <class>myapp.SzakdolgozatBE.rating.Rating</class>
     <class>myapp.SzakdolgozatBE.privateMessage.PrivateMessage</class>
+    <class>myapp.SzakdolgozatBE.conversation.Conversation</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
     <properties>

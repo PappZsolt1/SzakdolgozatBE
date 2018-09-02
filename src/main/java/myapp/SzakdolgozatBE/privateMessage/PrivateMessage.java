@@ -12,13 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import myapp.SzakdolgozatBE.conversation.Conversation;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "PrivateMessage")
 @NamedQueries({
-    @NamedQuery(name = "getSentPrivateMessages", query = "SELECT p FROM PrivateMessage p WHERE p.sender = :sender"),
-    @NamedQuery(name = "getReceivedPrivateMessages", query = "SELECT p FROM PrivateMessage p WHERE p.addressee = :addressee")
+    @NamedQuery(name = "getConversationPrivateMessages", query = "SELECT p FROM PrivateMessage p WHERE p.conversation = :conversation")
 })
 public class PrivateMessage implements Serializable {
 
@@ -42,6 +42,11 @@ public class PrivateMessage implements Serializable {
     @JsonBackReference(value = "myUser-privateMessagesReceived")
     @JoinColumn(name = "addressee_id")
     private MyUser addressee;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference(value = "conversation-privateMessage")
+    @JoinColumn(name = "conversation_id")
+    private Conversation conversation;
 
     public Long getId() {
         return id;
@@ -89,6 +94,14 @@ public class PrivateMessage implements Serializable {
 
     public void setAddressee(MyUser addressee) {
         this.addressee = addressee;
+    }
+
+    public Conversation getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
     }
 
     @Override
