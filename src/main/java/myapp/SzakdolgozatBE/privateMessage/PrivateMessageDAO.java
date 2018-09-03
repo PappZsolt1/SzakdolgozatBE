@@ -29,6 +29,6 @@ public class PrivateMessageDAO {
     }
     
     public List<PrivateMessage> getConversationPrivateMessages() {
-        return em.createNamedQuery("getAllPrivateMessages").getResultList(); //todo
+        return em.createNamedQuery("getConversationPrivateMessages").getResultList(); //todo
     }
 }

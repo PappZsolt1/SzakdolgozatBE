@@ -43,6 +43,8 @@ public class Conversation implements Serializable {
     @OneToMany(mappedBy = "conversation")
     @JsonManagedReference(value = "conversation-privateMessage")
     private List<PrivateMessage> privateMessages;
+    
+    private int unreadMessages;
 
     public Long getId() {
         return id;
@@ -74,6 +76,14 @@ public class Conversation implements Serializable {
 
     public void setPrivateMessages(List<PrivateMessage> privateMessages) {
         this.privateMessages = privateMessages;
+    }
+
+    public int getUnreadMessages() {
+        return unreadMessages;
+    }
+
+    public void setUnreadMessages(int unreadMessages) {
+        this.unreadMessages = unreadMessages;
     }
 
     @Override

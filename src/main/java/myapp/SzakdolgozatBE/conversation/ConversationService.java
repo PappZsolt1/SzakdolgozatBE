@@ -15,6 +15,7 @@ public class ConversationService {
         if (tmp == null) {
             throw new NullPointerException();
         } else {
+            tmp.setUnreadMessages(0);
             return tmp;
         }
     }
@@ -24,6 +25,17 @@ public class ConversationService {
     }
     
     public List<Conversation> getUserConversations() {
-        return dao.getUserConversations();
+        int unreadMessages = 0;
+        List<Conversation> tmp = dao.getUserConversations();
+        for (int i = 0; i < tmp.size(); i++) {
+            for (int j = 0; j < tmp.get(i).getPrivateMessages().size(); j++) {
+                if (tmp.get(i).getPrivateMessages().get(j).isUnread() == true) {
+                    unreadMessages++;
+                }
+            }
+            tmp.get(i).setUnreadMessages(unreadMessages);
+            unreadMessages = 0;
+        }
+        return tmp;
     }
 }
