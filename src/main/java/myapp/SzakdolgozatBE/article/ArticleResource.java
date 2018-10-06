@@ -21,6 +21,7 @@ public class ArticleResource {
     ArticleService service;
 
     @POST
+    @Path("/save")
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveArticle(String title, String content) {
         Article tmp = service.saveArticle(title, content);
@@ -48,6 +49,7 @@ public class ArticleResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/save")
     public List<Article> getSavedArticles() {
         return service.getSavedArticles();
     }

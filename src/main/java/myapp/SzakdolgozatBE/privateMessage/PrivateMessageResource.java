@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/PrivateMessage")
+@Path("/privatemessage")
 @ApplicationScoped
 public class PrivateMessageResource {
     
@@ -39,7 +39,6 @@ public class PrivateMessageResource {
     }
     
     @GET
-    @Path("/sent")
     @Produces(MediaType.APPLICATION_JSON)
     public List<PrivateMessage> getConversationPrivateMessages() {
         return service.getConversationPrivateMessages();
