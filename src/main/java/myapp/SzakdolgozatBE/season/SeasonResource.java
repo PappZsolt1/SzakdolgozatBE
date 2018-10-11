@@ -44,8 +44,9 @@ public class SeasonResource {
     }
 
     @GET
+    @Path("/series/{seriesId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSeriesSeasons(long seriesId) {
+    public Response getSeriesSeasons(@PathParam("seriesId") long seriesId) {
         try {
             List<Season> seasons = service.getSeriesSeasons(seriesId);
             return Response.ok().entity(seasons).build();

@@ -48,8 +48,9 @@ public class EpisodeResource {
     }
 
     @GET
+    @Path("/season/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Episode> getSeasonEpisodes(long seasonId) {
+    public List<Episode> getSeasonEpisodes(@PathParam("seasonId") long seasonId) {
         return service.getSeasonEpisodes(seasonId);
     }
 
