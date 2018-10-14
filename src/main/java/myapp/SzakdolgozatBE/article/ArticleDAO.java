@@ -17,6 +17,13 @@ public class ArticleDAO {
         em.getTransaction().commit();
         return article;
     }
+    
+    public Article saveAgainArticle(Article article) {
+        em.getTransaction().begin();
+        em.merge(article);
+        em.getTransaction().commit();
+        return article;
+    }
 
     public Article publishNewArticle(Article article) {
         em.getTransaction().begin();
@@ -25,7 +32,7 @@ public class ArticleDAO {
         return article;
     }
 
-    public Article publishSavedArticle(Article article, long id) {
+    public Article publishSavedArticle(Article article) {
         em.getTransaction().begin();
         em.merge(article);
         em.getTransaction().commit();

@@ -23,8 +23,8 @@ public class ArticleResource {
     @POST
     @Path("/save")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response saveArticle(String title, String content) {
-        Article tmp = service.saveArticle(title, content);
+    public Response saveArticle(Article article) {
+        Article tmp = service.saveArticle(article);
         return Response.ok().entity(tmp).build();
     }
 
