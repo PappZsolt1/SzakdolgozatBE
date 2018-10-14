@@ -44,16 +44,16 @@ public class Series implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ageClassification_id")
-    @JsonManagedReference(value = "series-ageClassification")
+    //@JsonManagedReference(value = "series-ageClassification")
     private AgeClassification ageClassification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
-    @JsonManagedReference(value = "series-genre")
+    //@JsonManagedReference(value = "series-genre")
     private Genre genre;
     
     @OneToMany(mappedBy = "series")
-    @JsonManagedReference(value = "series-season")
+    //@JsonManagedReference(value = "series-season")
     private List<Season> seasons;
 
     public Long getId() {

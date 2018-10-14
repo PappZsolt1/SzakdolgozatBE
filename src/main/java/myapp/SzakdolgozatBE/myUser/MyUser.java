@@ -38,9 +38,9 @@ public class MyUser implements Serializable {
     
     private String password;
     
-    @OneToMany(mappedBy = "myUser")
+    /*@OneToMany(mappedBy = "myUser")
     @JsonBackReference(value = "article-myUser")
-    private List<Article> articles;
+    private List<Article> articles;*/
     
     @OneToMany(mappedBy = "myUser")
     @JsonBackReference(value = "comment-myUser")
@@ -51,7 +51,7 @@ public class MyUser implements Serializable {
     private List<Topic> topics;
     
     @OneToMany(mappedBy = "myUser")
-    @JsonManagedReference(value = "myUser-rating")
+    //@JsonManagedReference(value = "myUser-rating")
     private List<Rating> ratings;
     
     @OneToMany(mappedBy = "myUser")
@@ -59,19 +59,19 @@ public class MyUser implements Serializable {
     private List<ErrorReport> errorReports;
     
     @OneToMany(mappedBy = "sender")
-    @JsonManagedReference(value = "myUser-privateMessagesSent")
+    //@JsonManagedReference(value = "myUser-privateMessagesSent")
     private List<PrivateMessage> privateMessagesSent;
     
     @OneToMany(mappedBy = "addressee")
-    @JsonManagedReference(value = "myUser-privateMessagesReceived")
+    //@JsonManagedReference(value = "myUser-privateMessagesReceived")
     private List<PrivateMessage> privateMessagesReceived;
     
     @OneToMany(mappedBy = "userA")
-    @JsonManagedReference(value = "myUserA-conversation")
+    //@JsonManagedReference(value = "myUserA-conversation")
     private List<Conversation> conversationsA;
 
     @OneToMany(mappedBy = "userB")
-    @JsonManagedReference(value = "myUserB-conversation")
+    //@JsonManagedReference(value = "myUserB-conversation")
     private List<Conversation> conversationsB;
     
     public Long getId() {
@@ -98,13 +98,13 @@ public class MyUser implements Serializable {
         this.password = password;
     }
 
-    public List<Article> getArticles() {
+    /*public List<Article> getArticles() {
         return articles;
     }
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
-    }
+    }*/
 
     public List<Comment> getComments() {
         return comments;

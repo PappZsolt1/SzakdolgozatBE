@@ -36,12 +36,12 @@ public class Conversation implements Serializable {
     private MyUser userA;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value = "myUserB-conversation")
+    //@JsonBackReference(value = "myUserB-conversation")
     @JoinColumn(name = "userB_id")
     private MyUser userB;
     
     @OneToMany(mappedBy = "conversation")
-    @JsonManagedReference(value = "conversation-privateMessage")
+    //@JsonManagedReference(value = "conversation-privateMessage")
     private List<PrivateMessage> privateMessages;
     
     private int unreadMessages;

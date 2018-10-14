@@ -33,7 +33,7 @@ public class ErrorReport implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MYUSER_ID")
-    @JsonManagedReference(value = "errorReport-myUser")
+    //@JsonManagedReference(value = "errorReport-myUser")
     private MyUser myUser;
     
     private boolean resolved;

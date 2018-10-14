@@ -55,27 +55,27 @@ public class Movie implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ageClassification_id")
-    @JsonManagedReference(value = "movie-ageClassification")
+    //@JsonManagedReference(value = "movie-ageClassification")
     private AgeClassification ageClassification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
-    @JsonManagedReference(value = "movie-genre")
+    //@JsonManagedReference(value = "movie-genre")
     private Genre genre;
 
     @ManyToMany
     @JoinTable(name = "Movie_Actor",
             joinColumns = @JoinColumn(name = "Movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
-    @JsonManagedReference(value = "movie-actor")
+    //@JsonManagedReference(value = "movie-actor")
     private List<Actor> actors;
     
     @OneToMany(mappedBy = "movie")
-    @JsonManagedReference(value = "movie-comment")
+    //@JsonManagedReference(value = "movie-comment")
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "movie")
-    @JsonManagedReference(value = "movie-rating")
+    //@JsonManagedReference(value = "movie-rating")
     private List<Rating> ratings;
 
     public Long getId() {

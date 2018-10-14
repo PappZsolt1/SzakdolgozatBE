@@ -39,7 +39,7 @@ public class Season implements Serializable {
     private Series series;
     
     @OneToMany(mappedBy = "season")
-    @JsonManagedReference(value = "season-episode")
+    //@JsonManagedReference(value = "season-episode")
     private List<Episode> episodes;
 
     public Long getId() {

@@ -37,13 +37,13 @@ public class Topic implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
-    @JsonManagedReference(value = "topic-myUser")
+    //@JsonManagedReference(value = "topic-myUser")
     private MyUser myUser;    
     
     private String createDate;
     
     @OneToMany(mappedBy = "topic")
-    @JsonManagedReference(value = "topic-comment")
+    //@JsonManagedReference(value = "topic-comment")
     private List<Comment> comments;
     
     public Long getId() {

@@ -37,7 +37,7 @@ public class Comment implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
-    @JsonManagedReference(value = "comment-myUser")
+    //@JsonManagedReference(value = "comment-myUser")
     private MyUser myUser;
     
     private String postDate;

@@ -20,7 +20,7 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Article")
 @NamedQueries({
-    @NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE AND a.myUser = :userId ORDER BY a.publishDate DESC"),
+    //@NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE AND a.myUser = :userId ORDER BY a.publishDate DESC"),
     @NamedQuery(name = "getPublishedArticles", query = "SELECT a FROM Article a WHERE a.published = TRUE ORDER BY a.publishDate DESC")
 })
 public class Article implements Serializable {
@@ -37,17 +37,17 @@ public class Article implements Serializable {
     
     private String publishDate;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference(value = "article-myUser")
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    //@JsonManagedReference(value = "article-myUser")
     @JoinColumn(name = "myUser_id")
-    private MyUser myUser;
+    private MyUser myUser;*/
     
     private boolean published;
     
     private boolean saved;
     
     @OneToMany(mappedBy = "article")
-    @JsonManagedReference(value = "article-comment")
+    //@JsonManagedReference(value = "article-comment")
     private List<Comment> comments;
 
     public Long getId() {
@@ -82,13 +82,13 @@ public class Article implements Serializable {
         this.publishDate = publishDate;
     }
 
-    public MyUser getMyUser() {
+    /*public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
-    }
+    }*/
     
     public boolean isPublished() {
         return published;
