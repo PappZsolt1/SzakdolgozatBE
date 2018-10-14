@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.movie;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
@@ -71,7 +72,7 @@ public class Movie implements Serializable {
     private List<Actor> actors;
     
     @OneToMany(mappedBy = "movie")
-    //@JsonManagedReference(value = "movie-comment")
+    @JsonBackReference(value = "movie-comment")
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "movie")

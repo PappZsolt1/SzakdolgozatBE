@@ -44,27 +44,27 @@ public class Comment implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    @JsonBackReference(value = "movie-comment")
+    //@JsonManagedReference(value = "movie-comment")
     private Movie movie;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "episode_id")
-    @JsonBackReference(value = "episode-comment")
+    //@JsonManagedReference(value = "episode-comment")
     private Episode episode;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_id")
-    @JsonBackReference(value = "actor-comment")
+    //@JsonManagedReference(value = "actor-comment")
     private Actor actor;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
-    @JsonBackReference(value = "article-comment")
+    //@JsonManagedReference(value = "article-comment")
     private Article article;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
-    @JsonBackReference(value = "topic-comment")
+    //@JsonManagedReference(value = "topic-comment")
     private Topic topic;
 
     public Long getId() {

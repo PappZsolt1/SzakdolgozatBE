@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.topic;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Topic implements Serializable {
     private String createDate;
     
     @OneToMany(mappedBy = "topic")
-    //@JsonManagedReference(value = "topic-comment")
+    @JsonBackReference(value = "topic-comment")
     private List<Comment> comments;
     
     public Long getId() {

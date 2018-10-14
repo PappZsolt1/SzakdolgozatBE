@@ -14,13 +14,10 @@ public class ArticleService {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
     public Article saveArticle(Article article) {
-        if (dao.getArticle(article.getId()) == null) {
-            Article tmp = new Article();
-            tmp.setTitle(article.getTitle());
-            tmp.setContent(article.getContent());
-            tmp.setSaved(true);
+        if (article.getId() == null) {
+            article.setSaved(true);
             //tmp.setMyUser(myUser);
-            return dao.saveArticle(tmp);
+            return dao.saveArticle(article);
         } else {
             Article tmp = dao.getArticle(article.getId());
             tmp.setTitle(article.getTitle());
@@ -29,21 +26,18 @@ public class ArticleService {
         }        
     }
     
-    public Article publishNewArticle(String title, String content) {
-        Article tmp = new Article();
-        tmp.setTitle(title);
-        tmp.setContent(content);
-        tmp.setPublishDate(sdf.format(new Date()));
-        tmp.setPublished(true);
+    public Article publishNewArticle(Article article) {
+        article.setPublishDate(sdf.format(new Date()));
+        article.setPublished(true);
         //tmp.setMyUser(myUser);
-        return dao.publishNewArticle(tmp);
+        return dao.publishNewArticle(article);
     }
     
-    public Article publishSavedArticle(long id, String title, String content) throws NullPointerException {
+    public Article publishSavedArticle(long id, Article article) throws NullPointerException {
         Article tmp = dao.getArticle(id);
         if (tmp != null) {
-            tmp.setTitle(title);
-            tmp.setContent(content);
+            tmp.setTitle(article.getTitle());
+            tmp.setContent(article.getContent());
             tmp.setPublishDate(sdf.format(new Date()));
             tmp.setSaved(false);
             tmp.setPublished(true);

@@ -30,17 +30,17 @@ public class ArticleResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response publishNewArticle(String title, String content) {
-        Article tmp = service.publishNewArticle(title, content);
+    public Response publishNewArticle(Article article) {
+        Article tmp = service.publishNewArticle(article);
         return Response.ok().entity(tmp).build();
     }
     
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response publishSavedArticle(@PathParam("id") long id, String title, String content) {
+    public Response publishSavedArticle(@PathParam("id") long id, Article article) {
         try {
-            Article tmp = service.publishSavedArticle(id, title, content);
+            Article tmp = service.publishSavedArticle(id, article);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

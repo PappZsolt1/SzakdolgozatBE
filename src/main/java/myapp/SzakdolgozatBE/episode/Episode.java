@@ -60,7 +60,7 @@ public class Episode implements Serializable {
     private List<Actor> actors;
     
     @OneToMany(mappedBy = "episode")
-    //@JsonManagedReference(value = "episode-comment")
+    @JsonBackReference(value = "episode-comment")
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "episode")
