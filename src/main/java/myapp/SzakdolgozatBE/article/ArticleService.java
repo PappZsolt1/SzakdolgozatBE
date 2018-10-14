@@ -13,13 +13,20 @@ public class ArticleService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
-    public Article saveArticle(String title, String content) {
-        Article tmp = new Article();
-        tmp.setTitle(title);
-        tmp.setContent(content);
-        tmp.setSaved(true);
-        //tmp.setMyUser(myUser);
-        return dao.saveArticle(tmp);
+    public Article saveArticle(Article article) {
+        if (dao.getArticle(article.getId()) == null) {
+            Article tmp = new Article();
+            tmp.setTitle(article.getTitle());
+            tmp.setContent(article.getContent());
+            tmp.setSaved(true);
+            //tmp.setMyUser(myUser);
+            return dao.saveArticle(tmp);
+        } else {
+            Article tmp = dao.getArticle(article.getId());
+            tmp.setTitle(article.getTitle());
+            tmp.setContent(article.getContent());
+            return dao.saveAgainArticle(tmp);
+        }        
     }
     
     public Article publishNewArticle(String title, String content) {
@@ -40,7 +47,7 @@ public class ArticleService {
             tmp.setPublishDate(sdf.format(new Date()));
             tmp.setSaved(false);
             tmp.setPublished(true);
-            return dao.publishSavedArticle(tmp, id);
+            return dao.publishSavedArticle(tmp);
         } else {
             throw new NullPointerException();
         }        
