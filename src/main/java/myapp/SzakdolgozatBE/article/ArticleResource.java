@@ -73,7 +73,7 @@ public class ArticleResource {
     }
     
     @GET
-    @Path("/{id}")
+    @Path("/{id : \\d+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getArticle(@PathParam("id") long id) {
         try {

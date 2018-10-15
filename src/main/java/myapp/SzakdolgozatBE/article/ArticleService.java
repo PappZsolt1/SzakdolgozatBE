@@ -48,7 +48,8 @@ public class ArticleService {
     }
     
     public List<Article> getSavedArticles() {
-        return dao.getSavedArticles(1);//todo
+        //return dao.getSavedArticles(1);//todo
+        return dao.getSavedArticles();
     }
     
     public List<Article> getPublishedArticles() {

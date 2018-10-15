@@ -22,6 +22,7 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Table(name = "Article")
 @NamedQueries({
     //@NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE AND a.myUser = :userId ORDER BY a.publishDate DESC"),
+    @NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE ORDER BY a.publishDate DESC"),
     @NamedQuery(name = "getPublishedArticles", query = "SELECT a FROM Article a WHERE a.published = TRUE ORDER BY a.publishDate DESC")
 })
 public class Article implements Serializable {
