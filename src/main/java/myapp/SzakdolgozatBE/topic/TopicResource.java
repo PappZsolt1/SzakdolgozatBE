@@ -21,8 +21,8 @@ public class TopicResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTopic(String title, String description) {
-        Topic tmp = service.addTopic(title, description);
+    public Response addTopic(Topic topic) {
+        Topic tmp = service.addTopic(topic);
         return Response.ok().entity(tmp).build();
     }
 

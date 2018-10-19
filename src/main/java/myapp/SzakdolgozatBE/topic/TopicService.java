@@ -15,13 +15,10 @@ public class TopicService {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
-    public Topic addTopic(String title, String description) {
-        Topic tmp = new Topic();
-        tmp.setTitle(title);
-        tmp.setDescription(description);
-        tmp.setCreateDate(sdf.format(new Date()));
+    public Topic addTopic(Topic topic) {
+        topic.setCreateDate(sdf.format(new Date()));
         //tmp.setMyUser(myUser);
-        return dao.addTopic(tmp);
+        return dao.addTopic(topic);
     }
 
     public List<Topic> getAllTopics() {

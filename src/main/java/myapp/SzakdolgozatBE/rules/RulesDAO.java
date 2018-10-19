@@ -10,8 +10,8 @@ public class RulesDAO {
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
     
-    public Rules getRules(long id) {
-        return em.find(Rules.class, id);
+    public Rules getRules() {
+        return (Rules)em.createNamedQuery("getRules").getSingleResult();
     }
     
     public Rules modifyRules(Rules rules) {
