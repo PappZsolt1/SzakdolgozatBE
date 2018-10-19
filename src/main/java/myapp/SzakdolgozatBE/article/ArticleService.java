@@ -26,24 +26,20 @@ public class ArticleService {
         }        
     }
     
-    public Article publishNewArticle(Article article) {
-        article.setPublishDate(sdf.format(new Date()));
-        article.setPublished(true);
-        //tmp.setMyUser(myUser);
-        return dao.publishNewArticle(article);
-    }
-    
-    public Article publishSavedArticle(long id, Article article) throws NullPointerException {
-        Article tmp = dao.getArticle(id);
-        if (tmp != null) {
+    public Article publishArticle(Article article) {
+        if (article.getId() == null) {
+            article.setPublishDate(sdf.format(new Date()));
+            article.setPublished(true);
+            //tmp.setMyUser(myUser);
+            return dao.publishNewArticle(article);
+        } else {
+            Article tmp = dao.getArticle(article.getId());
             tmp.setTitle(article.getTitle());
             tmp.setContent(article.getContent());
             tmp.setPublishDate(sdf.format(new Date()));
             tmp.setSaved(false);
             tmp.setPublished(true);
             return dao.publishSavedArticle(tmp);
-        } else {
-            throw new NullPointerException();
         }        
     }
     
