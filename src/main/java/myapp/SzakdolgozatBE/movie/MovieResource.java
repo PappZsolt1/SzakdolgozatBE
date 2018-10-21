@@ -62,11 +62,10 @@ public class MovieResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyMovie(@PathParam("id") long id, Movie movie) {
+    public Response modifyMovie(Movie movie) {
         try {
-            Movie tmp = service.modifyMovie(id, movie);
+            Movie tmp = service.modifyMovie(movie);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

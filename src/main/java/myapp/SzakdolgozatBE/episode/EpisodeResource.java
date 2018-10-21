@@ -67,11 +67,10 @@ public class EpisodeResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyEpisode(@PathParam("id") long id, Episode episode) {
+    public Response modifyEpisode(Episode episode) {
         try {
-            Episode tmp = service.modifyEpisode(id, episode);
+            Episode tmp = service.modifyEpisode(episode);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

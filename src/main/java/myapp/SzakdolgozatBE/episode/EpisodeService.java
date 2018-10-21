@@ -44,8 +44,8 @@ public class EpisodeService {
         }
     }
 
-    public Episode modifyEpisode(long id, Episode episode) throws NullPointerException {
-        Episode tmp = dao.getEpisode(id);
+    public Episode modifyEpisode(Episode episode) throws NullPointerException {
+        Episode tmp = dao.getEpisode(episode.getId());
         if (tmp != null) {
             tmp.setTitle(episode.getTitle());
             tmp.setReleaseDate(episode.getReleaseDate());

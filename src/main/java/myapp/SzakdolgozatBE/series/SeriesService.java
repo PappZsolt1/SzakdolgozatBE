@@ -46,8 +46,8 @@ public class SeriesService {
         }
     }
 
-    public Series modifySeries(long id, Series series) throws NullPointerException {
-        Series tmp = dao.getSeries(id);
+    public Series modifySeries(Series series) throws NullPointerException {
+        Series tmp = dao.getSeries(series.getId());
         if (tmp != null) {
             tmp.setTitle(series.getTitle());
             tmp.setReleaseYear(series.getReleaseYear());

@@ -68,11 +68,10 @@ public class SeasonResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifySeason(@PathParam("id") long id, Season season) {
+    public Response modifySeason(Season season) {
         try {
-            Season tmp = service.modifySeason(id, season);
+            Season tmp = service.modifySeason(season);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

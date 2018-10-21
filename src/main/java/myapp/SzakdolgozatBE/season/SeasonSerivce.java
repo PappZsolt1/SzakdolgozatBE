@@ -51,8 +51,8 @@ public class SeasonSerivce {
         }
     }
 
-    public Season modifySeason(long id, Season season) throws NullPointerException {
-        Season tmp = dao.getSeason(id);
+    public Season modifySeason(Season season) throws NullPointerException {
+        Season tmp = dao.getSeason(season.getId());
         if (tmp != null) {
             tmp.setNumber(season.getNumber());
             tmp.setSeries(season.getSeries());

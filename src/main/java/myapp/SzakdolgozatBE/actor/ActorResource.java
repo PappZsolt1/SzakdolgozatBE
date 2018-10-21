@@ -57,11 +57,10 @@ public class ActorResource {
     }
     
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyActor(@PathParam("id") long id, Actor actor) {
+    public Response modifyActor(Actor actor) {
         try {
-            Actor tmp = service.modifyActor(id, actor);
+            Actor tmp = service.modifyActor(actor);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();

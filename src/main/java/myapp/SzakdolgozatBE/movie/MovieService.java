@@ -44,8 +44,8 @@ public class MovieService {
         }
     }
 
-    public Movie modifyMovie(long id, Movie movie) throws NullPointerException {
-        Movie tmp = dao.getMovie(id);
+    public Movie modifyMovie(Movie movie) throws NullPointerException {
+        Movie tmp = dao.getMovie(movie.getId());
         if (tmp != null) {
             tmp.setTitle(movie.getTitle());
             tmp.setBudget(movie.getBudget());

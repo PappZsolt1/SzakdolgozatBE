@@ -44,8 +44,8 @@ public class ActorService {
         }
     }
 
-    public Actor modifyActor(long id, Actor actor) throws NullPointerException {
-        Actor tmp = dao.getActor(id);
+    public Actor modifyActor(Actor actor) throws NullPointerException {
+        Actor tmp = dao.getActor(actor.getId());
         if (tmp != null) {
             tmp.setBio(actor.getBio());
             tmp.setBirthDate(actor.getBirthDate());

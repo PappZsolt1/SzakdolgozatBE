@@ -58,11 +58,10 @@ public class SeriesResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifySeries(@PathParam("id") long id, Series series) {
+    public Response modifySeries(Series series) {
         try {
-            Series tmp = service.modifySeries(id, series);
+            Series tmp = service.modifySeries(series);
             return Response.ok().entity(tmp).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();
