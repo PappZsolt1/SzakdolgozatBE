@@ -16,7 +16,7 @@ public class AgeClassificationDAO {
     }
 
     public List<AgeClassification> getAllAgeClassifications() {
-        return em.createNamedQuery("getAllAgeClassification").getResultList();
+        return em.createNamedQuery("getAllAgeClassifications").getResultList();
     }
 
     public AgeClassification addAgeClassification(AgeClassification ageClassification) {
