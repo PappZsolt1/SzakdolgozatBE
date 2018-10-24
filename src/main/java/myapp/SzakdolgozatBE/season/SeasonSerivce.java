@@ -15,13 +15,8 @@ public class SeasonSerivce {
     @Inject
     SeriesDAO seriesDAO;
 
-    public Season addSeason(Season season) throws NullPointerException {
-        Series tmp = seriesDAO.getSeries(season.getSeries().getId());
-        if (tmp != null) {            
-            return dao.addSeason(season);
-        } else {
-            throw new NullPointerException();
-        }
+    public Season addSeason(Season season) {
+        return dao.addSeason(season);
     }
 
     public Season getSeason(long id) throws NullPointerException {

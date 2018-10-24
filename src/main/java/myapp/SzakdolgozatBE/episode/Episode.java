@@ -45,7 +45,7 @@ public class Episode implements Serializable {
     
     private String releaseDate;
     
-    private int eLength;
+    private String eLength;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "season_id")
@@ -115,12 +115,12 @@ public class Episode implements Serializable {
         this.releaseDate = releaseDate;
     }
 
-    public int getLength() {
+    public String geteLength() {
         return eLength;
     }
 
-    public void setLength(int length) {
-        this.eLength = length;
+    public void seteLength(String eLength) {
+        this.eLength = eLength;
     }
 
     public Season getSeason() {

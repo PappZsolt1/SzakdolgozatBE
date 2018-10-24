@@ -47,7 +47,7 @@ public class Movie implements Serializable {
     
     private int budget;
     
-    private int mLength;
+    private String mLength;
     
     private int releaseYear;
 
@@ -127,12 +127,12 @@ public class Movie implements Serializable {
         this.budget = budget;
     }
 
-    public int getLength() {
+    public String getmLength() {
         return mLength;
     }
 
-    public void setLength(int length) {
-        this.mLength = length;
+    public void setmLength(String mLength) {
+        this.mLength = mLength;
     }
 
     public int getReleaseYear() {

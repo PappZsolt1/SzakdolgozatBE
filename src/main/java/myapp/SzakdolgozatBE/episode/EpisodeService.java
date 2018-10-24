@@ -49,7 +49,7 @@ public class EpisodeService {
         if (tmp != null) {
             tmp.setTitle(episode.getTitle());
             tmp.setReleaseDate(episode.getReleaseDate());
-            tmp.setLength(episode.getLength());
+            tmp.seteLength(episode.geteLength());
             tmp.setSeason(episode.getSeason());
             tmp.setActors(episode.getActors());
             return dao.modifyEpisode(tmp);

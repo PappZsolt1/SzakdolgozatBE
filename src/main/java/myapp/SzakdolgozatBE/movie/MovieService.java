@@ -49,7 +49,7 @@ public class MovieService {
         if (tmp != null) {
             tmp.setTitle(movie.getTitle());
             tmp.setBudget(movie.getBudget());
-            tmp.setLength(movie.getLength());
+            tmp.setmLength(movie.getmLength());
             tmp.setReleaseYear(movie.getReleaseYear());
             tmp.setCoverPicture(movie.getCoverPicture());
             tmp.setAgeClassification(movie.getAgeClassification());
