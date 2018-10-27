@@ -4,12 +4,21 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import myapp.SzakdolgozatBE.actor.Actor;
+import myapp.SzakdolgozatBE.article.Article;
+import myapp.SzakdolgozatBE.episode.Episode;
+import myapp.SzakdolgozatBE.movie.Movie;
+import myapp.SzakdolgozatBE.topic.Topic;
 
 @RequestScoped
 public class CommentDAO {
     
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
+    
+    public Comment getComment(long id) {
+        return em.find(Comment.class, id);        
+    }
     
     public Comment addComment(Comment comment) {
         em.getTransaction().begin();
@@ -18,7 +27,30 @@ public class CommentDAO {
         return comment;
     }
     
-    /*public List<Comment> getxxxComments () {
-        //todo
-    }*/
+    public List<Comment> getMovieComments (Movie movie) {
+        return em.createNamedQuery("getMovieComments").setParameter("movie", movie).getResultList();
+    }
+    
+    public List<Comment> getEpisodeComments (Episode episode) {
+        return em.createNamedQuery("getEpisodeComments").setParameter("episode", episode).getResultList();
+    }
+    
+    public List<Comment> getActorComments (Actor actor) {
+        return em.createNamedQuery("getActorComments").setParameter("actor", actor).getResultList();
+    }
+    
+    public List<Comment> getArticleComments (Article article) {
+        return em.createNamedQuery("getArticleComments").setParameter("article", article).getResultList();
+    }
+    
+    public List<Comment> getTopicComments (Topic topic) {
+        return em.createNamedQuery("getTopicComments").setParameter("topic", topic).getResultList();
+    }
+    
+    public Comment moderateComment(Comment comment) {
+        em.getTransaction().begin();
+        em.merge(comment);
+        em.getTransaction().commit();
+        return comment;
+    }
 }

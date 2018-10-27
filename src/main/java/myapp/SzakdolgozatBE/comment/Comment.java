@@ -23,7 +23,11 @@ import myapp.SzakdolgozatBE.topic.Topic;
 @Entity
 @Table(name = "Comment")
 @NamedQueries({
-    //@NamedQuery(name = "", query = "")
+    @NamedQuery(name = "getMovieComments", query = "SELECT c FROM Comment c WHERE c.movie = :movie"),
+    @NamedQuery(name = "getEpisodeComments", query = "SELECT c FROM Comment c WHERE c.episode = :episode"),
+    @NamedQuery(name = "getActorComments", query = "SELECT c FROM Comment c WHERE c.actor = :actor"),
+    @NamedQuery(name = "getArticleComments", query = "SELECT c FROM Comment c WHERE c.article = :article"),
+    @NamedQuery(name = "getTopicComments", query = "SELECT c FROM Comment c WHERE c.topic = :topic")
 })
 public class Comment implements Serializable {
 

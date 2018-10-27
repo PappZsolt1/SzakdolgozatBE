@@ -80,7 +80,33 @@ public class CommentService {
         return dao.addComment(tmp);
     }
 
-    /*public List<Comment> getxxxComments () {
-        //todo
-    }*/
+    public List<Comment> getMovieComments (long movieId) {
+        return dao.getMovieComments(movieDao.getMovie(movieId));
+    }
+    
+    public List<Comment> getEpisodeComments (long episodeId) {
+        return dao.getEpisodeComments(episodeDao.getEpisode(episodeId));
+    }
+    
+    public List<Comment> getActorComments (long actorId) {
+        return dao.getActorComments(actorDao.getActor(actorId));
+    }
+    
+    public List<Comment> getArticleComments (long articleId) {
+        return dao.getArticleComments(articleDao.getArticle(articleId));
+    }
+    
+    public List<Comment> getTopicComments (long topicId) {
+        return dao.getTopicComments(TopicDao.getTopic(topicId));
+    }
+    
+    public Comment moderateComment(long commentId) throws NullPointerException {
+        Comment tmp = dao.getComment(commentId);
+        if (tmp != null) {
+            tmp.setContent("Moderálva!");
+            return dao.moderateComment(tmp);
+        } else {
+            throw new NullPointerException();
+        }        
+    }
 }
