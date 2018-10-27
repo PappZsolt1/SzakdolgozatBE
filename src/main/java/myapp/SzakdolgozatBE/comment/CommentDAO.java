@@ -27,23 +27,23 @@ public class CommentDAO {
         return comment;
     }
     
-    public List<Comment> getMovieComments (Movie movie) {
+    public List<Comment> getMovieComments(Movie movie) {
         return em.createNamedQuery("getMovieComments").setParameter("movie", movie).getResultList();
     }
     
-    public List<Comment> getEpisodeComments (Episode episode) {
+    public List<Comment> getEpisodeComments(Episode episode) {
         return em.createNamedQuery("getEpisodeComments").setParameter("episode", episode).getResultList();
     }
     
-    public List<Comment> getActorComments (Actor actor) {
+    public List<Comment> getActorComments(Actor actor) {
         return em.createNamedQuery("getActorComments").setParameter("actor", actor).getResultList();
     }
     
-    public List<Comment> getArticleComments (Article article) {
+    public List<Comment> getArticleComments(Article article) {
         return em.createNamedQuery("getArticleComments").setParameter("article", article).getResultList();
     }
     
-    public List<Comment> getTopicComments (Topic topic) {
+    public List<Comment> getTopicComments(Topic topic) {
         return em.createNamedQuery("getTopicComments").setParameter("topic", topic).getResultList();
     }
     
