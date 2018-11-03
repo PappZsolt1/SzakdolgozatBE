@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
-@Table(name = "ERRORREPORT")
+@Table(name = "ErrorReport")
 @NamedQueries({
     @NamedQuery(name = "getAllErrorReports", query = "SELECT e FROM ErrorReport e ORDER BY e.sendingDate ASC"),
     @NamedQuery(name = "getResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = TRUE ORDER BY e.sendingDate ASC"),

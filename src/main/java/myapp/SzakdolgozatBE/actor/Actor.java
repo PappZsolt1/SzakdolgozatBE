@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,6 +42,9 @@ public class Actor implements Serializable {
     private String birthPlace;
     
     private String bio;
+    
+    @Lob
+    private byte[] photo;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gender_id")
@@ -97,6 +101,14 @@ public class Actor implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
     public Gender getGender() {
