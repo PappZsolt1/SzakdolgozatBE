@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.actor.Actor;
 
@@ -23,7 +24,8 @@ import myapp.SzakdolgozatBE.actor.Actor;
 public class Gender implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 
     private String name;

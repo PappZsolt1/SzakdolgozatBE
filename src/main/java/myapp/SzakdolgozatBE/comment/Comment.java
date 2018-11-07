@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.article.Article;
@@ -34,9 +36,11 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
     
+    @Column(columnDefinition = "TEXT")
     private String content;
     
     @ManyToOne(fetch = FetchType.LAZY)

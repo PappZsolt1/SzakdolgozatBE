@@ -1,12 +1,14 @@
 package myapp.SzakdolgozatBE.rules;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Table(name = "Rules")
@@ -19,9 +21,11 @@ public class Rules implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
     
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     public Long getId() {

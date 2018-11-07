@@ -47,4 +47,13 @@ public class AgeClassificationService {
             throw new NullPointerException();
         }
     }
+    
+    public boolean canBeDeleted(long id) {
+        AgeClassification tmp = dao.getAgeClassification(id);
+        if (tmp.getMovies().isEmpty() && tmp.getSeries().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

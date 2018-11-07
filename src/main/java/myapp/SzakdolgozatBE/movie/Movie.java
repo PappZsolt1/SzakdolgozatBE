@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
@@ -34,7 +35,9 @@ public class Movie implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
     
     private String title;
