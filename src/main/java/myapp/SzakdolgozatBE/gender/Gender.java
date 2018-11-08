@@ -24,7 +24,7 @@ import myapp.SzakdolgozatBE.actor.Actor;
 public class Gender implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @SequenceGenerator(name = "gen")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 

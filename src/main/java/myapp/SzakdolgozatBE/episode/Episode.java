@@ -33,7 +33,7 @@ public class Episode implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @SequenceGenerator(name = "gen")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
     

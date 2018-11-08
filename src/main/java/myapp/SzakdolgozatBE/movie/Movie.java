@@ -36,7 +36,7 @@ public class Movie implements Serializable {
     
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @SequenceGenerator(name = "gen")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
     

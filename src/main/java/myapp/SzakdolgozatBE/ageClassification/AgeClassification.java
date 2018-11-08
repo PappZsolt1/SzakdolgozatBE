@@ -25,7 +25,7 @@ import myapp.SzakdolgozatBE.series.Series;
 public class AgeClassification implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "gen", initialValue = 1000, allocationSize = 50)
+    @SequenceGenerator(name = "gen")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 
