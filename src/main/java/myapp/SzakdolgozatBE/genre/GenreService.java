@@ -3,13 +3,21 @@ package myapp.SzakdolgozatBE.genre;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.movie.MovieDAO;
+import myapp.SzakdolgozatBE.series.SeriesDAO;
 
 @Stateless
 public class GenreService {
 
     @Inject
     GenreDAO dao;
+    
+    @Inject
+    MovieDAO movieDao;
 
+    @Inject
+    SeriesDAO seriesDao;
+    
     public Genre getGenre(long id) throws NullPointerException {
         Genre tmp = dao.getGenre(id);
         if (tmp == null) {
@@ -45,6 +53,15 @@ public class GenreService {
             return dao.modifyGenre(tmp);
         } else {
             throw new NullPointerException();
+        }
+    }
+    
+    public boolean canBeDeleted(long id) {
+        Genre tmp = dao.getGenre(id);
+        if (movieDao.genreNotUsed(tmp) && seriesDao.genreNotUsed(tmp)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

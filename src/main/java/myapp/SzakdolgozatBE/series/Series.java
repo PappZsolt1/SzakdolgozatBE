@@ -24,6 +24,8 @@ import myapp.SzakdolgozatBE.season.Season;
 @Table(name = "Series")
 @NamedQueries({
     @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s"),
+    @NamedQuery(name = "getAgeClassificationSeries", query = "SELECT s FROM Series s WHERE s.ageClassification = :ageClassification"),
+    @NamedQuery(name = "getGenreSeries", query = "SELECT s FROM Series s WHERE s.genre = :genre")
     //@NamedQuery(name = "getEpisodeRatings", query = "") // todo
 })
 public class Series implements Serializable {

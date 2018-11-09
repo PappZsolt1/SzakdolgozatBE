@@ -4,6 +4,8 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import myapp.SzakdolgozatBE.ageClassification.AgeClassification;
+import myapp.SzakdolgozatBE.genre.Genre;
 
 @RequestScoped
 public class SeriesDAO {
@@ -43,5 +45,15 @@ public class SeriesDAO {
         em.getTransaction().begin();
         em.merge(series);
         em.getTransaction().commit();
+    }
+    
+    public boolean ageClassificationNotUsed(AgeClassification ageClassification) {
+        return em.createNamedQuery("getAgeClassificationSeries")
+                .setParameter("ageClassification", ageClassification).getResultList().isEmpty();
+    }
+    
+    public boolean genreNotUsed(Genre genre) {
+        return em.createNamedQuery("getGenreSeries")
+                .setParameter("genre", genre).getResultList().isEmpty();
     }
 }

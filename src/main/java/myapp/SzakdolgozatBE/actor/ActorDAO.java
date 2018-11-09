@@ -4,6 +4,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import myapp.SzakdolgozatBE.gender.Gender;
 
 @RequestScoped
 public class ActorDAO {
@@ -37,5 +38,10 @@ public class ActorDAO {
         em.merge(actor);
         em.getTransaction().commit();
         return actor;
+    }
+    
+    public boolean genreNotUsed(Gender gender) {
+        return em.createNamedQuery("getGenderActors")
+                .setParameter("gender", gender).getResultList().isEmpty();
     }
 }

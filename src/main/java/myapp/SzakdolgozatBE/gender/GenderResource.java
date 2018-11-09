@@ -68,4 +68,11 @@ public class GenderResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean canBeDeleted(@PathParam("id") long id) {
+        return service.canBeDeleted(id);
+    }
 }

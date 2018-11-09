@@ -3,12 +3,16 @@ package myapp.SzakdolgozatBE.gender;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.actor.ActorDAO;
 
 @Stateless
 public class GenderService {
 
     @Inject
     GenderDAO dao;
+    
+    @Inject
+    ActorDAO actorDao;
 
     public Gender getGender(long id) throws NullPointerException {
         Gender tmp = dao.getGender(id);
@@ -45,6 +49,15 @@ public class GenderService {
             return dao.modifyGender(tmp);
         } else {
             throw new NullPointerException();
+        }
+    }
+    
+    public boolean canBeDeleted(long id) {
+        Gender tmp = dao.getGender(id);
+        if (actorDao.genreNotUsed(tmp)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

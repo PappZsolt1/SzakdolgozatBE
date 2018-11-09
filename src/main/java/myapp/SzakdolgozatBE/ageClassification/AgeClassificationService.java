@@ -3,12 +3,20 @@ package myapp.SzakdolgozatBE.ageClassification;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.movie.MovieDAO;
+import myapp.SzakdolgozatBE.series.SeriesDAO;
 
 @Stateless
 public class AgeClassificationService {
 
     @Inject
     AgeClassificationDAO dao;
+    
+    @Inject
+    MovieDAO movieDao;
+    
+    @Inject
+    SeriesDAO seriesDao;
 
     public AgeClassification getAgeClassification(long id) throws NullPointerException {
         AgeClassification tmp = dao.getAgeClassification(id);
@@ -50,7 +58,7 @@ public class AgeClassificationService {
     
     public boolean canBeDeleted(long id) {
         AgeClassification tmp = dao.getAgeClassification(id);
-        if (tmp.getMovies().isEmpty() && tmp.getSeries().isEmpty()) {
+        if (movieDao.ageClassificationNotUsed(tmp) && seriesDao.ageClassificationNotUsed(tmp)) {
             return true;
         } else {
             return false;

@@ -27,7 +27,7 @@ import myapp.SzakdolgozatBE.movie.Movie;
 @Entity
 @Table(name = "Actor")
 @NamedQueries({
-    //@NamedQuery(name = "", query = "")
+    @NamedQuery(name = "getGenderActors", query = "SELECT a FROM Actor a WHERE a.gender = :gender")
 })
 public class Actor implements Serializable {
 
