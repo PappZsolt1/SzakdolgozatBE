@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/actor")
 @ApplicationScoped
@@ -22,8 +23,12 @@ public class ActorResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addActor(Actor actor) {
-        Actor tmp = service.addActor(actor);
-        return Response.ok().entity(tmp).build();
+        try {
+            Actor tmp = service.addActor(actor);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }        
     }
     
     @GET
@@ -62,6 +67,8 @@ public class ActorResource {
         try {
             Actor tmp = service.modifyActor(actor);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
