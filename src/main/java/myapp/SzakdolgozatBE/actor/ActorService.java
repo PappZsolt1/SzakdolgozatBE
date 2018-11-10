@@ -65,6 +65,15 @@ public class ActorService {
     }
     
     public boolean validateDate(String birthDate) {
+        int year;
+        try {
+            year = Integer.parseInt(birthDate.substring(0, 4));
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if (year < 1800 || year > 2100) {
+            return false;
+        }
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd.");
             sdf.setLenient(false);
