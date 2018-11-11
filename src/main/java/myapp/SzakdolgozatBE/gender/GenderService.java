@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.gender;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 
 @Stateless
@@ -14,10 +15,10 @@ public class GenderService {
     @Inject
     ActorDAO actorDao;
 
-    public Gender getGender(long id) throws NullPointerException {
+    public Gender getGender(long id) throws MyValidationException {
         Gender tmp = dao.getGender(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return tmp;
         }
@@ -27,34 +28,40 @@ public class GenderService {
         return dao.getAllGenders();
     }
 
-    public Gender addGender(String name) {
+    public Gender addGender(String name) throws MyValidationException {
+        if (name.matches("^\\S.*\\S$|^\\S$") == false) {
+            throw new MyValidationException();
+        } else {
         Gender tmp = new Gender();
         tmp.setName(name);
-        return dao.addGender(tmp);
+        return dao.addGender(tmp);        
+        }
     }
 
-    public void deleteGender(long id) throws NullPointerException {
+    public void deleteGender(long id) throws MyValidationException {
         Gender tmp = dao.getGender(id);
-        if (tmp == null) {
-            throw new NullPointerException();
+        if (tmp == null || canBeDeleted(id) == false) {
+            throw new MyValidationException();
         } else {
             dao.deleteGender(id);
         }
     }
 
-    public Gender modifyGender(long id, String name) throws NullPointerException {
+    public Gender modifyGender(long id, String name) throws MyValidationException {
         Gender tmp = dao.getGender(id);
-        if (tmp != null) {
+        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false) {
+            throw new MyValidationException();
+        } else {
             tmp.setName(name);
             return dao.modifyGender(tmp);
-        } else {
-            throw new NullPointerException();
         }
     }
     
-    public boolean canBeDeleted(long id) {
+    public boolean canBeDeleted(long id) throws MyValidationException {
         Gender tmp = dao.getGender(id);
-        if (actorDao.genreNotUsed(tmp)) {
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else if (actorDao.genreNotUsed(tmp) == true) {
             return true;
         } else {
             return false;

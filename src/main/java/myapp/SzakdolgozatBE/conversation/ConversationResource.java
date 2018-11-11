@@ -10,6 +10,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/conversation")
 @ApplicationScoped
@@ -25,21 +26,34 @@ public class ConversationResource {
         try {
             Conversation tmp = service.getConversation(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addConversation(Conversation conversation) {
-        Conversation tmp = service.addConversation(conversation);
-        return Response.ok().entity(tmp).build();
+        try {
+            Conversation tmp = service.addConversation(conversation);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Conversation> getUserConversations() {
-        return service.getUserConversations();
+    public Response getUserConversations() {
+        try {
+            List<Conversation> tmp = service.getUserConversations();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

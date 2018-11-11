@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.ageClassification;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
 import myapp.SzakdolgozatBE.series.SeriesDAO;
 
@@ -18,10 +19,10 @@ public class AgeClassificationService {
     @Inject
     SeriesDAO seriesDao;
 
-    public AgeClassification getAgeClassification(long id) throws NullPointerException {
+    public AgeClassification getAgeClassification(long id) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return tmp;
         }
@@ -31,34 +32,40 @@ public class AgeClassificationService {
         return dao.getAllAgeClassifications();
     }
 
-    public AgeClassification addAgeClassification(String name) {
-        AgeClassification tmp = new AgeClassification();
-        tmp.setName(name);
-        return dao.addAgeClassification(tmp);
+    public AgeClassification addAgeClassification(String name) throws MyValidationException {
+        if (name.matches("^\\S.*\\S$|^\\S$") == false) {
+            throw new MyValidationException();
+        } else {
+            AgeClassification tmp = new AgeClassification();
+            tmp.setName(name);
+            return dao.addAgeClassification(tmp);            
+        }
     }
 
-    public void deleteAgeClassification(long id) throws NullPointerException {
+    public void deleteAgeClassification(long id) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
-        if (tmp == null) {
-            throw new NullPointerException();
+        if (tmp == null || canBeDeleted(id) == false) {
+            throw new MyValidationException();
         } else {
             dao.deleteAgeClassification(id);
         }
     }
 
-    public AgeClassification modifyAgeClassification(long id, String name) throws NullPointerException {
+    public AgeClassification modifyAgeClassification(long id, String name) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
-        if (tmp != null) {
+        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false) {
+            throw new MyValidationException();
+        } else {
             tmp.setName(name);
             return dao.modifyAgeClassification(tmp);
-        } else {
-            throw new NullPointerException();
         }
     }
     
-    public boolean canBeDeleted(long id) {
+    public boolean canBeDeleted(long id) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
-        if (movieDao.ageClassificationNotUsed(tmp) && seriesDao.ageClassificationNotUsed(tmp)) {
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else if (movieDao.ageClassificationNotUsed(tmp) == true && seriesDao.ageClassificationNotUsed(tmp) == true) {
             return true;
         } else {
             return false;

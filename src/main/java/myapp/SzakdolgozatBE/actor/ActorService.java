@@ -19,20 +19,22 @@ public class ActorService {
     GenderDAO genderDao;
 
     public Actor addActor(Actor actor) throws MyValidationException {
-        if (actor.getId() != null || actor.getName().trim().equals("") ||
-                actor.getBirthPlace().trim().equals("") || actor.getBio().trim().equals("") ||
+        if (actor.getId() != null ||
+                actor.getName().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getBirthPlace().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getBio().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
                 genderDao.getGender(actor.getGender().getId()) == null ||
-                validateDate(actor.getBirthDate()) == false) { //photo
+                validateBirthDate(actor.getBirthDate()) == false) { //photo
             throw new MyValidationException();
         } else {
             return dao.addActor(actor);
         }        
     }
 
-    public Actor getActor(long id) throws NullPointerException {
+    public Actor getActor(long id) throws MyValidationException {
         Actor tmp = dao.getActor(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return tmp;
         }
@@ -42,29 +44,31 @@ public class ActorService {
         //todo
     }*/
     
-    public void deleteActor(long id) throws NullPointerException {
+    public void deleteActor(long id) throws MyValidationException {
         Actor tmp = dao.getActor(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             dao.deleteActor(id);
         }
     }
 
-    public Actor modifyActor(Actor actor) throws NullPointerException, MyValidationException {
-        if (actor.getId() == null || actor.getName().trim().equals("") ||
-                actor.getBirthPlace().trim().equals("") || actor.getBio().trim().equals("") ||
+    public Actor modifyActor(Actor actor) throws MyValidationException {
+        if (actor.getId() == null ||
+                actor.getName().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getBirthPlace().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getBio().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
                 genderDao.getGender(actor.getGender().getId()) == null ||
-                validateDate(actor.getBirthDate()) == false) { //photo
+                validateBirthDate(actor.getBirthDate()) == false) { //photo
             throw new MyValidationException();
         } else if (dao.getActor(actor.getId()) == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return dao.modifyActor(actor);
         }
     }
     
-    public boolean validateDate(String birthDate) {
+    public boolean validateBirthDate(String birthDate) {
         int year;
         try {
             year = Integer.parseInt(birthDate.substring(0, 4));

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Stateless
 public class ArticleService {
@@ -13,34 +14,57 @@ public class ArticleService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
-    public Article saveArticle(Article article) {
-        if (article.getId() == null) {
+    public Article saveArticle(Article article) throws MyValidationException {
+        if (article.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                article.getPublishDate() != null ||
+                article.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                article.isPublished() == true) {
+            throw new MyValidationException();
+        } else if (article.getId() == null && article.isSaved() == false) {
             article.setSaved(true);
             //tmp.setMyUser(myUser);
             return dao.saveArticle(article);
-        } else {
+        } else if (article.getId() != null && article.isSaved() == true) {
             Article tmp = dao.getArticle(article.getId());
-            tmp.setTitle(article.getTitle());
-            tmp.setContent(article.getContent());
-            return dao.saveAgainArticle(tmp);
-        }        
-    }
+            if (tmp == null) {
+                throw new MyValidationException();
+            } else {
+                tmp.setTitle(article.getTitle());
+                tmp.setContent(article.getContent());
+                return dao.saveAgainArticle(tmp);
+            }
+        } else {
+            throw new MyValidationException();
+        }
+    }     
+
     
-    public Article publishArticle(Article article) {
-        if (article.getId() == null) {
+    public Article publishArticle(Article article) throws MyValidationException {
+        if (article.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                article.getPublishDate() != null ||
+                article.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                article.isPublished() == true) {
+            throw new MyValidationException();
+        } else if (article.getId() == null && article.isSaved() == false) {
             article.setPublishDate(sdf.format(new Date()));
             article.setPublished(true);
             //tmp.setMyUser(myUser);
             return dao.publishNewArticle(article);
-        } else {
+        } else if (article.getId() != null && article.isSaved() == true) {
             Article tmp = dao.getArticle(article.getId());
-            tmp.setTitle(article.getTitle());
-            tmp.setContent(article.getContent());
-            tmp.setPublishDate(sdf.format(new Date()));
-            tmp.setSaved(false);
-            tmp.setPublished(true);
-            return dao.publishSavedArticle(tmp);
-        }        
+            if (tmp == null) {
+                throw new MyValidationException();
+            } else {
+                tmp.setTitle(article.getTitle());
+                tmp.setContent(article.getContent());
+                tmp.setPublishDate(sdf.format(new Date()));
+                tmp.setSaved(false);
+                tmp.setPublished(true);
+                return dao.publishSavedArticle(tmp);
+            }
+        } else {
+            throw new MyValidationException();
+        }
     }
     
     public List<Article> getSavedArticles() {
@@ -52,21 +76,21 @@ public class ArticleService {
         return dao.getPublishedArticles();
     }
     
-    public void deleteArticle(long id) throws NullPointerException {
+    public void deleteArticle(long id) throws MyValidationException {
         Article tmp = dao.getArticle(id);
         if (tmp != null) {
             dao.deleteArticle(id);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
     
-    public Article getArticle(long id) throws NullPointerException {
+    public Article getArticle(long id) throws MyValidationException {
         Article tmp = dao.getArticle(id);
         if (tmp != null) {
             return tmp;
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
 }

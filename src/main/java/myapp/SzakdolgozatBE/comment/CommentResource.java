@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/comment")
 @ApplicationScoped
@@ -21,43 +22,74 @@ public class CommentResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addComment(Comment comment) {
-        Comment tmp =  service.addComment(comment);
-        return Response.ok().entity(tmp).build();
+        try {
+            Comment tmp =  service.addComment(comment);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Path("/movie/{movieId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Comment> getMovieComments(@PathParam("movieId") long movieId) {
-        return service.getMovieComments(movieId);
+    public Response getMovieComments(@PathParam("movieId") long movieId) {
+        try {
+            List<Comment> tmp = service.getMovieComments(movieId);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Path("/episode/{episodeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Comment> getEpisodeComments(@PathParam("episodeId") long episodeId) {
-        return service.getEpisodeComments(episodeId);
+    public Response getEpisodeComments(@PathParam("episodeId") long episodeId) {
+        try {
+            List<Comment> tmp = service.getEpisodeComments(episodeId);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Path("/actor/{actorId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Comment> getActorComments(@PathParam("actorId") long actorId) {
-        return service.getActorComments(actorId);
+    public Response getActorComments(@PathParam("actorId") long actorId) {
+        try {
+            List<Comment> tmp = service.getActorComments(actorId);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Path("/article/articleId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Comment> getArticleComments(@PathParam("articleId") long articleId) {
-        return service.getArticleComments(articleId);
+    public Response getArticleComments(@PathParam("articleId") long articleId) {
+        try {
+            List<Comment> tmp = service.getArticleComments(articleId);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Path("/topic/{topicId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Comment> getTopicComments(@PathParam("topicId") long topicId) {
-        return service.getTopicComments(topicId);
+    public Response getTopicComments(@PathParam("topicId") long topicId) {
+        try {
+            List<Comment> tmp = service.getTopicComments(topicId);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @PUT

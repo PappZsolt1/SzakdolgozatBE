@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/gender")
 @ApplicationScoped
@@ -27,22 +28,35 @@ public class GenderResource {
         try {
             Gender tmp = service.getGender(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Gender> getAllGenders() {
-        return service.getAllGenders();
+    public Response getAllGenders() {
+        try {
+            List<Gender> tmp = service.getAllGenders();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addGender(String name) {
-        Gender tmp = service.addGender(name);
-        return Response.ok().entity(tmp).build();
+        try {
+            Gender tmp = service.addGender(name);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DELETE
@@ -52,8 +66,10 @@ public class GenderResource {
         try {
             service.deleteGender(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -64,15 +80,24 @@ public class GenderResource {
         try {
             Gender tmp = service.modifyGender(id, name);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     @GET
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean canBeDeleted(@PathParam("id") long id) {
-        return service.canBeDeleted(id);
+    public Response canBeDeleted(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.canBeDeleted(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

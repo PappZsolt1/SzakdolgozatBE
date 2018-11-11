@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.rating.RatingService;
 import myapp.SzakdolgozatBE.series.SeriesService;
 
@@ -31,8 +32,14 @@ public class EpisodeResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addEpisode(Episode episode) {
-        Episode tmp = service.addEpisode(episode);
-        return Response.ok().entity(tmp).build();
+        try {
+            Episode tmp = service.addEpisode(episode);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
@@ -42,16 +49,23 @@ public class EpisodeResource {
         try {
             Episode tmp = service.getEpisode(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Path("/season/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Episode> getSeasonEpisodes(@PathParam("seasonId") long seasonId) {
-        return service.getSeasonEpisodes(seasonId);
+    public Response getSeasonEpisodes(@PathParam("seasonId") long seasonId) {
+        try {
+            List<Episode> tmp = service.getSeasonEpisodes(seasonId);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DELETE
@@ -61,8 +75,10 @@ public class EpisodeResource {
         try {
             service.deleteEpisode(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -72,8 +88,10 @@ public class EpisodeResource {
         try {
             Episode tmp = service.modifyEpisode(episode);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -87,8 +105,10 @@ public class EpisodeResource {
             long seriesId = service.getEpisode(id).getSeason().getSeries().getId();
             seriesService.changeRating(seriesId);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

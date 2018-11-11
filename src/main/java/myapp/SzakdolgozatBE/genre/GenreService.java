@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.genre;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
 import myapp.SzakdolgozatBE.series.SeriesDAO;
 
@@ -18,10 +19,10 @@ public class GenreService {
     @Inject
     SeriesDAO seriesDao;
     
-    public Genre getGenre(long id) throws NullPointerException {
+    public Genre getGenre(long id) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return tmp;
         }
@@ -31,34 +32,40 @@ public class GenreService {
         return dao.getAllGenres();
     }
 
-    public Genre addGenre(String name) {
-        Genre tmp = new Genre();
-        tmp.setName(name);
-        return dao.addGenre(tmp);
+    public Genre addGenre(String name) throws MyValidationException {
+        if (name.matches("^\\S.*\\S$|^\\S$") == false) {
+            throw new MyValidationException();
+        } else {
+            Genre tmp = new Genre();
+            tmp.setName(name);
+            return dao.addGenre(tmp);
+        }
     }
 
-    public void deleteGenre(long id) {
+    public void deleteGenre(long id) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
-        if (tmp == null) {
-            throw new NullPointerException();
+        if (tmp == null || canBeDeleted(id) == false) {
+            throw new MyValidationException();
         } else {
             dao.deleteGenre(id);
         }
     }
 
-    public Genre modifyGenre(long id, String name) throws NullPointerException {
+    public Genre modifyGenre(long id, String name) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
-        if (tmp != null) {
+        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false) {
+            throw new MyValidationException();
+        } else {
             tmp.setName(name);            
             return dao.modifyGenre(tmp);
-        } else {
-            throw new NullPointerException();
         }
     }
     
-    public boolean canBeDeleted(long id) {
+    public boolean canBeDeleted(long id) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
-        if (movieDao.genreNotUsed(tmp) && seriesDao.genreNotUsed(tmp)) {
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else if (movieDao.genreNotUsed(tmp) && seriesDao.genreNotUsed(tmp)) {
             return true;
         } else {
             return false;

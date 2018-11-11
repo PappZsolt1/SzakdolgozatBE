@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/article")
 @ApplicationScoped
@@ -24,28 +25,50 @@ public class ArticleResource {
     @Path("/save")
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveArticle(Article article) {
-        Article tmp = service.saveArticle(article);
-        return Response.ok().entity(tmp).build();
+        try {
+            Article tmp = service.saveArticle(article);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response publishArticle(Article article) {
-        Article tmp = service.publishArticle(article);
-        return Response.ok().entity(tmp).build();
+        try {
+            Article tmp = service.publishArticle(article);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/save")
-    public List<Article> getSavedArticles() {
-        return service.getSavedArticles();
+    public Response getSavedArticles() {
+        try {
+            List<Article> tmp = service.getSavedArticles();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Article> getPublishedArticles() {
-        return service.getPublishedArticles();
+    public Response getPublishedArticles() {
+        try {
+            List<Article> tmp = service.getPublishedArticles();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @DELETE
@@ -55,8 +78,10 @@ public class ArticleResource {
         try {
             service.deleteArticle(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
@@ -67,8 +92,10 @@ public class ArticleResource {
         try {
             Article tmp = service.getArticle(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

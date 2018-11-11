@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.article.ArticleDAO;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
@@ -35,10 +36,16 @@ public class CommentService {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
-    public Comment addComment(Comment comment) {
-        comment.setPostDate(sdf.format(new Date()));
-        //tmp.setMyUser(myUser);
-        return dao.addComment(comment);
+    public Comment addComment(Comment comment) throws MyValidationException {
+        if (comment.getId() != null ||
+                comment.getPostDate() != null ||
+                comment.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false) {//other entities, only one
+            throw new MyValidationException();
+        } else {
+            comment.setPostDate(sdf.format(new Date()));
+            //tmp.setMyUser(myUser);
+            return dao.addComment(comment);
+        }
     }
     
     public List<Comment> getMovieComments (long movieId) {
@@ -61,13 +68,13 @@ public class CommentService {
         return dao.getTopicComments(TopicDao.getTopic(topicId));
     }
     
-    public Comment moderateComment(long commentId) throws NullPointerException {
-        Comment tmp = dao.getComment(commentId);
+    public Comment moderateComment(long id) throws MyValidationException {
+        Comment tmp = dao.getComment(id);
         if (tmp != null) {
             tmp.setContent("Moderálva!");
             return dao.moderateComment(tmp);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }        
     }
 }
