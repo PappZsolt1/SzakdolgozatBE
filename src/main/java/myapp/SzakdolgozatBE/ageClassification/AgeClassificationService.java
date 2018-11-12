@@ -33,7 +33,7 @@ public class AgeClassificationService {
     }
 
     public AgeClassification addAgeClassification(String name) throws MyValidationException {
-        if (name.matches("^\\S.*\\S$|^\\S$") == false) {
+        if (name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
             throw new MyValidationException();
         } else {
             AgeClassification tmp = new AgeClassification();
@@ -53,7 +53,7 @@ public class AgeClassificationService {
 
     public AgeClassification modifyAgeClassification(long id, String name) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
-        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false) {
+        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
             throw new MyValidationException();
         } else {
             tmp.setName(name);

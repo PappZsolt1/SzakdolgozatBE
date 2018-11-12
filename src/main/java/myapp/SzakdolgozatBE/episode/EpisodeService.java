@@ -21,6 +21,7 @@ public class EpisodeService {
     public Episode addEpisode(Episode episode) throws MyValidationException {
         if (episode.getId() != null ||
                 episode.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                episode.getTitle().length() > 200 ||
                 episode.getRatings() != null ||
                 validateReleaseDate(episode.getReleaseDate()) == false ||
                 validateLength(episode.geteLength()) == false) {
@@ -55,6 +56,7 @@ public class EpisodeService {
     public Episode modifyEpisode(Episode episode) throws MyValidationException {
         if (episode.getId() == null ||
                 episode.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                episode.getTitle().length() > 200 ||
                 episode.getRatings() != null ||
                 validateReleaseDate(episode.getReleaseDate()) == false ||
                 validateLength(episode.geteLength()) == false) {
@@ -87,7 +89,7 @@ public class EpisodeService {
         } catch (NumberFormatException e) {
             return false;
         }
-        if (year < 1900 || year > 2100) {
+        if (year < 1850 || year > 2100) {
             return false;
         }
         try {

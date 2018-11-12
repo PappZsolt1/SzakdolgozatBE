@@ -21,8 +21,11 @@ public class ActorService {
     public Actor addActor(Actor actor) throws MyValidationException {
         if (actor.getId() != null ||
                 actor.getName().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getName().length() > 200 ||
                 actor.getBirthPlace().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getBirthPlace().length() > 200 ||
                 actor.getBio().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                actor.getBio().length() > 60000 ||
                 genderDao.getGender(actor.getGender().getId()) == null ||
                 validateBirthDate(actor.getBirthDate()) == false) { //photo
             throw new MyValidationException();
@@ -56,8 +59,11 @@ public class ActorService {
     public Actor modifyActor(Actor actor) throws MyValidationException {
         if (actor.getId() == null ||
                 actor.getName().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getName().length() > 200 ||
                 actor.getBirthPlace().matches("^\\S.*\\S$|^\\S$") == false ||
+                actor.getBirthPlace().length() > 200 ||
                 actor.getBio().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                actor.getBio().length() > 60000 ||
                 genderDao.getGender(actor.getGender().getId()) == null ||
                 validateBirthDate(actor.getBirthDate()) == false) { //photo
             throw new MyValidationException();
@@ -75,7 +81,7 @@ public class ActorService {
         } catch (NumberFormatException e) {
             return false;
         }
-        if (year < 1800 || year > 2100) {
+        if (year < 1750 || year > 2100) {
             return false;
         }
         try {

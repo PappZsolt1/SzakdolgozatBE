@@ -39,7 +39,8 @@ public class CommentService {
     public Comment addComment(Comment comment) throws MyValidationException {
         if (comment.getId() != null ||
                 comment.getPostDate() != null ||
-                comment.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false) {//other entities, only one
+                comment.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                comment.getContent().length() > 60000) {//other entities, only one
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));

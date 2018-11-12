@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/errorreport")
 @ApplicationScoped
@@ -22,29 +23,50 @@ public class ErrorReportResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addErrorReport(String content) {
-        ErrorReport tmp = service.add(content);
-        return Response.ok().entity(tmp).build();
+        try {
+            ErrorReport tmp = service.add(content);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ErrorReport> getAllErrorReports() {
-        return service.getAllErrorReports();
+    public Response getAllErrorReports() {
+        try {
+            List<ErrorReport> tmp = service.getAllErrorReports();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/resolved")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ErrorReport> getResolvedErrorReports() {
-        return service.getResolvedErrorReports();
+    public Response getResolvedErrorReports() {
+        try {
+            List<ErrorReport> tmp = service.getResolvedErrorReports();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Path("/notresolved")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ErrorReport> getNotResolvedErrorReports() {
-        return service.getNotResolvedErrorReports();
+    public Response getNotResolvedErrorReports() {
+        try {
+            List<ErrorReport> tmp = service.getNotResolvedErrorReports();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PUT
@@ -54,8 +76,10 @@ public class ErrorReportResource {
         try {
             service.makeResolved(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

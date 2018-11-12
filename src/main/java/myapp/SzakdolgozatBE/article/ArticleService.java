@@ -16,8 +16,10 @@ public class ArticleService {
     
     public Article saveArticle(Article article) throws MyValidationException {
         if (article.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                article.getContent().length() > 60000 ||
                 article.getPublishDate() != null ||
                 article.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                article.getTitle().length() > 200 ||
                 article.isPublished() == true) {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {
@@ -41,8 +43,10 @@ public class ArticleService {
     
     public Article publishArticle(Article article) throws MyValidationException {
         if (article.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
+                article.getContent().length() > 60000 ||
                 article.getPublishDate() != null ||
                 article.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                article.getTitle().length() > 200 ||
                 article.isPublished() == true) {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {

@@ -33,7 +33,7 @@ public class GenreService {
     }
 
     public Genre addGenre(String name) throws MyValidationException {
-        if (name.matches("^\\S.*\\S$|^\\S$") == false) {
+        if (name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
             throw new MyValidationException();
         } else {
             Genre tmp = new Genre();
@@ -53,7 +53,7 @@ public class GenreService {
 
     public Genre modifyGenre(long id, String name) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
-        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false) {
+        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
             throw new MyValidationException();
         } else {
             tmp.setName(name);            

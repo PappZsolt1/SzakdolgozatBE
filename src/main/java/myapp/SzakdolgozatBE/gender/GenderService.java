@@ -29,7 +29,7 @@ public class GenderService {
     }
 
     public Gender addGender(String name) throws MyValidationException {
-        if (name.matches("^\\S.*\\S$|^\\S$") == false) {
+        if (name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
             throw new MyValidationException();
         } else {
         Gender tmp = new Gender();
@@ -49,7 +49,7 @@ public class GenderService {
 
     public Gender modifyGender(long id, String name) throws MyValidationException {
         Gender tmp = dao.getGender(id);
-        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false) {
+        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
             throw new MyValidationException();
         } else {
             tmp.setName(name);

@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.rating.RatingService;
 
 @Path("/movie")
@@ -27,8 +28,14 @@ public class MovieResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMovie(Movie movie) {
-        Movie tmp = service.addMovie(movie);
-        return Response.ok().entity(tmp).build();
+        try {
+            Movie tmp = service.addMovie(movie);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
@@ -38,15 +45,22 @@ public class MovieResource {
         try {
             Movie tmp = service.getMovie(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Movie> getAllMovies() {
-        return service.getAllMovies();
+    public Response getAllMovies() {
+        try {
+            List<Movie> tmp = service.getAllMovies();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DELETE
@@ -56,8 +70,10 @@ public class MovieResource {
         try {
             service.deleteMovie(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -67,8 +83,10 @@ public class MovieResource {
         try {
             Movie tmp = service.modifyMovie(movie);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -80,8 +98,10 @@ public class MovieResource {
             service.changeRating(id, rating);
             ratingService.addMovieRating((byte) rating, id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
