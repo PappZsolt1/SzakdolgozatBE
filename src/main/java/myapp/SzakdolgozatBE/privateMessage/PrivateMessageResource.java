@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/privatemessage")
 @ApplicationScoped
@@ -22,8 +23,14 @@ public class PrivateMessageResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPrivateMessage(String content) {
-        PrivateMessage tmp = service.addPrivateMessage(content);
-        return Response.ok().entity(tmp).build();
+        try {
+            PrivateMessage tmp = service.addPrivateMessage(content);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @PUT
@@ -33,14 +40,21 @@ public class PrivateMessageResource {
         try {
             service.makeRead(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PrivateMessage> getConversationPrivateMessages() {
-        return service.getConversationPrivateMessages();
+    public Response getConversationPrivateMessages() {
+        try {
+            List<PrivateMessage> tmp = service.getConversationPrivateMessages();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

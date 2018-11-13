@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/rules")
 @ApplicationScoped
@@ -19,8 +20,12 @@ public class RulesResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRules() {
-        Rules tmp = service.getRules();
-        return Response.ok().entity(tmp).build();
+        try {
+            Rules tmp = service.getRules();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @PUT
@@ -29,8 +34,10 @@ public class RulesResource {
         try {
             Rules tmp = service.modifyRules(content);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

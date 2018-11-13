@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/season")
 @ApplicationScoped
@@ -26,8 +27,10 @@ public class SeasonResource {
         try {
             Season tmp = service.addSeason(season);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -38,8 +41,10 @@ public class SeasonResource {
         try {
             Season tmp = service.getSeason(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -50,8 +55,10 @@ public class SeasonResource {
         try {
             List<Season> seasons = service.getSeriesSeasons(seriesId);
             return Response.ok().entity(seasons).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -62,8 +69,10 @@ public class SeasonResource {
         try {
             service.deleteSeason(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -73,8 +82,10 @@ public class SeasonResource {
         try {
             Season tmp = service.modifySeason(season);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

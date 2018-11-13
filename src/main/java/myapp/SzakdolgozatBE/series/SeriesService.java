@@ -3,9 +3,10 @@ package myapp.SzakdolgozatBE.series;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import myapp.SzakdolgozatBE.ageClassification.AgeClassificationService;
+import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
 import myapp.SzakdolgozatBE.episode.Episode;
-import myapp.SzakdolgozatBE.genre.GenreService;
+import myapp.SzakdolgozatBE.genre.GenreDAO;
 import myapp.SzakdolgozatBE.season.Season;
 
 @Stateless
@@ -15,19 +16,28 @@ public class SeriesService {
     SeriesDAO dao;
     
     @Inject
-    AgeClassificationService ageClassificationService;
+    AgeClassificationDAO ageClassificationDao;
     
     @Inject
-    GenreService genreService;
+    GenreDAO genreDao;
 
-    public Series addSeries(Series series) {
-        return dao.addSeries(series);
+    public Series addSeries(Series series) throws MyValidationException {
+        if (series.getId() != null ||
+                ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null ||
+                genreDao.getGenre(series.getGenre().getId()) == null ||
+                series.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                series.getTitle().length() > 100 ||
+                series.getReleaseYear() < 1850 || series.getReleaseYear() > 2100) { //photo
+            throw new MyValidationException();
+        } else {
+            return dao.addSeries(series);
+        }
     }
 
-    public Series getSeries(long id) throws NullPointerException {
+    public Series getSeries(long id) throws MyValidationException {
         Series tmp = dao.getSeries(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return tmp;
         }
@@ -37,30 +47,31 @@ public class SeriesService {
         return dao.getAllSeries();
     }
 
-    public void deleteSeries(long id) throws NullPointerException {
+    public void deleteSeries(long id) throws MyValidationException {
         Series tmp = dao.getSeries(id);
         if (tmp != null) {
             dao.deleteSeries(id);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
 
-    public Series modifySeries(Series series) throws NullPointerException {
-        Series tmp = dao.getSeries(series.getId());
-        if (tmp != null) {
-            tmp.setTitle(series.getTitle());
-            tmp.setReleaseYear(series.getReleaseYear());
-            tmp.setCoverPicture(series.getCoverPicture());
-            tmp.setAgeClassification(series.getAgeClassification());
-            tmp.setGenre(series.getGenre());
-            return dao.modifySeries(tmp);
+    public Series modifySeries(Series series) throws MyValidationException {
+        if (series.getId() != null ||
+                ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null ||
+                genreDao.getGenre(series.getGenre().getId()) == null ||
+                series.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
+                series.getTitle().length() > 100 ||
+                series.getReleaseYear() < 1850 || series.getReleaseYear() > 2100) {
+            throw new MyValidationException();
+        } else if (dao.getSeries(series.getId()) == null) {
+            throw new MyValidationException();
         } else {
-            throw new NullPointerException();
+            return dao.modifySeries(series);
         }
     }
 
-    public void changeRating(long id) {
+    public void changeRating(long id) throws MyValidationException {//todo
         Series tmp = dao.getSeries(id);
         double numberOfRatings = 0;
         int sumOfRatings = 0;
@@ -74,7 +85,7 @@ public class SeriesService {
             tmp.setRating(sumOfRatings / numberOfRatings);
             dao.changeRating(tmp);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
 }

@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/topic")
 @ApplicationScoped
@@ -22,14 +23,25 @@ public class TopicResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTopic(Topic topic) {
-        Topic tmp = service.addTopic(topic);
-        return Response.ok().entity(tmp).build();
+        try {
+            Topic tmp = service.addTopic(topic);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Topic> getAllTopics() {
-        return service.getAllTopics();
+    public Response getAllTopics() {
+        try {
+            List<Topic> tmp = service.getAllTopics();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
@@ -39,8 +51,10 @@ public class TopicResource {
         try {
             Topic tmp = service.getTopic(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -51,8 +65,10 @@ public class TopicResource {
         try {
             service.deleteTopic(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

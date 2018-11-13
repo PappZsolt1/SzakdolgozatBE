@@ -23,7 +23,7 @@ public class RatingService {
     @Inject
     MyUserDAO myUserDao;
 
-    public Rating addMovieRating(byte rating, long movieId) {
+    public Rating addMovieRating(byte rating, long movieId) { //these needed?
         Rating tmp = new Rating();
         tmp.setRating(rating);
         tmp.setMovie(movieDao.getMovie(movieId));

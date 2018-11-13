@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.season;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.series.Series;
 import myapp.SzakdolgozatBE.series.SeriesDAO;
 
@@ -15,45 +16,52 @@ public class SeasonSerivce {
     @Inject
     SeriesDAO seriesDAO;
 
-    public Season addSeason(Season season) {
-        return dao.addSeason(season);
+    public Season addSeason(Season season) throws MyValidationException {
+        if (season.getId() != null || season.getNumber() < 0 || season.getNumber() > 100) {
+            throw new MyValidationException();
+        } else {
+            return dao.addSeason(season);
+        }
     }
 
-    public Season getSeason(long id) throws NullPointerException {
+    public Season getSeason(long id) throws MyValidationException {
         Season tmp = dao.getSeason(id);
         if (tmp == null) {
-            throw new NullPointerException();
+            throw new MyValidationException();
         } else {
             return tmp;
         }
     }
 
-    public List<Season> getSeriesSeasons(long seriesId) throws NullPointerException {
+    public List<Season> getSeriesSeasons(long seriesId) throws MyValidationException {
         Series tmp = seriesDAO.getSeries(seriesId);
         if (tmp != null) {
             return dao.getSeriesSeasons(tmp);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
 
-    public void deleteSeason(long id) throws NullPointerException {
+    public void deleteSeason(long id) throws MyValidationException {
         Season tmp = dao.getSeason(id);
         if (tmp != null) {
             dao.deleteSeason(id);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
 
-    public Season modifySeason(Season season) throws NullPointerException {
+    public Season modifySeason(Season season) throws MyValidationException {
+        if (season.getId() == null || season.getNumber() < 0 || season.getNumber() > 100) {
+            throw new MyValidationException();
+        }
         Season tmp = dao.getSeason(season.getId());
         if (tmp != null) {
             tmp.setNumber(season.getNumber());
             tmp.setSeries(season.getSeries());
             return dao.modifySeason(tmp);
         } else {
-            throw new NullPointerException();
+            throw new MyValidationException();
         }
     }
 }

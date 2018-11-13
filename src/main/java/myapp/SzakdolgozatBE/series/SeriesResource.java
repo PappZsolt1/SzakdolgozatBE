@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/series")
 @ApplicationScoped
@@ -23,8 +24,14 @@ public class SeriesResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addSeries(Series series) {
-        Series tmp = service.addSeries(series);
-        return Response.ok().entity(tmp).build();
+        try {
+            Series tmp = service.addSeries(series);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
@@ -34,15 +41,22 @@ public class SeriesResource {
         try {
             Series tmp = service.getSeries(id);
             return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Series> getAllSeries() {
-        return service.getAllSeries();
+    public Response getAllSeries() {
+        try {
+            List<Series> tmp = service.getAllSeries();
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DELETE
@@ -52,8 +66,10 @@ public class SeriesResource {
         try {
             service.deleteSeries(id);
             return Response.ok().build();
-        } catch (Throwable t) {
+        } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -63,8 +79,10 @@ public class SeriesResource {
         try {
             Series tmp = service.modifySeries(series);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

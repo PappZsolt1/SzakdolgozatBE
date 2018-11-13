@@ -27,7 +27,8 @@ public class MovieService {
                 genreDao.getGenre(movie.getGenre().getId()) == null ||
                 movie.getRatings() != null ||
                 movie.getBudget() < 0 || movie.getBudget() > 1000000000 ||
-                movie.getReleaseYear() < 1850 || movie.getReleaseYear() > 2100) {// pic
+                movie.getReleaseYear() < 1850 || movie.getReleaseYear() > 2100 ||
+                validateLength(movie.getmLength()) == false) {// pic
             throw new MyValidationException();
         } else {
             return dao.addMovie(movie);
@@ -64,7 +65,8 @@ public class MovieService {
                 genreDao.getGenre(movie.getGenre().getId()) == null ||
                 movie.getRatings() != null ||
                 movie.getBudget() < 0 || movie.getBudget() > 1000000000 ||
-                movie.getReleaseYear() < 1850 || movie.getReleaseYear() > 2100) {// pic
+                movie.getReleaseYear() < 1850 || movie.getReleaseYear() > 2100 ||
+                validateLength(movie.getmLength()) == false) {// pic
             throw new MyValidationException();
         } else if (dao.getMovie(movie.getId()) == null) {
             throw new MyValidationException();
@@ -86,5 +88,42 @@ public class MovieService {
         } else {
             throw new MyValidationException();
         }
+    }
+    
+    public boolean validateLength(String mLength) {
+        if (mLength.matches("^[0-9]{1,3} óra [0-9]{1,2} perc$|^[0-9]{1,2} perc$") == false) {
+            return false;
+        }
+        if (mLength.length() > 10) {
+            int hour;
+            try {
+                hour = Integer.parseInt(mLength.substring(0, mLength.indexOf("ó") - 1));
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            if (hour > 100 || hour < 0) {
+                return false;
+            }
+            int minute;
+            try {
+                minute = Integer.parseInt(mLength.substring(mLength.indexOf("a") + 2, mLength.indexOf("p") - 1));
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            if (minute > 60 || minute < 0) {
+                return false;
+            }
+        } else {
+            int minute;
+            try {
+                minute = Integer.parseInt(mLength.substring(0, mLength.indexOf("p") - 1));
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            if (minute > 60 || minute < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
