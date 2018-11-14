@@ -6,21 +6,22 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 
 @Stateless
 public class ArticleService {
     
     @Inject ArticleDAO dao;
     
+    MyValidator val = new MyValidator();
+    
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
     public Article saveArticle(Article article) throws MyValidationException {
-        if (article.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                article.getContent().length() > 60000 ||
-                article.getPublishDate() != null ||
-                article.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                article.getTitle().length() > 200 ||
-                article.isPublished() == true) {
+        if (val.validateText(article.getTitle(), 200) == false
+                || val.validateText(article.getContent(), 60000) == false
+                || article.getPublishDate() != null
+                || article.isPublished() == true) {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {
             article.setSaved(true);
@@ -42,12 +43,10 @@ public class ArticleService {
 
     
     public Article publishArticle(Article article) throws MyValidationException {
-        if (article.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                article.getContent().length() > 60000 ||
-                article.getPublishDate() != null ||
-                article.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                article.getTitle().length() > 200 ||
-                article.isPublished() == true) {
+        if (val.validateText(article.getTitle(), 200) == false
+                || val.validateText(article.getContent(), 60000) == false
+                || article.getPublishDate() != null
+                || article.isPublished() == true) {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {
             article.setPublishDate(sdf.format(new Date()));

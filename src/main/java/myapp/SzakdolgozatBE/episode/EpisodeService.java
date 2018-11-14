@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.season.SeasonDAO;
 
 @Stateless
@@ -18,13 +19,14 @@ public class EpisodeService {
     @Inject
     SeasonDAO seasonDAO;
     
+    MyValidator val = new MyValidator();
+    
     public Episode addEpisode(Episode episode) throws MyValidationException {
-        if (episode.getId() != null ||
-                episode.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                episode.getTitle().length() > 200 ||
-                episode.getRatings() != null ||
-                validateReleaseDate(episode.getReleaseDate()) == false ||
-                validateLength(episode.geteLength()) == false) {
+        if (episode.getId() != null
+                || val.validateText(episode.getTitle(), 200) == false
+                || episode.getRatings() != null
+                || val.validateDate(episode.getReleaseDate(), 1850, 2100) == false
+                || val.validateLength(episode.geteLength()) == false) {
             throw new MyValidationException();
         } else {
             return dao.addEpisode(episode);
@@ -54,12 +56,11 @@ public class EpisodeService {
     }
 
     public Episode modifyEpisode(Episode episode) throws MyValidationException {
-        if (episode.getId() == null ||
-                episode.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                episode.getTitle().length() > 200 ||
-                episode.getRatings() != null ||
-                validateReleaseDate(episode.getReleaseDate()) == false ||
-                validateLength(episode.geteLength()) == false) {
+        if (episode.getId() == null
+                || val.validateText(episode.getTitle(), 200) == false
+                || episode.getRatings() != null
+                || val.validateDate(episode.getReleaseDate(), 1850, 2100) == false
+                || val.validateLength(episode.geteLength()) == false) {
             throw new MyValidationException();
         } else if (dao.getEpisode(episode.getId()) == null) {
             throw new MyValidationException();
@@ -80,62 +81,5 @@ public class EpisodeService {
         } else {
             throw new MyValidationException();
         }
-    }
-    
-    public boolean validateReleaseDate(String releaseDate) {
-        int year;
-        try {
-            year = Integer.parseInt(releaseDate.substring(0, 4));
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        if (year < 1850 || year > 2100) {
-            return false;
-        }
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd.");
-            sdf.setLenient(false);
-            sdf.parse(releaseDate);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
-    
-    public boolean validateLength(String eLength) {
-        if (eLength.matches("^[0-9]{1,3} óra [0-9]{1,2} perc$|^[0-9]{1,2} perc$") == false) {
-            return false;
-        }
-        if (eLength.length() > 10) {
-            int hour;
-            try {
-                hour = Integer.parseInt(eLength.substring(0, eLength.indexOf("ó") - 1));
-            } catch (NumberFormatException e) {
-                return false;
-            }
-            if (hour > 100 || hour < 0) {
-                return false;
-            }
-            int minute;
-            try {
-                minute = Integer.parseInt(eLength.substring(eLength.indexOf("a") + 2, eLength.indexOf("p") - 1));
-            } catch (NumberFormatException e) {
-                return false;
-            }
-            if (minute > 60 || minute < 0) {
-                return false;
-            }
-        } else {
-            int minute;
-            try {
-                minute = Integer.parseInt(eLength.substring(0, eLength.indexOf("p") - 1));
-            } catch (NumberFormatException e) {
-                return false;
-            }
-            if (minute > 60 || minute < 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }

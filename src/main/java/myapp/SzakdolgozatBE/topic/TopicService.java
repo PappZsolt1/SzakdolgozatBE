@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Stateless
@@ -13,16 +14,16 @@ public class TopicService {
 
     @Inject
     TopicDAO dao;
+    
+    MyValidator val = new MyValidator();
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
     public Topic addTopic(Topic topic) throws MyValidationException {
-        if (topic.getId() != null ||
-                topic.getCreateDate() != null ||
-                topic.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                topic.getTitle().length() > 100 ||
-                topic.getDescription().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                topic.getDescription().length() > 60000) {
+        if (topic.getId() != null
+                || topic.getCreateDate() != null
+                || val.validateText(topic.getTitle(), 200) == false
+                || val.validateText(topic.getDescription(), 60000) == false) {
             throw new MyValidationException();
         } else {
             topic.setCreateDate(sdf.format(new Date()));

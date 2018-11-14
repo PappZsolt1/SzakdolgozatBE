@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.rules;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 
 @Stateless
 public class RulesService {
@@ -10,13 +11,14 @@ public class RulesService {
     @Inject
     RulesDAO dao;
     
+    MyValidator val = new MyValidator();
+    
     public Rules getRules() {
         return dao.getRules();
     }
     
     public Rules modifyRules(String content) throws MyValidationException {
-        if (content.matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                content.length() > 60000) {
+        if (val.validateText(content, 60000) == false) {
             throw new MyValidationException();
         }
         Rules tmp = dao.getRules();

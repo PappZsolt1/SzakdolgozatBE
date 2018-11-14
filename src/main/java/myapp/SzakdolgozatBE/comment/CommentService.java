@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.article.ArticleDAO;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
@@ -33,14 +34,15 @@ public class CommentService {
     
     @Inject
     TopicDAO TopicDao;
+    
+    MyValidator val = new MyValidator();
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
     public Comment addComment(Comment comment) throws MyValidationException {
-        if (comment.getId() != null ||
-                comment.getPostDate() != null ||
-                comment.getContent().matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                comment.getContent().length() > 60000) {//other entities, only one
+        if (comment.getId() != null
+                || comment.getPostDate() != null
+                || val.validateText(comment.getContent(), 60000) == false) {//other entities, only one
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));

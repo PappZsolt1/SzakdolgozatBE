@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.series.Series;
 import myapp.SzakdolgozatBE.series.SeriesDAO;
 
@@ -15,9 +16,11 @@ public class SeasonSerivce {
     
     @Inject
     SeriesDAO seriesDAO;
+    
+    MyValidator val = new MyValidator();
 
     public Season addSeason(Season season) throws MyValidationException {
-        if (season.getId() != null || season.getNumber() < 0 || season.getNumber() > 100) {
+        if (season.getId() != null || val.validateNumber(season.getNumber(), 0, 100) == false) {
             throw new MyValidationException();
         } else {
             return dao.addSeason(season);
@@ -52,7 +55,7 @@ public class SeasonSerivce {
     }
 
     public Season modifySeason(Season season) throws MyValidationException {
-        if (season.getId() == null || season.getNumber() < 0 || season.getNumber() > 100) {
+        if (season.getId() == null || val.validateNumber(season.getNumber(), 0, 100) == false) {
             throw new MyValidationException();
         }
         Season tmp = dao.getSeason(season.getId());

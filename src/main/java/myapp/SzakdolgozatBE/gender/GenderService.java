@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 
 @Stateless
@@ -14,6 +15,8 @@ public class GenderService {
     
     @Inject
     ActorDAO actorDao;
+    
+    MyValidator val = new MyValidator();
 
     public Gender getGender(long id) throws MyValidationException {
         Gender tmp = dao.getGender(id);
@@ -29,7 +32,7 @@ public class GenderService {
     }
 
     public Gender addGender(String name) throws MyValidationException {
-        if (name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
+        if (val.validateText(name, 200) == false) {
             throw new MyValidationException();
         } else {
         Gender tmp = new Gender();
@@ -49,7 +52,7 @@ public class GenderService {
 
     public Gender modifyGender(long id, String name) throws MyValidationException {
         Gender tmp = dao.getGender(id);
-        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
+        if (tmp == null || val.validateText(name, 200) == false) {
             throw new MyValidationException();
         } else {
             tmp.setName(name);

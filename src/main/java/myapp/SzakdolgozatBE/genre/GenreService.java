@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
 import myapp.SzakdolgozatBE.series.SeriesDAO;
 
@@ -19,6 +20,8 @@ public class GenreService {
     @Inject
     SeriesDAO seriesDao;
     
+    MyValidator val = new MyValidator();
+    
     public Genre getGenre(long id) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
         if (tmp == null) {
@@ -33,7 +36,7 @@ public class GenreService {
     }
 
     public Genre addGenre(String name) throws MyValidationException {
-        if (name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
+        if (val.validateText(name, 60000) == false) {
             throw new MyValidationException();
         } else {
             Genre tmp = new Genre();
@@ -53,7 +56,7 @@ public class GenreService {
 
     public Genre modifyGenre(long id, String name) throws MyValidationException {
         Genre tmp = dao.getGenre(id);
-        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
+        if (tmp == null || val.validateText(name, 60000) == false) {
             throw new MyValidationException();
         } else {
             tmp.setName(name);            

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
 import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.genre.GenreDAO;
@@ -20,14 +21,15 @@ public class SeriesService {
     
     @Inject
     GenreDAO genreDao;
+    
+    MyValidator val = new MyValidator();
 
     public Series addSeries(Series series) throws MyValidationException {
-        if (series.getId() != null ||
-                ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null ||
-                genreDao.getGenre(series.getGenre().getId()) == null ||
-                series.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                series.getTitle().length() > 100 ||
-                series.getReleaseYear() < 1850 || series.getReleaseYear() > 2100) { //photo
+        if (series.getId() != null
+                || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
+                || genreDao.getGenre(series.getGenre().getId()) == null
+                || val.validateText(series.getTitle(), 200) == false
+                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false) { //photo
             throw new MyValidationException();
         } else {
             return dao.addSeries(series);
@@ -57,12 +59,11 @@ public class SeriesService {
     }
 
     public Series modifySeries(Series series) throws MyValidationException {
-        if (series.getId() != null ||
-                ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null ||
-                genreDao.getGenre(series.getGenre().getId()) == null ||
-                series.getTitle().matches("^\\S.*\\S$|^\\S$") == false ||
-                series.getTitle().length() > 100 ||
-                series.getReleaseYear() < 1850 || series.getReleaseYear() > 2100) {
+        if (series.getId() != null
+                || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
+                || genreDao.getGenre(series.getGenre().getId()) == null
+                || val.validateText(series.getTitle(), 200) == false
+                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false) {
             throw new MyValidationException();
         } else if (dao.getSeries(series.getId()) == null) {
             throw new MyValidationException();

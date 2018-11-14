@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
 import myapp.SzakdolgozatBE.series.SeriesDAO;
 
@@ -18,6 +19,8 @@ public class AgeClassificationService {
     
     @Inject
     SeriesDAO seriesDao;
+    
+    MyValidator val = new MyValidator();
 
     public AgeClassification getAgeClassification(long id) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
@@ -33,7 +36,7 @@ public class AgeClassificationService {
     }
 
     public AgeClassification addAgeClassification(String name) throws MyValidationException {
-        if (name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
+        if (val.validateText(name, 200) == false) {
             throw new MyValidationException();
         } else {
             AgeClassification tmp = new AgeClassification();
@@ -53,7 +56,7 @@ public class AgeClassificationService {
 
     public AgeClassification modifyAgeClassification(long id, String name) throws MyValidationException {
         AgeClassification tmp = dao.getAgeClassification(id);
-        if (tmp == null || name.matches("^\\S.*\\S$|^\\S$") == false || name.length() > 200) {
+        if (tmp == null || val.validateText(name, 200) == false) {
             throw new MyValidationException();
         } else {
             tmp.setName(name);

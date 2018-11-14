@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 
 @Stateless
 public class PrivateMessageService {
@@ -13,11 +14,12 @@ public class PrivateMessageService {
     @Inject
     PrivateMessageDAO dao;
     
+    MyValidator val = new MyValidator();
+    
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
     public PrivateMessage addPrivateMessage(String content) throws MyValidationException {
-        if (content.matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                content.length() > 60000) {
+        if (val.validateText(content, 60000) == false) {
             throw new MyValidationException();
         } else {
             PrivateMessage tmp = new PrivateMessage();

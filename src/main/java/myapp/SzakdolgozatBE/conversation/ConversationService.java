@@ -4,12 +4,15 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 
 @Stateless
 public class ConversationService {
     
     @Inject
     ConversationDAO dao;
+    
+    MyValidator val = new MyValidator();
     
     public Conversation getConversation(long id) throws MyValidationException {
         Conversation tmp = dao.getConversation(id);

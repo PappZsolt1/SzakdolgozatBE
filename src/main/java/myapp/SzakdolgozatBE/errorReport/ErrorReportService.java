@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.MyValidator;
 
 @Stateless
 public class ErrorReportService {
@@ -13,11 +14,12 @@ public class ErrorReportService {
     @Inject
     ErrorReportDAO dao;
     
+    MyValidator val = new MyValidator();
+    
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
     public ErrorReport add(String content) throws MyValidationException {
-        if (content.matches("^\\S(.|\\s)*\\S$|^\\S$") == false ||
-                content.length() > 60000) {
+        if (val.validateText(content, 60000) == false) {
             throw new MyValidationException();
         } else {
             ErrorReport tmp = new ErrorReport();
