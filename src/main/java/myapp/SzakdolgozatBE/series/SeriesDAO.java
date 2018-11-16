@@ -27,6 +27,10 @@ public class SeriesDAO {
     public List<Series> getAllSeries() {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
+    
+    public List<Series> getResultSeries(String title) {
+        return em.createNamedQuery("getResultSeries").setParameter("title", title).getResultList();
+    }
 
     public void deleteSeries(long id) {
         em.getTransaction().begin();

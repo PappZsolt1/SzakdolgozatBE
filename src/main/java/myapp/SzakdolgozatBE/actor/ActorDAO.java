@@ -22,6 +22,10 @@ public class ActorDAO {
     public Actor getActor(long id) {
         return em.find(Actor.class, id);
     }
+    
+    public List<Actor> getResultActors(String name) {
+        return em.createNamedQuery("getResultActors").setParameter("name", name).getResultList();
+    }
 
     /*public List<Actor> getxxxActors() {
         //todo

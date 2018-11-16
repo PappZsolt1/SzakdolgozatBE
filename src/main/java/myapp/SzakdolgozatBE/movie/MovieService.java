@@ -49,6 +49,14 @@ public class MovieService {
     public List<Movie> getAllMovies() {
         return dao.getAllMovies();
     }
+    
+    public List<Movie> getResultMovies(String title) throws MyValidationException {
+        if (val.validateText(title, 200) == false) {
+            throw new MyValidationException();
+        } else {
+            return dao.getResultMovies(title);
+        }
+    }
 
     public void deleteMovie(long id) throws MyValidationException {
         Movie tmp = dao.getMovie(id);
@@ -64,7 +72,6 @@ public class MovieService {
                 || val.validateText(movie.getTitle(), 200) == false
                 || ageClassificationDao.getAgeClassification(movie.getAgeClassification().getId()) == null
                 || genreDao.getGenre(movie.getGenre().getId()) == null
-                || movie.getRatings() != null
                 || val.validateNumber(movie.getBudget(), 0, 1000000000) == false
                 || val.validateNumber(movie.getReleaseYear(), 1850, 2100) == false
                 || val.validateLength(movie.getmLength()) == false) {// pic

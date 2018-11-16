@@ -27,6 +27,10 @@ public class MovieDAO {
     public List<Movie> getAllMovies() {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
+    
+    public List<Movie> getResultMovies(String title) {
+        return em.createNamedQuery("getResultMovies").setParameter("title", title).getResultList();
+    }
 
     public void deleteMovie(long id) {
         em.getTransaction().begin();

@@ -15,4 +15,4 @@ INSERT INTO Rules VALUES (1, "Hozzászólások írása során tilos trágár, ra
 
 INSERT INTO ErrorReport VALUES (1, "Hiba.", false, "2018. 05. 02. 22:08:32", null)
 
-INSERT INTO Article VALUES (10, "aaa\r\nbbb\r\n\r\nccc", null, false, true, "test")
+INSERT INTO Actor VALUES (10, "bio", "2001. 01. 01.", "New York", "John Doe", LOAD_FILE("D:\képek\a1.png"), 1)

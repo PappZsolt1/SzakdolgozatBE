@@ -27,7 +27,8 @@ import myapp.SzakdolgozatBE.movie.Movie;
 @Entity
 @Table(name = "Actor")
 @NamedQueries({
-    @NamedQuery(name = "getGenderActors", query = "SELECT a FROM Actor a WHERE a.gender = :gender")
+    @NamedQuery(name = "getGenderActors", query = "SELECT a FROM Actor a WHERE a.gender = :gender"),
+    @NamedQuery(name = "getResultActors", query = "SELECT a FROM Actor a WHERE a.name LIKE CONCAT('%', :name, '%') ORDER BY a.name ASC")
 })
 public class Actor implements Serializable {
 

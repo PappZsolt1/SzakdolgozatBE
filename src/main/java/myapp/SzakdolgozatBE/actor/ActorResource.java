@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.actor;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
@@ -42,6 +43,20 @@ public class ActorResource {
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Path("/search/{name}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getResultActors(@PathParam("name") String name) {
+        try {
+            List<Actor> tmp = service.getResultActors(name);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

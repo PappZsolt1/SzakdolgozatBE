@@ -30,7 +30,8 @@ import myapp.SzakdolgozatBE.rating.Rating;
 @NamedQueries({
     @NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m"),
     @NamedQuery(name = "getAgeClassificationMovies", query = "SELECT m FROM Movie m WHERE m.ageClassification = :ageClassification"),
-    @NamedQuery(name = "getGenreMovies", query = "SELECT m FROM Movie m WHERE m.genre = :genre")
+    @NamedQuery(name = "getGenreMovies", query = "SELECT m FROM Movie m WHERE m.genre = :genre"),
+    @NamedQuery(name = "getResultMovies", query = "SELECT m FROM Movie m WHERE m.title LIKE CONCAT('%', :title, '%') ORDER BY m.title ASC")
 })
 public class Movie implements Serializable {
 

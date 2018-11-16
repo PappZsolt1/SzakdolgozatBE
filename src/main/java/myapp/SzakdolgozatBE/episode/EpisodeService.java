@@ -58,7 +58,6 @@ public class EpisodeService {
     public Episode modifyEpisode(Episode episode) throws MyValidationException {
         if (episode.getId() == null
                 || val.validateText(episode.getTitle(), 200) == false
-                || episode.getRatings() != null
                 || val.validateDate(episode.getReleaseDate(), 1850, 2100) == false
                 || val.validateLength(episode.geteLength()) == false) {
             throw new MyValidationException();

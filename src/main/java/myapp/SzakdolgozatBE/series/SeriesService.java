@@ -48,6 +48,14 @@ public class SeriesService {
     public List<Series> getAllSeries() {
         return dao.getAllSeries();
     }
+    
+    public List<Series> getResultSeries(String title) throws MyValidationException {
+        if (val.validateText(title, 200) == false) {
+            throw new MyValidationException();
+        } else {
+            return dao.getResultSeries(title);
+        }
+    }
 
     public void deleteSeries(long id) throws MyValidationException {
         Series tmp = dao.getSeries(id);
@@ -59,7 +67,7 @@ public class SeriesService {
     }
 
     public Series modifySeries(Series series) throws MyValidationException {
-        if (series.getId() != null
+        if (series.getId() == null
                 || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
                 || genreDao.getGenre(series.getGenre().getId()) == null
                 || val.validateText(series.getTitle(), 200) == false

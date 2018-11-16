@@ -43,6 +43,14 @@ public class ActorService {
         }
     }
 
+    public List<Actor> getResultActors(String name) throws MyValidationException {
+        if (val.validateText(name, 200) == false) {
+            throw new MyValidationException();
+        } else {
+            return dao.getResultActors(name);
+        }
+    }
+    
     /*public List<Actor> getxxxActors() {
         //todo
     }*/

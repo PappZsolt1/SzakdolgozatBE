@@ -58,6 +58,20 @@ public class SeriesResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
+    @Path("/search/{title}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getResultSeries(@PathParam("title") String title) {
+        try {
+            List<Series> tmp = service.getResultSeries(title);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @DELETE
     @Path("/{id}")

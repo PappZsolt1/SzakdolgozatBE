@@ -62,6 +62,20 @@ public class MovieResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
+    @Path("/search/{title}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getResultMovies(@PathParam("title") String title) {
+        try {
+            List<Movie> tmp = service.getResultMovies(title);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @DELETE
     @Path("/{id}")
