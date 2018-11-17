@@ -1,8 +1,5 @@
 package myapp.SzakdolgozatBE.actor;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -42,6 +39,11 @@ public class ActorService {
             return tmp;
         }
     }
+    
+    public boolean checkIfExists(long id) {
+        Actor tmp = dao.getActor(id);
+        return (tmp != null);
+    }
 
     public List<Actor> getResultActors(String name) throws MyValidationException {
         if (val.validateText(name, 200) == false) {
@@ -57,7 +59,7 @@ public class ActorService {
     
     public void deleteActor(long id) throws MyValidationException {
         Actor tmp = dao.getActor(id);
-        if (tmp == null) {
+        if (tmp == null || canBeDeleted(id) == false) {
             throw new MyValidationException();
         } else {
             dao.deleteActor(id);
@@ -76,6 +78,15 @@ public class ActorService {
             throw new MyValidationException();
         } else {
             return dao.modifyActor(actor);
+        }
+    }
+    
+    public boolean canBeDeleted(long id) throws MyValidationException {
+        Actor tmp = dao.getActor(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return (tmp.getMovies().isEmpty() && tmp.getEpisodes().isEmpty());
         }
     }
 }

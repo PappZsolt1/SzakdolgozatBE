@@ -22,10 +22,11 @@ public class SeasonResource {
     SeasonSerivce service;
 
     @POST
+    @Path("/{seriesId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addSeason(Season season) {
+    public Response addSeason(@PathParam("seriesId") long seriesId, Season season) {
         try {
-            Season tmp = service.addSeason(season);
+            Season tmp = service.addSeason(seriesId, season);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
@@ -47,8 +48,21 @@ public class SeasonResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    
     @GET
+    @Path("/check/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkIfExists(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.checkIfExists(id);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    //not used
+    /*@GET
     @Path("/series/{seriesId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeriesSeasons(@PathParam("seriesId") long seriesId) {
@@ -60,14 +74,14 @@ public class SeasonResource {
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }*/
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{seriesId}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteSeason(@PathParam("id") long id) {
+    public Response deleteSeason(@PathParam("seriesId") long seriesId, @PathParam("id") long id) {
         try {
-            service.deleteSeason(id);
+            service.deleteSeason(seriesId, id);
             return Response.ok().build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -84,6 +98,20 @@ public class SeasonResource {
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response canBeDeleted(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.canBeDeleted(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

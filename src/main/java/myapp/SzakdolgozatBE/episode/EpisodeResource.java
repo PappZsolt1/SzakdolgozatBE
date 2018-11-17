@@ -24,16 +24,17 @@ public class EpisodeResource {
     EpisodeService service;
     
     @EJB
-    RatingService ratingService;
+    RatingService ratingService; //todo
     
     @EJB
-    SeriesService seriesService;
+    SeriesService seriesService; //todo
 
     @POST
+    @Path("/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEpisode(Episode episode) {
+    public Response addEpisode(@PathParam("seasonId") long seasonId, Episode episode) {
         try {
-            Episode tmp = service.addEpisode(episode);
+            Episode tmp = service.addEpisode(seasonId, episode);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
@@ -56,7 +57,8 @@ public class EpisodeResource {
         }
     }
 
-    @GET
+    //not used
+    /*@GET
     @Path("/season/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeasonEpisodes(@PathParam("seasonId") long seasonId) {
@@ -66,14 +68,14 @@ public class EpisodeResource {
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }*/
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{seasonId}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteEpisode(@PathParam("id") long id) {
+    public Response deleteEpisode(@PathParam("seasonId") long seasonId, @PathParam("id") long id) {
         try {
-            service.deleteEpisode(id);
+            service.deleteEpisode(seasonId, id);
             return Response.ok().build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -105,6 +107,20 @@ public class EpisodeResource {
             long seriesId = service.getEpisode(id).getSeason().getSeries().getId();
             seriesService.changeRating(seriesId);
             return Response.ok().build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response canBeDeleted(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.canBeDeleted(id);
+            return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Throwable t) {

@@ -60,7 +60,7 @@ public class MovieService {
 
     public void deleteMovie(long id) throws MyValidationException {
         Movie tmp = dao.getMovie(id);
-        if (tmp == null) {
+        if (tmp == null || canBeDeleted(id) == false) {
             throw new MyValidationException();
         } else {
             dao.deleteMovie(id);
@@ -95,6 +95,15 @@ public class MovieService {
             dao.changeRating(tmp);
         } else {
             throw new MyValidationException();
+        }
+    }
+    
+    public boolean canBeDeleted(long id) throws MyValidationException {
+        Movie tmp = dao.getMovie(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getActors().isEmpty();
         }
     }
 }

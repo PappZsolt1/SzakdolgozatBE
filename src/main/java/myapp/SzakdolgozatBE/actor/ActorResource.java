@@ -48,6 +48,18 @@ public class ActorResource {
         }
     }
     
+    @GET
+    @Path("/check/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkIfExists(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.checkIfExists(id);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
     @Path("/search/{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,6 +102,20 @@ public class ActorResource {
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response canBeDeleted(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.canBeDeleted(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

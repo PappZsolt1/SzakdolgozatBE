@@ -44,7 +44,12 @@ public class SeriesService {
             return tmp;
         }
     }
-
+    
+    public boolean checkIfExists(long id) {
+        Series tmp = dao.getSeries(id);
+        return (tmp != null);
+    }
+    
     public List<Series> getAllSeries() {
         return dao.getAllSeries();
     }
@@ -59,7 +64,7 @@ public class SeriesService {
 
     public void deleteSeries(long id) throws MyValidationException {
         Series tmp = dao.getSeries(id);
-        if (tmp != null) {
+        if (tmp != null && canBeDeleted(id) == true) {
             dao.deleteSeries(id);
         } else {
             throw new MyValidationException();
@@ -95,6 +100,15 @@ public class SeriesService {
             dao.changeRating(tmp);
         } else {
             throw new MyValidationException();
+        }
+    }
+    
+    public boolean canBeDeleted(long id) throws MyValidationException {
+        Series tmp = dao.getSeries(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getSeasons().isEmpty();
         }
     }
 }

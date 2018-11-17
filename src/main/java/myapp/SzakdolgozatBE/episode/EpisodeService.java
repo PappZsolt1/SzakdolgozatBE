@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.season.Season;
 import myapp.SzakdolgozatBE.season.SeasonDAO;
 
 @Stateless
@@ -17,11 +18,11 @@ public class EpisodeService {
     EpisodeDAO dao;
     
     @Inject
-    SeasonDAO seasonDAO;
+    SeasonDAO seasonDao;
     
     MyValidator val = new MyValidator();
     
-    public Episode addEpisode(Episode episode) throws MyValidationException {
+    public Episode addEpisode(long seasonId, Episode episode) throws MyValidationException {
         if (episode.getId() != null
                 || val.validateText(episode.getTitle(), 200) == false
                 || episode.getRatings() != null
@@ -29,7 +30,16 @@ public class EpisodeService {
                 || val.validateLength(episode.geteLength()) == false) {
             throw new MyValidationException();
         } else {
-            return dao.addEpisode(episode);
+            Season tmp = seasonDao.getSeason(seasonId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            } else {
+                episode.setSeason(tmp);
+                dao.addEpisode(episode);
+                tmp.getEpisodes().add(episode);
+                seasonDao.modifySeason(tmp);
+                return episode;
+            }
         }
     }
 
@@ -41,17 +51,23 @@ public class EpisodeService {
             return tmp;
         }
     }
-
+    
     public List<Episode> getSeasonEpisodes(long seasonId) {
-        return dao.getSeasonEpisodes(seasonDAO.getSeason(seasonId));
+        return dao.getSeasonEpisodes(seasonDao.getSeason(seasonId));
     }
 
-    public void deleteEpisode(long id) throws MyValidationException {
-        Episode tmp = dao.getEpisode(id);
-        if (tmp == null) {
+    public void deleteEpisode(long seasonId, long id) throws MyValidationException {
+        Episode tmp1 = dao.getEpisode(id);
+        if (tmp1 == null || canBeDeleted(id) == false) {
             throw new MyValidationException();
         } else {
+            Season tmp2 = seasonDao.getSeason(seasonId);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            }
             dao.deleteEpisode(id);
+            tmp2.getEpisodes().remove(tmp1);
+            seasonDao.modifySeason(tmp2);
         }
     }
 
@@ -69,7 +85,7 @@ public class EpisodeService {
     }
 
     public void changeRating(long id, int rating) throws MyValidationException {//todo
-         Episode tmp = dao.getEpisode(id);
+        Episode tmp = dao.getEpisode(id);
         if (tmp != null) {
             int numberOfRatings = tmp.getNumberOfRatings();
             int sumOfRatings = tmp.getSumOfRatings();
@@ -79,6 +95,15 @@ public class EpisodeService {
             dao.changeRating(tmp);
         } else {
             throw new MyValidationException();
+        }
+    }
+    
+    public boolean canBeDeleted(long id) throws MyValidationException {
+        Episode tmp = dao.getEpisode(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getActors().isEmpty();
         }
     }
 }

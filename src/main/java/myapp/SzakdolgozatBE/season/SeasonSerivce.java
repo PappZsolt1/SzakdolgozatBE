@@ -15,15 +15,24 @@ public class SeasonSerivce {
     SeasonDAO dao;
     
     @Inject
-    SeriesDAO seriesDAO;
+    SeriesDAO seriesDao;
     
     MyValidator val = new MyValidator();
 
-    public Season addSeason(Season season) throws MyValidationException {
+    public Season addSeason(long seriesId, Season season) throws MyValidationException {
         if (season.getId() != null || val.validateNumber(season.getNumber(), 0, 100) == false) {
             throw new MyValidationException();
         } else {
-            return dao.addSeason(season);
+            Series tmp = seriesDao.getSeries(seriesId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            } else {
+                season.setSeries(tmp);
+                dao.addSeason(season);
+                tmp.getSeasons().add(season);
+                seriesDao.modifySeries(tmp);
+                return season;
+            }
         }
     }
 
@@ -35,9 +44,14 @@ public class SeasonSerivce {
             return tmp;
         }
     }
+    
+    public boolean checkIfExists(long id) {
+        Season tmp = dao.getSeason(id);
+        return (tmp != null);
+    }
 
     public List<Season> getSeriesSeasons(long seriesId) throws MyValidationException {
-        Series tmp = seriesDAO.getSeries(seriesId);
+        Series tmp = seriesDao.getSeries(seriesId);
         if (tmp != null) {
             return dao.getSeriesSeasons(tmp);
         } else {
@@ -45,12 +59,18 @@ public class SeasonSerivce {
         }
     }
 
-    public void deleteSeason(long id) throws MyValidationException {
-        Season tmp = dao.getSeason(id);
-        if (tmp != null) {
-            dao.deleteSeason(id);
-        } else {
+    public void deleteSeason(long seriesId, long id) throws MyValidationException {
+        Season tmp1 = dao.getSeason(id);
+        if (tmp1 == null || canBeDeleted(id) == false) {
             throw new MyValidationException();
+        } else {
+            Series tmp2 = seriesDao.getSeries(seriesId);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            }
+            dao.deleteSeason(id);
+            tmp2.getSeasons().remove(tmp1);
+            seriesDao.modifySeries(tmp2);
         }
     }
 
@@ -65,6 +85,15 @@ public class SeasonSerivce {
             return dao.modifySeason(tmp);
         } else {
             throw new MyValidationException();
+        }
+    }
+    
+    public boolean canBeDeleted(long id) throws MyValidationException {
+        Season tmp = dao.getSeason(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getEpisodes().isEmpty();
         }
     }
 }
