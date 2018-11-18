@@ -74,17 +74,30 @@ public class SeasonSerivce {
         }
     }
 
-    public Season modifySeason(Season season) throws MyValidationException {
+    public Season modifySeason(long seriesId, Season season) throws MyValidationException {
         if (season.getId() == null || val.validateNumber(season.getNumber(), 0, 100) == false) {
             throw new MyValidationException();
-        }
-        Season tmp = dao.getSeason(season.getId());
-        if (tmp != null) {
-            tmp.setNumber(season.getNumber());
-            tmp.setSeries(season.getSeries());
-            return dao.modifySeason(tmp);
         } else {
-            throw new MyValidationException();
+            Season tmp1 = dao.getSeason(season.getId());
+            if (tmp1 == null) {
+                throw new MyValidationException();
+            }
+            Series tmp2 = seriesDao.getSeries(seriesId);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            }
+            if (tmp1.getSeries().equals(tmp2) == true) {
+                season.setSeries(tmp2);
+                return dao.modifySeason(season);
+            } else {
+                season.setSeries(tmp2);
+                seriesDao.modifySeries(tmp2);
+                tmp1.getSeries().getSeasons().remove(season);
+                dao.modifySeason(season);
+                tmp2.getSeasons().add(season);
+                seriesDao.modifySeries(tmp1.getSeries());
+                return season;
+            }
         }
     }
     

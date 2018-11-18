@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.season;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
@@ -91,10 +90,11 @@ public class SeasonResource {
     }
 
     @PUT
+    @Path("/{seriesId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifySeason(Season season) {
+    public Response modifySeason(@PathParam("seriesId") long seriesId, Season season) {
         try {
-            Season tmp = service.modifySeason(season);
+            Season tmp = service.modifySeason(seriesId, season);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();

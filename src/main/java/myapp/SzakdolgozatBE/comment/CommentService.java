@@ -42,7 +42,9 @@ public class CommentService {
     public Comment addComment(Comment comment) throws MyValidationException {
         if (comment.getId() != null
                 || comment.getPostDate() != null
-                || val.validateText(comment.getContent(), 60000) == false) {//other entities, only one
+                || val.validateText(comment.getContent(), 60000) == false
+                || validateCommentObjects(new Object[] {comment.getActor(), comment.getArticle(),
+                comment.getEpisode(), comment.getMovie(), comment.getTopic()}) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
@@ -73,11 +75,21 @@ public class CommentService {
     
     public Comment moderateComment(long id) throws MyValidationException {
         Comment tmp = dao.getComment(id);
-        if (tmp != null) {
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
             tmp.setContent("Moderálva!");
             return dao.moderateComment(tmp);
-        } else {
-            throw new MyValidationException();
         }        
+    }
+    
+    public boolean validateCommentObjects(Object[] o) {
+        int count = 0;
+        for (int i = 0; i < o.length; i++) {
+            if (o[i] != null) {
+                count++;
+            }
+        }
+        return (count == 1);
     }
 }

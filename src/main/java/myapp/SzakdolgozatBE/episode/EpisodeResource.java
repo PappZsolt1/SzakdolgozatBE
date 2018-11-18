@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.episode;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
@@ -56,6 +55,20 @@ public class EpisodeResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
+    @GET
+    @Path("/season/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEpisodeSeasonId(@PathParam("id") long id) {
+        try {
+            long tmp = service.getEpisodeSeasonId(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     //not used
     /*@GET
@@ -85,10 +98,11 @@ public class EpisodeResource {
     }
 
     @PUT
+    @Path("/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyEpisode(Episode episode) {
+    public Response modifyEpisode(@PathParam("seasonId") long seasonId, Episode episode) {
         try {
-            Episode tmp = service.modifyEpisode(episode);
+            Episode tmp = service.modifyEpisode(seasonId, episode);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();

@@ -1,8 +1,5 @@
 package myapp.SzakdolgozatBE.episode;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -52,6 +49,15 @@ public class EpisodeService {
         }
     }
     
+    public long getEpisodeSeasonId(long id) throws MyValidationException {
+        Episode tmp = dao.getEpisode(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getSeason().getId();
+        }
+    }
+    
     public List<Episode> getSeasonEpisodes(long seasonId) {
         return dao.getSeasonEpisodes(seasonDao.getSeason(seasonId));
     }
@@ -71,16 +77,33 @@ public class EpisodeService {
         }
     }
 
-    public Episode modifyEpisode(Episode episode) throws MyValidationException {
+    public Episode modifyEpisode(long seasonId, Episode episode) throws MyValidationException {
         if (episode.getId() == null
                 || val.validateText(episode.getTitle(), 200) == false
                 || val.validateDate(episode.getReleaseDate(), 1850, 2100) == false
                 || val.validateLength(episode.geteLength()) == false) {
             throw new MyValidationException();
-        } else if (dao.getEpisode(episode.getId()) == null) {
-            throw new MyValidationException();
         } else {
-            return dao.modifyEpisode(episode);
+            Episode tmp1 = dao.getEpisode(episode.getId());
+            if (tmp1 == null) {
+                throw new MyValidationException();
+            }
+            Season tmp2 = seasonDao.getSeason(seasonId);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            }
+            if (tmp1.getSeason().equals(tmp2) == true) {
+                episode.setSeason(tmp2);
+                return dao.modifyEpisode(episode);
+            } else {
+                episode.setSeason(tmp2);
+                seasonDao.modifySeason(tmp2);
+                tmp1.getSeason().getEpisodes().remove(episode);
+                dao.modifyEpisode(episode);
+                tmp2.getEpisodes().add(episode);
+                seasonDao.modifySeason(tmp1.getSeason());
+                return episode;
+            }
         }
     }
 
