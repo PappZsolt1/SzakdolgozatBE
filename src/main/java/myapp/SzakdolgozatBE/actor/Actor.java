@@ -49,6 +49,7 @@ public class Actor implements Serializable {
     private String bio;
     
     @Lob
+    @Column(columnDefinition = "BLOB")
     private byte[] photo;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,11 +58,11 @@ public class Actor implements Serializable {
     private Gender gender;
     
     @ManyToMany(mappedBy = "actors")
-    @JsonBackReference(value = "movie-actor")
+    //@JsonBackReference(value = "movie-actor")
     private List<Movie> movies;
     
     @ManyToMany(mappedBy = "actors")
-    @JsonBackReference(value = "episode-actor")
+    //@JsonBackReference(value = "episode-actor")
     private List<Episode> episodes;
     
     @OneToMany(mappedBy = "actor")

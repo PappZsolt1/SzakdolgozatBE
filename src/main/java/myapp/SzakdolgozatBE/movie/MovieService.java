@@ -5,6 +5,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.actor.Actor;
+import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
 import myapp.SzakdolgozatBE.genre.GenreDAO;
 
@@ -19,6 +21,9 @@ public class MovieService {
     
     @Inject
     GenreDAO genreDao;
+    
+    @Inject
+    ActorDAO actorDao;
     
     MyValidator val = new MyValidator();
     
@@ -35,6 +40,26 @@ public class MovieService {
         } else {
             return dao.addMovie(movie);
         }
+    }
+    
+    public boolean saveMovieActors(long id, long[] actorIds) throws MyValidationException {//todo
+        Movie tmp1 = dao.getMovie(id);
+        tmp1.getActors().clear();
+        if (tmp1 == null) {
+            throw new MyValidationException();
+        }
+        if (actorIds.length == 0) {
+            return true;
+        }
+        for (int i = 0; i < actorIds.length; i++) {
+            Actor tmp2 = actorDao.getActor(actorIds[i]);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            }
+            tmp1.getActors().add(tmp2);
+        }
+        dao.modifyMovie(tmp1);
+        return true;
     }
 
     public Movie getMovie(long id) throws MyValidationException {

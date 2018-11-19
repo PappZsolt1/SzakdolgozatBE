@@ -3,6 +3,7 @@ package myapp.SzakdolgozatBE.series;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,6 +46,7 @@ public class Series implements Serializable {
     private int releaseYear;
     
     @Lob
+    @Column(columnDefinition = "BLOB")
     private byte[] coverPicture;
     
     @ManyToOne(fetch = FetchType.LAZY)

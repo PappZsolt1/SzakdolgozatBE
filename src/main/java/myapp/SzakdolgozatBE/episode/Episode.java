@@ -58,7 +58,7 @@ public class Episode implements Serializable {
     @JoinTable(name = "Episode_Actor",
             joinColumns = @JoinColumn(name = "Episode_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
-    //@JsonManagedReference(value = "episode-actor")
+    @JsonBackReference(value = "episode-actor")
     private List<Actor> actors;
     
     @OneToMany(mappedBy = "episode")

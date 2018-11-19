@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -58,6 +59,7 @@ public class Movie implements Serializable {
     private int releaseYear;
 
     @Lob
+    @Column(columnDefinition = "BLOB")
     private byte[] coverPicture;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -74,7 +76,7 @@ public class Movie implements Serializable {
     @JoinTable(name = "Movie_Actor",
             joinColumns = @JoinColumn(name = "Movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "Actor_id", referencedColumnName = "id"))
-    //@JsonManagedReference(value = "movie-actor")
+    @JsonBackReference(value = "movie-actor")
     private List<Actor> actors;
     
     @OneToMany(mappedBy = "movie")

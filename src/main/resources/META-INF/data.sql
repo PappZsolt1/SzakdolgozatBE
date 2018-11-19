@@ -16,3 +16,5 @@ INSERT INTO Rules VALUES (1, "Hozzászólások írása során tilos trágár, ra
 INSERT INTO ErrorReport VALUES (1, "Hiba.", false, "2018. 05. 02. 22:08:32", null)
 
 INSERT INTO Actor VALUES (10, "bio", "2001. 01. 01.", "New York", "John Doe", LOAD_FILE("D:\images\circle.png"), 1)
+
+INSERT INTO ErrorReport VALUES (2, "Árvíztűrő tükörfúrórgép. Árvíztűrő tükörfúrórgép. Árvíztűrő tükörfúrórgép.", false, "2018. 05. 02. 22:08:32", null)
