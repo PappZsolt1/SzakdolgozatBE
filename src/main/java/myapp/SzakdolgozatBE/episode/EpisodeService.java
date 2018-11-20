@@ -5,6 +5,10 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.actor.Actor;
+import myapp.SzakdolgozatBE.actor.ActorDAO;
+import myapp.SzakdolgozatBE.rating.Rating;
+import myapp.SzakdolgozatBE.rating.RatingDAO;
 import myapp.SzakdolgozatBE.season.Season;
 import myapp.SzakdolgozatBE.season.SeasonDAO;
 
@@ -16,6 +20,12 @@ public class EpisodeService {
     
     @Inject
     SeasonDAO seasonDao;
+    
+    @Inject
+    ActorDAO actorDao;
+    
+    @Inject
+    RatingDAO ratingDao;
     
     MyValidator val = new MyValidator();
     
@@ -49,12 +59,62 @@ public class EpisodeService {
         }
     }
     
+    public boolean checkIfExists(long id) {
+        Episode tmp = dao.getEpisode(id);
+        return (tmp != null);
+    }
+    
     public long getEpisodeSeasonId(long id) throws MyValidationException {
         Episode tmp = dao.getEpisode(id);
         if (tmp == null) {
             throw new MyValidationException();
         } else {
             return tmp.getSeason().getId();
+        }
+    }
+    
+    public List<Actor> getEpisodeActors(long id) throws MyValidationException {
+        Episode tmp = dao.getEpisode(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getActors();
+        }
+    }
+    
+    public Actor addActorToEpisode(long id, long actorId) throws MyValidationException {
+        Episode tmp1 = dao.getEpisode(id);
+        if (tmp1 == null) {
+            throw new MyValidationException();
+        } else {
+            Actor tmp2 = actorDao.getActor(actorId);
+            if (tmp2 == null || tmp1.getActors().contains(tmp2) == true) {
+                throw new MyValidationException();
+            } else {
+                tmp1.getActors().add(tmp2);
+                dao.modifyEpisode(tmp1);
+                tmp2.getEpisodes().add(tmp1);
+                actorDao.modifyActor(tmp2);
+                return tmp2;
+            }
+        }
+    }
+    
+    public Actor removeActorFromEpisode(long id, long actorId) throws MyValidationException {
+        Episode tmp1 = dao.getEpisode(id);
+        if (tmp1 == null) {
+            throw new MyValidationException();
+        } else {
+            Actor tmp2 = actorDao.getActor(actorId);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            } else {
+                tmp1.getActors().remove(tmp2);
+                dao.modifyEpisode(tmp1);
+                tmp2.getEpisodes().remove(tmp1);
+                actorDao.modifyActor(tmp2);
+                return tmp2;
+            }
         }
     }
     
@@ -107,17 +167,20 @@ public class EpisodeService {
         }
     }
 
-    public void changeRating(long id, int rating) throws MyValidationException {//todo
+    public void changeRating(long id, byte rating) throws MyValidationException {//todo
         Episode tmp = dao.getEpisode(id);
-        if (tmp != null) {
-            int numberOfRatings = tmp.getNumberOfRatings();
-            int sumOfRatings = tmp.getSumOfRatings();
-            tmp.setNumberOfRatings(numberOfRatings + 1);
-            tmp.setSumOfRatings(sumOfRatings + rating);
-            tmp.setRating(sumOfRatings / numberOfRatings);
-            dao.changeRating(tmp);
-        } else {
+        if (tmp == null || val.validateNumber(rating, 1, 10) == false) {
             throw new MyValidationException();
+        } else {
+            tmp.setNumberOfRatings(tmp.getNumberOfRatings() + 1);
+            tmp.setSumOfRatings(tmp.getSumOfRatings() + rating);
+            tmp.setRating(tmp.getSumOfRatings() / tmp.getNumberOfRatings());
+            dao.modifyEpisode(tmp);
+            Rating r = new Rating();
+            r.setRating(rating);
+            r.setEpisode(tmp);
+            //r.setMyUser(myUser);
+            ratingDao.addRating(r);
         }
     }
     

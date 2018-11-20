@@ -9,6 +9,8 @@ import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
 import myapp.SzakdolgozatBE.genre.GenreDAO;
+import myapp.SzakdolgozatBE.rating.Rating;
+import myapp.SzakdolgozatBE.rating.RatingDAO;
 
 @Stateless
 public class MovieService {
@@ -24,6 +26,9 @@ public class MovieService {
     
     @Inject
     ActorDAO actorDao;
+    
+    @Inject
+    RatingDAO ratingDao;
     
     MyValidator val = new MyValidator();
     
@@ -41,26 +46,6 @@ public class MovieService {
             return dao.addMovie(movie);
         }
     }
-    
-    public boolean saveMovieActors(long id, long[] actorIds) throws MyValidationException {//todo
-        Movie tmp1 = dao.getMovie(id);
-        tmp1.getActors().clear();
-        if (tmp1 == null) {
-            throw new MyValidationException();
-        }
-        if (actorIds.length == 0) {
-            return true;
-        }
-        for (int i = 0; i < actorIds.length; i++) {
-            Actor tmp2 = actorDao.getActor(actorIds[i]);
-            if (tmp2 == null) {
-                throw new MyValidationException();
-            }
-            tmp1.getActors().add(tmp2);
-        }
-        dao.modifyMovie(tmp1);
-        return true;
-    }
 
     public Movie getMovie(long id) throws MyValidationException {
         Movie tmp = dao.getMovie(id);
@@ -68,6 +53,56 @@ public class MovieService {
             throw new MyValidationException();
         } else {
             return tmp;
+        }
+    }
+    
+    public boolean checkIfExists(long id) {
+        Movie tmp = dao.getMovie(id);
+        return (tmp != null);
+    }
+    
+    public List<Actor> getMovieActors(long id) throws MyValidationException {
+        Movie tmp = dao.getMovie(id);
+        if (tmp == null) {
+            throw new MyValidationException();
+        } else {
+            return tmp.getActors();
+        }
+    }
+    
+    public Actor addActorToMovie(long id, long actorId) throws MyValidationException {
+        Movie tmp1 = dao.getMovie(id);
+        if (tmp1 == null) {
+            throw new MyValidationException();
+        } else {
+            Actor tmp2 = actorDao.getActor(actorId);
+            if (tmp2 == null || tmp1.getActors().contains(tmp2) == true) {
+                throw new MyValidationException();
+            } else {
+                tmp1.getActors().add(tmp2);
+                dao.modifyMovie(tmp1);
+                tmp2.getMovies().add(tmp1);
+                actorDao.modifyActor(tmp2);
+                return tmp2;
+            }
+        }
+    }
+    
+    public Actor removeActorFromMovie(long id, long actorId) throws MyValidationException {
+        Movie tmp1 = dao.getMovie(id);
+        if (tmp1 == null) {
+            throw new MyValidationException();
+        } else {
+            Actor tmp2 = actorDao.getActor(actorId);
+            if (tmp2 == null) {
+                throw new MyValidationException();
+            } else {
+                tmp1.getActors().remove(tmp2);
+                dao.modifyMovie(tmp1);
+                tmp2.getMovies().remove(tmp1);
+                actorDao.modifyActor(tmp2);
+                return tmp2;
+            }
         }
     }
 
@@ -109,17 +144,20 @@ public class MovieService {
         
     }
 
-    public void changeRating(long id, int rating) throws MyValidationException {//todo
+    public void changeRating(long id, byte rating) throws MyValidationException {
         Movie tmp = dao.getMovie(id);
-        if (tmp != null) {
-            int numberOfRatings = tmp.getNumberOfRatings();
-            int sumOfRatings = tmp.getSumOfRatings();
-            tmp.setNumberOfRatings(numberOfRatings + 1);
-            tmp.setSumOfRatings(sumOfRatings + rating);
-            tmp.setRating(sumOfRatings / numberOfRatings);
-            dao.changeRating(tmp);
-        } else {
+        if (tmp == null || val.validateNumber(rating, 1, 10) == false) {
             throw new MyValidationException();
+        } else {
+            tmp.setNumberOfRatings(tmp.getNumberOfRatings() + 1);
+            tmp.setSumOfRatings(tmp.getSumOfRatings() + rating);
+            tmp.setRating((double)tmp.getSumOfRatings() / (double)tmp.getNumberOfRatings());
+            dao.modifyMovie(tmp);
+            Rating r = new Rating();
+            r.setRating(rating);
+            r.setMovie(tmp);
+            //r.setMyUser(myUser);
+            ratingDao.addRating(r);
         }
     }
     

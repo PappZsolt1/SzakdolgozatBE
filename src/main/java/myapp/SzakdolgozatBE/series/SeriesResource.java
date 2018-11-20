@@ -60,7 +60,8 @@ public class SeriesResource {
         }
     }
 
-    @GET
+    //not used
+    /*@GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSeries() {
         try {
@@ -69,7 +70,7 @@ public class SeriesResource {
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }*/
     
     @Path("/search/{title}")
     @GET

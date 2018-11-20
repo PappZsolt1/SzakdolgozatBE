@@ -84,7 +84,7 @@ public class Movie implements Serializable {
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "movie")
-    //@JsonManagedReference(value = "movie-rating")
+    @JsonBackReference(value = "movie-rating")
     private List<Rating> ratings;
 
     public Long getId() {
@@ -123,7 +123,7 @@ public class Movie implements Serializable {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

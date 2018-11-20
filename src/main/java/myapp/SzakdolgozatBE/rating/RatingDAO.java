@@ -21,10 +21,12 @@ public class RatingDAO {
     }
 
     public Rating getMovieRating(MyUser user, Movie movie) {
-        return (Rating) em.createNamedQuery("getMovieRating").setParameter("user", user).setParameter("movie", movie).getSingleResult();
+        return (Rating) em.createNamedQuery("getMovieRating")
+                .setParameter("user", user).setParameter("movie", movie).getSingleResult();
     }
 
     public Rating getEpisodeRating(MyUser user, Episode episode) {
-        return (Rating) em.createNamedQuery("getEpisodeRating").setParameter("user", user).setParameter("episode", episode).getSingleResult();
+        return (Rating) em.createNamedQuery("getEpisodeRating")
+                .setParameter("user", user).setParameter("episode", episode).getSingleResult();
     }
 }

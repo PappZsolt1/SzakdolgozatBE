@@ -38,17 +38,11 @@ public class MovieDAO {
         em.getTransaction().commit();
     }
 
-    public Movie modifyMovie(Movie movie) throws NullPointerException {
+    public Movie modifyMovie(Movie movie) {
         em.getTransaction().begin();
         em.merge(movie);
         em.getTransaction().commit();
         return movie;
-    }
-
-    public void changeRating(Movie movie) {
-        em.getTransaction().begin();
-        em.merge(movie);
-        em.getTransaction().commit();
     }
     
     public boolean ageClassificationNotUsed(AgeClassification ageClassification) {

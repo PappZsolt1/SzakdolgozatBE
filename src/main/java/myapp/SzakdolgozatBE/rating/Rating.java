@@ -41,12 +41,12 @@ public class Rating implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    @JsonBackReference(value = "movie-rating")
+    //@JsonBackReference(value = "movie-rating")
     private Movie movie;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "episode_id")
-    @JsonBackReference(value = "episode-rating")
+    //@JsonBackReference(value = "episode-rating")
     private Episode episode;
 
     public Long getId() {

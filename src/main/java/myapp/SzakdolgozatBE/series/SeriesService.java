@@ -41,6 +41,15 @@ public class SeriesService {
         if (tmp == null) {
             throw new MyValidationException();
         } else {
+            int numberOfRatings = 0;
+            double sumOfRatings = 0;
+            for (Season season : tmp.getSeasons()) {
+                for (Episode episode : season.getEpisodes()) {
+                    numberOfRatings++;
+                    sumOfRatings += episode.getRating();
+                }
+            }
+            tmp.setRating(sumOfRatings / numberOfRatings);
             return tmp;
         }
     }
@@ -82,24 +91,6 @@ public class SeriesService {
             throw new MyValidationException();
         } else {
             return dao.modifySeries(series);
-        }
-    }
-
-    public void changeRating(long id) throws MyValidationException {//todo
-        Series tmp = dao.getSeries(id);
-        double numberOfRatings = 0;
-        int sumOfRatings = 0;
-        if (tmp != null) {
-            for (Season season : tmp.getSeasons()) {
-                for (Episode episode: season.getEpisodes()) {
-                    numberOfRatings++;
-                    sumOfRatings += episode.getRating();
-                }
-            }
-            tmp.setRating(sumOfRatings / numberOfRatings);
-            dao.changeRating(tmp);
-        } else {
-            throw new MyValidationException();
         }
     }
     

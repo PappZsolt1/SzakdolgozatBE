@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.episode;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
@@ -12,8 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
-import myapp.SzakdolgozatBE.rating.RatingService;
-import myapp.SzakdolgozatBE.series.SeriesService;
+import myapp.SzakdolgozatBE.actor.Actor;
 
 @Path("/episode")
 @ApplicationScoped
@@ -21,12 +21,6 @@ public class EpisodeResource {
 
     @EJB
     EpisodeService service;
-    
-    @EJB
-    RatingService ratingService; //todo
-    
-    @EJB
-    SeriesService seriesService; //todo
 
     @POST
     @Path("/{seasonId}")
@@ -57,11 +51,65 @@ public class EpisodeResource {
     }
     
     @GET
+    @Path("/check/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkIfExists(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.checkIfExists(id);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
     @Path("/season/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEpisodeSeasonId(@PathParam("id") long id) {
         try {
             long tmp = service.getEpisodeSeasonId(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/actors/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEpisodeActors(@PathParam("id") long id) {
+        try {
+            List<Actor> tmp = service.getEpisodeActors(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/add/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addActorToEpisode(@PathParam("id") long id, long actorId) {
+        try {
+            Actor tmp = service.addActorToEpisode(id, actorId);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/remove/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeActorFromEpisode(@PathParam("id") long id, long actorId) {
+        try {
+            Actor tmp = service.removeActorFromEpisode(id, actorId);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -114,15 +162,12 @@ public class EpisodeResource {
     @PUT
     @Path("/rating/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeRating(@PathParam("id") long id, int rating) {
+    public Response changeRating(@PathParam("id") long id, byte rating) {
         try {
             service.changeRating(id, rating);
-            ratingService.addMovieRating((byte) rating, id);
-            long seriesId = service.getEpisode(id).getSeason().getSeries().getId();
-            seriesService.changeRating(seriesId);
             return Response.ok().build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

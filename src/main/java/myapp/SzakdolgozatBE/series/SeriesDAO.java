@@ -44,12 +44,6 @@ public class SeriesDAO {
         em.getTransaction().commit();
         return series;
     }
-
-    public void changeRating(Series series) {        
-        em.getTransaction().begin();
-        em.merge(series);
-        em.getTransaction().commit();
-    }
     
     public boolean ageClassificationNotUsed(AgeClassification ageClassification) {
         return em.createNamedQuery("getAgeClassificationSeries")

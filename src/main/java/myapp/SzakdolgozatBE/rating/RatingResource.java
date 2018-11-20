@@ -16,7 +16,8 @@ public class RatingResource {
     @EJB
     RatingService service;
 
-    @POST
+    //not used
+    /*@POST
     @Path("/movie")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMovieRating(byte rating, long movieId) {
@@ -30,7 +31,7 @@ public class RatingResource {
     public Response addEpisodeRating(byte rating, long episodeId) {
         Rating tmp = service.addEpisodeRating(rating, episodeId);
         return Response.ok().entity(tmp).build();
-    }
+    }*/
 
     @GET
     @Path("/movie")

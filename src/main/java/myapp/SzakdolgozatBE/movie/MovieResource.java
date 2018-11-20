@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
-import myapp.SzakdolgozatBE.rating.RatingService;
+import myapp.SzakdolgozatBE.actor.Actor;
 
 @Path("/movie")
 @ApplicationScoped
@@ -21,9 +21,6 @@ public class MovieResource {
 
     @EJB
     MovieService service;
-
-    @EJB
-    RatingService ratingService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,20 +35,6 @@ public class MovieResource {
         }
     }
     
-    @POST
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response saveMovieActors(@PathParam("id") long id, long[] actorIds) {//todo
-        try {
-            boolean tmp = service.saveMovieActors(id, actorIds);
-            return Response.ok().entity(tmp).build();
-        } catch (MyValidationException m) {
-            return Response.status(Response.Status.CONFLICT).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,8 +48,63 @@ public class MovieResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    
     @GET
+    @Path("/check/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkIfExists(@PathParam("id") long id) {
+        try {
+            boolean tmp = service.checkIfExists(id);
+            return Response.ok().entity(tmp).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/actors/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMovieActors(@PathParam("id") long id) {
+        try {
+            List<Actor> tmp = service.getMovieActors(id);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/add/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addActorToMovie(@PathParam("id") long id, long actorId) {
+        try {
+            Actor tmp = service.addActorToMovie(id, actorId);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/remove/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeActorFromMovie(@PathParam("id") long id, long actorId) {
+        try {
+            Actor tmp = service.removeActorFromMovie(id, actorId);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    //not used
+    /*@GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllMovies() {
         try {
@@ -75,7 +113,7 @@ public class MovieResource {
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }*/
     
     @Path("/search/{title}")
     @GET
@@ -121,13 +159,12 @@ public class MovieResource {
     @PUT
     @Path("/rating/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeRating(@PathParam("id") long id, int rating) {
+    public Response changeRating(@PathParam("id") long id, byte rating) {
         try {
             service.changeRating(id, rating);
-            ratingService.addMovieRating((byte) rating, id);
             return Response.ok().build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
