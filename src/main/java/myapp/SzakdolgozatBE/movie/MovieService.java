@@ -38,7 +38,7 @@ public class MovieService {
                 || ageClassificationDao.getAgeClassification(movie.getAgeClassification().getId()) == null
                 || genreDao.getGenre(movie.getGenre().getId()) == null
                 || movie.getRatings() != null
-                || val.validateNumber(movie.getBudget(), 0, 1000000000) == false
+                || val.validateNumber(movie.getBudget(), 0, 2000000000) == false
                 || val.validateNumber(movie.getReleaseYear(), 1850, 2100) == false
                 || val.validateLength(movie.getmLength()) == false) {// pic
             throw new MyValidationException();
