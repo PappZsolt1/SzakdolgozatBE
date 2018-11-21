@@ -20,10 +20,67 @@ public class CommentResource {
     @EJB CommentService service;
     
     @POST
+    @Path("/movie/{movieId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addComment(Comment comment) {
+    public Response addMovieComment(@PathParam("movieId") long movieId, Comment comment) {
         try {
-            Comment tmp =  service.addComment(comment);
+            Comment tmp = service.addMovieComment(movieId, comment);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/actor/{actorId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addActorComment(@PathParam("actorId") long actorId, Comment comment) {
+        try {
+            Comment tmp = service.addActorComment(actorId, comment);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/article/{articleId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addArticleComment(@PathParam("articleId") long articleId, Comment comment) {
+        try {
+            Comment tmp = service.addArticleComment(articleId, comment);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/episode/{episodeId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addEpisodeComment(@PathParam("episodeId") long episodeId, Comment comment) {
+        try {
+            Comment tmp = service.addEpisodeComment(episodeId, comment);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @POST
+    @Path("/topic/{topicId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTopicComment(@PathParam("topicId") long topicId, Comment comment) {
+        try {
+            Comment tmp = service.addTopicComment(topicId, comment);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
@@ -69,7 +126,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/article/articleId}")
+    @Path("/article/{articleId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getArticleComments(@PathParam("articleId") long articleId) {
         try {

@@ -174,7 +174,7 @@ public class EpisodeService {
         } else {
             tmp.setNumberOfRatings(tmp.getNumberOfRatings() + 1);
             tmp.setSumOfRatings(tmp.getSumOfRatings() + rating);
-            tmp.setRating(tmp.getSumOfRatings() / tmp.getNumberOfRatings());
+            tmp.setRating((double)tmp.getSumOfRatings() / (double)tmp.getNumberOfRatings());
             dao.modifyEpisode(tmp);
             Rating r = new Rating();
             r.setRating(rating);

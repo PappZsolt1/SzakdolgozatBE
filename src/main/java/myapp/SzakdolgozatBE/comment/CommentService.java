@@ -7,11 +7,16 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
+import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.article.ArticleDAO;
+import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
+import myapp.SzakdolgozatBE.movie.Movie;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
 import myapp.SzakdolgozatBE.myUser.MyUser;
+import myapp.SzakdolgozatBE.topic.Topic;
 import myapp.SzakdolgozatBE.topic.TopicDAO;
 
 @Stateless
@@ -39,16 +44,112 @@ public class CommentService {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
-    public Comment addComment(Comment comment) throws MyValidationException {
+    public Comment addMovieComment(long movieId, Comment comment) throws MyValidationException {
         if (comment.getId() != null
                 || comment.getPostDate() != null
-                || val.validateText(comment.getContent(), 60000) == false
-                || validateCommentObjects(new Object[] {comment.getActor(), comment.getArticle(),
-                comment.getEpisode(), comment.getMovie(), comment.getTopic()}) == false) {
+                || comment.getActor() != null
+                || comment.getArticle()!= null 
+                || comment.getMovie()!= null
+                || comment.getEpisode()!= null
+                || comment.getTopic()!= null
+                || val.validateText(comment.getContent(), 60000) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
             //tmp.setMyUser(myUser);
+            Movie tmp = movieDao.getMovie(movieId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            }
+            comment.setMovie(tmp);
+            return dao.addComment(comment);
+        }
+    }
+    
+    public Comment addActorComment(long actorId, Comment comment) throws MyValidationException {
+        if (comment.getId() != null
+                || comment.getPostDate() != null
+                || comment.getActor() != null
+                || comment.getArticle()!= null 
+                || comment.getMovie()!= null
+                || comment.getEpisode()!= null
+                || comment.getTopic()!= null
+                || val.validateText(comment.getContent(), 60000) == false) {
+            throw new MyValidationException();
+        } else {
+            comment.setPostDate(sdf.format(new Date()));
+            //tmp.setMyUser(myUser);
+            Actor tmp = actorDao.getActor(actorId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            }
+            comment.setActor(tmp);
+            return dao.addComment(comment);
+        }
+    }
+    
+    public Comment addArticleComment(long articleId, Comment comment) throws MyValidationException {
+        if (comment.getId() != null
+                || comment.getPostDate() != null
+                || comment.getActor() != null
+                || comment.getArticle()!= null 
+                || comment.getMovie()!= null
+                || comment.getEpisode()!= null
+                || comment.getTopic()!= null
+                || val.validateText(comment.getContent(), 60000) == false) {
+            throw new MyValidationException();
+        } else {
+            comment.setPostDate(sdf.format(new Date()));
+            //tmp.setMyUser(myUser);
+            Article tmp = articleDao.getArticle(articleId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            }
+            comment.setArticle(tmp);
+            return dao.addComment(comment);
+        }
+    }
+    
+    public Comment addEpisodeComment(long episodeId, Comment comment) throws MyValidationException {
+        if (comment.getId() != null
+                || comment.getPostDate() != null
+                || comment.getActor() != null
+                || comment.getArticle()!= null 
+                || comment.getMovie()!= null
+                || comment.getEpisode()!= null
+                || comment.getTopic()!= null
+                || val.validateText(comment.getContent(), 60000) == false) {
+            throw new MyValidationException();
+        } else {
+            comment.setPostDate(sdf.format(new Date()));
+            //tmp.setMyUser(myUser);
+            Episode tmp = episodeDao.getEpisode(episodeId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            }
+            comment.setEpisode(tmp);
+            return dao.addComment(comment);
+        }
+    }
+    
+    public Comment addTopicComment(long topicId, Comment comment) throws MyValidationException {
+        if (comment.getId() != null
+                || comment.getPostDate() != null
+                || comment.getActor() != null
+                || comment.getArticle()!= null 
+                || comment.getMovie()!= null
+                || comment.getEpisode()!= null
+                || comment.getTopic()!= null
+                || val.validateText(comment.getContent(), 60000) == false) {
+            throw new MyValidationException();
+        } else {
+            comment.setPostDate(sdf.format(new Date()));
+            //tmp.setMyUser(myUser);
+            Topic tmp = TopicDao.getTopic(topicId);
+            if (tmp == null) {
+                throw new MyValidationException();
+            }
+            comment.setTopic(tmp);
             return dao.addComment(comment);
         }
     }
@@ -81,15 +182,5 @@ public class CommentService {
             tmp.setContent("Moderálva!");
             return dao.moderateComment(tmp);
         }        
-    }
-    
-    public boolean validateCommentObjects(Object[] o) {
-        int count = 0;
-        for (int i = 0; i < o.length; i++) {
-            if (o[i] != null) {
-                count++;
-            }
-        }
-        return (count == 1);
     }
 }

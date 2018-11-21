@@ -49,7 +49,7 @@ public class SeriesService {
                     sumOfRatings += episode.getRating();
                 }
             }
-            tmp.setRating(sumOfRatings / numberOfRatings);
+            tmp.setRating(sumOfRatings / (double)numberOfRatings);
             return tmp;
         }
     }
