@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.comment.CommentDAO;
 import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Stateless
@@ -14,6 +16,9 @@ public class TopicService {
 
     @Inject
     TopicDAO dao;
+    
+    @Inject
+    CommentDAO commentDao;
     
     MyValidator val = new MyValidator();
 
@@ -50,6 +55,10 @@ public class TopicService {
         if (tmp == null) {
             throw new MyValidationException();
         } else {
+            List<Comment> comments = commentDao.getTopicComments(tmp);
+            for (Comment comment : comments) {
+                commentDao.deleteComment(comment.getId());
+            }
             dao.deleteTopic(id);
         }
     }

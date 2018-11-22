@@ -29,7 +29,8 @@ import myapp.SzakdolgozatBE.topic.Topic;
     @NamedQuery(name = "getEpisodeComments", query = "SELECT c FROM Comment c WHERE c.episode = :episode ORDER BY c.postDate ASC"),
     @NamedQuery(name = "getActorComments", query = "SELECT c FROM Comment c WHERE c.actor = :actor ORDER BY c.postDate ASC"),
     @NamedQuery(name = "getArticleComments", query = "SELECT c FROM Comment c WHERE c.article = :article ORDER BY c.postDate ASC"),
-    @NamedQuery(name = "getTopicComments", query = "SELECT c FROM Comment c WHERE c.topic = :topic ORDER BY c.postDate ASC")
+    @NamedQuery(name = "getTopicComments", query = "SELECT c FROM Comment c WHERE c.topic = :topic ORDER BY c.postDate ASC"),
+    @NamedQuery(name = "getNumberOfMovieComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.movie = :movie")
 })
 public class Comment implements Serializable {
 
@@ -49,6 +50,8 @@ public class Comment implements Serializable {
     private MyUser myUser;
     
     private String postDate;
+    
+    private boolean moderated;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
@@ -105,6 +108,14 @@ public class Comment implements Serializable {
 
     public void setPostDate(String postDate) {
         this.postDate = postDate;
+    }
+
+    public boolean isModerated() {
+        return moderated;
+    }
+
+    public void setModerated(boolean moderated) {
+        this.moderated = moderated;
     }
 
     public Movie getMovie() {

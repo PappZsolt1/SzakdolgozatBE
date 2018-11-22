@@ -27,8 +27,13 @@ public class CommentDAO {
         return comment;
     }
     
-    public List<Comment> getMovieComments(Movie movie) {
-        return em.createNamedQuery("getMovieComments").setParameter("movie", movie).getResultList();
+    public List<Comment> getMovieComments(int offset, int limit, Movie movie) {
+        return em.createNamedQuery("getMovieComments").setParameter("movie", movie)
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfMovieComments(Movie movie) {
+        return (long)em.createNamedQuery("getNumberOfMovieComments").setParameter("movie", movie).getSingleResult();
     }
     
     public List<Comment> getEpisodeComments(Episode episode) {
@@ -52,5 +57,11 @@ public class CommentDAO {
         em.merge(comment);
         em.getTransaction().commit();
         return comment;
+    }
+    
+    public void deleteComment(long id) {
+        em.getTransaction().begin();
+        em.remove(this.getComment(id));
+        em.getTransaction().commit();
     }
 }

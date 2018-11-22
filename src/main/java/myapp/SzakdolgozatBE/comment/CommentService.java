@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.article.Article;
@@ -52,6 +53,7 @@ public class CommentService {
                 || comment.getMovie()!= null
                 || comment.getEpisode()!= null
                 || comment.getTopic()!= null
+                || comment.isModerated() == true
                 || val.validateText(comment.getContent(), 60000) == false) {
             throw new MyValidationException();
         } else {
@@ -74,6 +76,7 @@ public class CommentService {
                 || comment.getMovie()!= null
                 || comment.getEpisode()!= null
                 || comment.getTopic()!= null
+                || comment.isModerated() == true
                 || val.validateText(comment.getContent(), 60000) == false) {
             throw new MyValidationException();
         } else {
@@ -96,6 +99,7 @@ public class CommentService {
                 || comment.getMovie()!= null
                 || comment.getEpisode()!= null
                 || comment.getTopic()!= null
+                || comment.isModerated() == true
                 || val.validateText(comment.getContent(), 60000) == false) {
             throw new MyValidationException();
         } else {
@@ -118,6 +122,7 @@ public class CommentService {
                 || comment.getMovie()!= null
                 || comment.getEpisode()!= null
                 || comment.getTopic()!= null
+                || comment.isModerated() == true
                 || val.validateText(comment.getContent(), 60000) == false) {
             throw new MyValidationException();
         } else {
@@ -140,6 +145,7 @@ public class CommentService {
                 || comment.getMovie()!= null
                 || comment.getEpisode()!= null
                 || comment.getTopic()!= null
+                || comment.isModerated() == true
                 || val.validateText(comment.getContent(), 60000) == false) {
             throw new MyValidationException();
         } else {
@@ -154,8 +160,21 @@ public class CommentService {
         }
     }
     
-    public List<Comment> getMovieComments (long movieId) {
-        return dao.getMovieComments(movieDao.getMovie(movieId));
+    public Wrapper getMovieComments (int page, int size, long movieId) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        Movie tmp = movieDao.getMovie(movieId);
+        if (tmp == null) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<Comment> results = dao.getMovieComments(offset, size, tmp);
+        long total = dao.getNumberOfMovieComments(tmp);
+        if ((offset) >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
     public List<Comment> getEpisodeComments (long episodeId) {
@@ -180,6 +199,7 @@ public class CommentService {
             throw new MyValidationException();
         } else {
             tmp.setContent("Moderálva!");
+            tmp.setModerated(true);
             return dao.moderateComment(tmp);
         }        
     }

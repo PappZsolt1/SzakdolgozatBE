@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/comment")
 @ApplicationScoped
@@ -90,12 +91,14 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/movie/{movieId}")
+    @Path("/movie/{page}/{size}/{movieId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovieComments(@PathParam("movieId") long movieId) {
+    public Response getMovieComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("movieId") long movieId) {
         try {
-            List<Comment> tmp = service.getMovieComments(movieId);
+            Wrapper tmp = service.getMovieComments(page, size, movieId);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
