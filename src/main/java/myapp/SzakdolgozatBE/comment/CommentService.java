@@ -171,26 +171,78 @@ public class CommentService {
         int offset = (page - 1) * size;
         List<Comment> results = dao.getMovieComments(offset, size, tmp);
         long total = dao.getNumberOfMovieComments(tmp);
-        if ((offset) >= total) {
+        if (total > 0 && offset >= total) {
             throw new MyValidationException();
         }
         return new Wrapper(results, total);
     }
     
-    public List<Comment> getEpisodeComments (long episodeId) {
-        return dao.getEpisodeComments(episodeDao.getEpisode(episodeId));
+    public Wrapper getEpisodeComments (int page, int size, long episodeId) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        Episode tmp = episodeDao.getEpisode(episodeId);
+        if (tmp == null) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<Comment> results = dao.getEpisodeComments(offset, size, tmp);
+        long total = dao.getNumberOfEpisodeComments(tmp);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
-    public List<Comment> getActorComments (long actorId) {
-        return dao.getActorComments(actorDao.getActor(actorId));
+    public Wrapper getActorComments (int page, int size, long actorId) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        Actor tmp = actorDao.getActor(actorId);
+        if (tmp == null) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<Comment> results = dao.getActorComments(offset, size, tmp);
+        long total = dao.getNumberOfActorComments(tmp);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
-    public List<Comment> getArticleComments (long articleId) {
-        return dao.getArticleComments(articleDao.getArticle(articleId));
+    public Wrapper getArticleComments (int page, int size, long articleId) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        Article tmp = articleDao.getArticle(articleId);
+        if (tmp == null) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<Comment> results = dao.getArticleComments(offset, size, tmp);
+        long total = dao.getNumberOfArticleComments(tmp);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
-    public List<Comment> getTopicComments (long topicId) {
-        return dao.getTopicComments(TopicDao.getTopic(topicId));
+    public Wrapper getTopicComments (int page, int size, long topicId) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        Topic tmp = TopicDao.getTopic(topicId);
+        if (tmp == null) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<Comment> results = dao.getTopicComments(offset, size, tmp);
+        long total = dao.getNumberOfTopicComments(tmp);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
     public Comment moderateComment(long id) throws MyValidationException {

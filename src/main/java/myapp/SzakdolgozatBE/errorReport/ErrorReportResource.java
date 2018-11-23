@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/errorreport")
 @ApplicationScoped
@@ -33,37 +34,43 @@ public class ErrorReportResource {
         }
     }
 
-    @Path("/all")
     @GET
+    @Path("/all/{page}/{size}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllErrorReports() {
+    public Response getAllErrorReports(@PathParam("page") int page, @PathParam("size") int size) {
         try {
-            List<ErrorReport> tmp = service.getAllErrorReports();
+            Wrapper tmp = service.getAllErrorReports(page, size);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @Path("/resolved")
     @GET
+    @Path("/resolved/{page}/{size}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getResolvedErrorReports() {
+    public Response getResolvedErrorReports(@PathParam("page") int page, @PathParam("size") int size) {
         try {
-            List<ErrorReport> tmp = service.getResolvedErrorReports();
+            Wrapper tmp = service.getResolvedErrorReports(page, size);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @Path("/notresolved")
     @GET
+    @Path("/notresolved/{page}/{size}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getNotResolvedErrorReports() {
+    public Response getNotResolvedErrorReports(@PathParam("page") int page, @PathParam("size") int size) {
         try {
-            List<ErrorReport> tmp = service.getNotResolvedErrorReports();
+            Wrapper tmp = service.getNotResolvedErrorReports(page, size);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

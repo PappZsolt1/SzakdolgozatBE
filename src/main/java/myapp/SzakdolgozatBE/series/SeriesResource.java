@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/series")
 @ApplicationScoped
@@ -72,12 +73,12 @@ public class SeriesResource {
         }
     }*/
     
-    @Path("/search/{title}")
     @GET
+    @Path("/search/{page}/{size}/{title}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getResultSeries(@PathParam("title") String title) {
+    public Response getResultSeries(@PathParam("page") int page, @PathParam("size") int size, @PathParam("title") String title) {
         try {
-            List<Series> tmp = service.getResultSeries(title);
+            Wrapper tmp = service.getResultSeries(page, size, title);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();

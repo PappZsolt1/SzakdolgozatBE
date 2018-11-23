@@ -24,7 +24,8 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Topic")
 @NamedQueries({
-    @NamedQuery(name = "getAllTopics", query = "SELECT t FROM Topic t")//todo
+    @NamedQuery(name = "getAllTopics", query = "SELECT t FROM Topic t ORDER BY t.createDate"),
+    @NamedQuery(name = "getNumberOfAllTopics", query = "SELECT COUNT(t.id) FROM Topic t")
 })
 public class Topic implements Serializable {
 

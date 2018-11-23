@@ -23,8 +23,13 @@ public class ActorDAO {
         return em.find(Actor.class, id);
     }
     
-    public List<Actor> getResultActors(String name) {
-        return em.createNamedQuery("getResultActors").setParameter("name", name).getResultList();
+    public List<Actor> getResultActors(int offset, int limit, String name) {
+        return em.createNamedQuery("getResultActors").setParameter("name", name)
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfResultActors(String name) {
+        return (long)em.createNamedQuery("getNumberOfResultActors").setParameter("name", name).getSingleResult();
     }
 
     /*public List<Actor> getxxxActors() {

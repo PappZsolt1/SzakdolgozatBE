@@ -44,8 +44,13 @@ public class ArticleDAO {
         return em.createNamedQuery("getSavedArticles").getResultList();
     }
 
-    public List<Article> getPublishedArticles() {
-        return em.createNamedQuery("getPublishedArticles").getResultList();
+    public List<Article> getPublishedArticles(int offset, int limit) {
+        return em.createNamedQuery("getPublishedArticles")
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfPublishedArticles() {
+        return (long)em.createNamedQuery("getNumberOfPublishedArticles").getSingleResult();
     }
 
     public void deleteArticle(long id) {

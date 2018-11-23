@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Stateless
 public class ArticleService {
@@ -75,8 +76,17 @@ public class ArticleService {
         return dao.getSavedArticles();
     }
     
-    public List<Article> getPublishedArticles() {
-        return dao.getPublishedArticles();
+    public Wrapper getPublishedArticles(int page, int size) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<Article> results = dao.getPublishedArticles(offset, size);
+        long total = dao.getNumberOfPublishedArticles();
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
     public void deleteArticle(long id) throws MyValidationException {

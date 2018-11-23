@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/actor")
 @ApplicationScoped
@@ -60,12 +61,12 @@ public class ActorResource {
         }
     }
     
-    @Path("/search/{name}")
     @GET
+    @Path("/search/{page}/{size}/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getResultActors(@PathParam("name") String name) {
+    public Response getResultActors(@PathParam("page") int page, @PathParam("size") int size, @PathParam("name") String name) {
         try {
-            List<Actor> tmp = service.getResultActors(name);
+            Wrapper tmp = service.getResultActors(page, size, name);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();

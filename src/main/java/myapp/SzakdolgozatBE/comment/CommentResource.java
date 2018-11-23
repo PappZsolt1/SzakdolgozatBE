@@ -105,48 +105,56 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/episode/{episodeId}")
+    @Path("/episode/{page}/{size}/{episodeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEpisodeComments(@PathParam("episodeId") long episodeId) {
+    public Response getEpisodeComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("episodeId") long episodeId) {
         try {
-            List<Comment> tmp = service.getEpisodeComments(episodeId);
+            Wrapper tmp = service.getEpisodeComments(page, size, episodeId);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     @GET
-    @Path("/actor/{actorId}")
+    @Path("/actor/{page}/{size}/{actorId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getActorComments(@PathParam("actorId") long actorId) {
+    public Response getActorComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("actorId") long actorId) {
         try {
-            List<Comment> tmp = service.getActorComments(actorId);
+            Wrapper tmp = service.getActorComments(page, size, actorId);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     @GET
-    @Path("/article/{articleId}")
+    @Path("/article/{page}/{size}/{articleId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getArticleComments(@PathParam("articleId") long articleId) {
+    public Response getArticleComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("articleId") long articleId) {
         try {
-            List<Comment> tmp = service.getArticleComments(articleId);
+            Wrapper tmp = service.getArticleComments(page, size, articleId);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     @GET
-    @Path("/topic/{topicId}")
+    @Path("/topic/{page}/{size}/{topicId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTopicComments(@PathParam("topicId") long topicId) {
+    public Response getTopicComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("topicId") long topicId) {
         try {
-            List<Comment> tmp = service.getTopicComments(topicId);
+            Wrapper tmp = service.getTopicComments(page, size, topicId);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

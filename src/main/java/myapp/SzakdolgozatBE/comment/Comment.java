@@ -30,7 +30,11 @@ import myapp.SzakdolgozatBE.topic.Topic;
     @NamedQuery(name = "getActorComments", query = "SELECT c FROM Comment c WHERE c.actor = :actor ORDER BY c.postDate ASC"),
     @NamedQuery(name = "getArticleComments", query = "SELECT c FROM Comment c WHERE c.article = :article ORDER BY c.postDate ASC"),
     @NamedQuery(name = "getTopicComments", query = "SELECT c FROM Comment c WHERE c.topic = :topic ORDER BY c.postDate ASC"),
-    @NamedQuery(name = "getNumberOfMovieComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.movie = :movie")
+    @NamedQuery(name = "getNumberOfMovieComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.movie = :movie"),
+    @NamedQuery(name = "getNumberOfEpisodeComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.episode = :episode"),
+    @NamedQuery(name = "getNumberOfActorComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.actor = :actor"),
+    @NamedQuery(name = "getNumberOfArticleComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.article = :article"),
+    @NamedQuery(name = "getNumberOfTopicComments", query = "SELECT COUNT(c.id) FROM Comment c WHERE c.topic = :topic")
 })
 public class Comment implements Serializable {
 

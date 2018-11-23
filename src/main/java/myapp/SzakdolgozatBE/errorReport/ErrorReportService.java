@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Stateless
 public class ErrorReportService {
@@ -30,16 +31,43 @@ public class ErrorReportService {
         }
     }
     
-    public List<ErrorReport> getAllErrorReports() {
-        return dao.getAllErrorReports();
+    public Wrapper getAllErrorReports(int page, int size) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<ErrorReport> results = dao.getAllErrorReports(offset, size);
+        long total = dao.getNumberOfAllErrorReports();
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
-    public List<ErrorReport> getResolvedErrorReports() {
-        return dao.getResolvedErrorReports();
+    public Wrapper getResolvedErrorReports(int page, int size) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<ErrorReport> results = dao.getResolvedErrorReports(offset, size);
+        long total = dao.getNumberOfAllErrorReports();
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
-    public List<ErrorReport> getNotResolvedErrorReports() {
-        return dao.getNotResolvedErrorReports();
+    public Wrapper getNotResolvedErrorReports(int page, int size) throws MyValidationException {
+        if (page < 1 || size < 1) {
+            throw new MyValidationException();
+        }
+        int offset = (page - 1) * size;
+        List<ErrorReport> results = dao.getNotResolvedErrorReports(offset, size);
+        long total = dao.getNumberOfAllErrorReports();
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
     public void makeResolved(long id) throws MyValidationException {

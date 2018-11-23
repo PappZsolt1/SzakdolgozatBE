@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.gender.GenderDAO;
 
 @Stateless
@@ -45,12 +46,17 @@ public class ActorService {
         return (tmp != null);
     }
 
-    public List<Actor> getResultActors(String name) throws MyValidationException {
-        if (val.validateText(name, 200) == false) {
+    public Wrapper getResultActors(int page, int size, String name) throws MyValidationException {
+        if (page < 1 || size < 1 || val.validateText(name, 200) == false) {
             throw new MyValidationException();
-        } else {
-            return dao.getResultActors(name);
         }
+        int offset = (page - 1) * size;
+        List<Actor> results = dao.getResultActors(offset, size, name);
+        long total = dao.getNumberOfResultActors(name);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
     
     /*public List<Actor> getxxxActors() {

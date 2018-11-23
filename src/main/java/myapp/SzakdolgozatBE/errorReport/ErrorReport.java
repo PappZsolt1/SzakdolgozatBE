@@ -21,7 +21,10 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @NamedQueries({
     @NamedQuery(name = "getAllErrorReports", query = "SELECT e FROM ErrorReport e ORDER BY e.sendingDate ASC"),
     @NamedQuery(name = "getResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = TRUE ORDER BY e.sendingDate ASC"),
-    @NamedQuery(name = "getNotResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = FALSE ORDER BY e.sendingDate ASC")
+    @NamedQuery(name = "getNotResolvedErrorReports", query = "SELECT e FROM ErrorReport e WHERE e.resolved = FALSE ORDER BY e.sendingDate ASC"),
+    @NamedQuery(name = "getNumberOfAllErrorReports", query = "SELECT COUNT(e.id) FROM ErrorReport e"),
+    @NamedQuery(name = "getNumberOfResolvedErrorReports", query = "SELECT COUNT(e.id) FROM ErrorReport e WHERE e.resolved = TRUE"),
+    @NamedQuery(name = "getNumberOfNotResolvedErrorReports", query = "SELECT COUNT(e.id) FROM ErrorReport e WHERE e.resolved = FALSE")
 })
 public class ErrorReport implements Serializable {
 

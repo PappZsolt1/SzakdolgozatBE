@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/article")
 @ApplicationScoped
@@ -61,11 +62,14 @@ public class ArticleResource {
     }
 
     @GET
+    @Path("/{page}/{size}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPublishedArticles() {
+    public Response getPublishedArticles(@PathParam("page") int page, @PathParam("size") int size) {
         try {
-            List<Article> tmp = service.getPublishedArticles();
+            Wrapper tmp = service.getPublishedArticles(page, size);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

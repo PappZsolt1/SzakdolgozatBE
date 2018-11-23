@@ -28,8 +28,13 @@ public class MovieDAO {
         return em.createNamedQuery("getAllMovies").getResultList();
     }
     
-    public List<Movie> getResultMovies(String title) {
-        return em.createNamedQuery("getResultMovies").setParameter("title", title).getResultList();
+    public List<Movie> getResultMovies(int offset, int limit, String title) {
+        return em.createNamedQuery("getResultMovies").setParameter("title", title)
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfResultMovies(String title) {
+        return (long)em.createNamedQuery("getNumberOfResultMovies").setParameter("title", title).getSingleResult();
     }
 
     public void deleteMovie(long id) {

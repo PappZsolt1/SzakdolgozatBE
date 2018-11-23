@@ -18,16 +18,31 @@ public class ErrorReportDAO {
         return errorReport;
     }
 
-    public List<ErrorReport> getAllErrorReports() {
-        return em.createNamedQuery("getAllErrorReports").getResultList();
+    public List<ErrorReport> getAllErrorReports(int offset, int limit) {
+        return em.createNamedQuery("getAllErrorReports")
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfAllErrorReports() {
+        return (long)em.createNamedQuery("getNumberOfAllErrorReports").getSingleResult();
     }
 
-    public List<ErrorReport> getResolvedErrorReports() {
-        return em.createNamedQuery("getResolvedErrorReports").getResultList();
+    public List<ErrorReport> getResolvedErrorReports(int offset, int limit) {
+        return em.createNamedQuery("getResolvedErrorReports")
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfResolvedErrorReports() {
+        return (long)em.createNamedQuery("getNumberOfResolvedErrorReports").getSingleResult();
     }
 
-    public List<ErrorReport> getNotResolvedErrorReports() {
-        return em.createNamedQuery("getNotResolvedErrorReports").getResultList();
+    public List<ErrorReport> getNotResolvedErrorReports(int offset, int limit) {
+        return em.createNamedQuery("getNotResolvedErrorReports")
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfNotResolvedErrorReports() {
+        return (long)em.createNamedQuery("getNumberOfNotResolvedErrorReports").getSingleResult();
     }
 
     public ErrorReport getErrorReport(long id) {

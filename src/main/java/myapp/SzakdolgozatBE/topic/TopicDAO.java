@@ -18,8 +18,13 @@ public class TopicDAO {
         return topic;
     }
 
-    public List<Topic> getAllTopics() {
-        return em.createNamedQuery("getAllTopics").getResultList();
+    public List<Topic> getAllTopics(int offset, int limit) {
+        return em.createNamedQuery("getAllTopics")
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public long getNumberOfAllTopics() {
+        return (long)em.createNamedQuery("getNumberOfAllTopics").getSingleResult();
     }
 
     public Topic getTopic(long id) {

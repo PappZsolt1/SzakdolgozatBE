@@ -27,7 +27,8 @@ import myapp.SzakdolgozatBE.season.Season;
     @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s"),
     @NamedQuery(name = "getAgeClassificationSeries", query = "SELECT s FROM Series s WHERE s.ageClassification = :ageClassification"),
     @NamedQuery(name = "getGenreSeries", query = "SELECT s FROM Series s WHERE s.genre = :genre"),
-    @NamedQuery(name = "getResultSeries", query = "SELECT s FROM Series s WHERE s.title LIKE CONCAT('%', :title, '%') ORDER BY s.title ASC")
+    @NamedQuery(name = "getResultSeries", query = "SELECT s FROM Series s WHERE s.title LIKE CONCAT('%', :title, '%') ORDER BY s.title ASC"),
+    @NamedQuery(name = "getNumberOfResultSeries", query = "SELECT COUNT(s.id) FROM Series s WHERE s.title LIKE CONCAT('%', :title, '%')")
     //@NamedQuery(name = "getEpisodeRatings", query = "") // todo
 })
 public class Series implements Serializable {

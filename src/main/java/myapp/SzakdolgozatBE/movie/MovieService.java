@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
@@ -110,12 +111,17 @@ public class MovieService {
         return dao.getAllMovies();
     }
     
-    public List<Movie> getResultMovies(String title) throws MyValidationException {
-        if (val.validateText(title, 200) == false) {
+    public Wrapper getResultMovies(int page, int size, String title) throws MyValidationException {
+        if (page < 1 || size < 1 || val.validateText(title, 200) == false) {
             throw new MyValidationException();
-        } else {
-            return dao.getResultMovies(title);
         }
+        int offset = (page - 1) * size;
+        List<Movie> results = dao.getResultMovies(offset, size, title);
+        long total = dao.getNumberOfResultMovies(title);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
 
     public void deleteMovie(long id) throws MyValidationException {

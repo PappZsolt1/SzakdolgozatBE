@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
+import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
 import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.genre.GenreDAO;
@@ -63,12 +64,17 @@ public class SeriesService {
         return dao.getAllSeries();
     }
     
-    public List<Series> getResultSeries(String title) throws MyValidationException {
-        if (val.validateText(title, 200) == false) {
+    public Wrapper getResultSeries(int page, int size, String title) throws MyValidationException {
+        if (page < 1 || size < 1 || val.validateText(title, 200) == false) {
             throw new MyValidationException();
-        } else {
-            return dao.getResultSeries(title);
         }
+        int offset = (page - 1) * size;
+        List<Series> results = dao.getResultSeries(offset, size, title);
+        long total = dao.getNumberOfResultSeries(title);
+        if (total > 0 && offset >= total) {
+            throw new MyValidationException();
+        }
+        return new Wrapper(results, total);
     }
 
     public void deleteSeries(long id) throws MyValidationException {

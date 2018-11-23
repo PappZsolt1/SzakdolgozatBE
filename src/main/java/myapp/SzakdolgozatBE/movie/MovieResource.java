@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import myapp.SzakdolgozatBE.MyValidationException;
+import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.actor.Actor;
 
 @Path("/movie")
@@ -115,12 +116,12 @@ public class MovieResource {
         }
     }*/
     
-    @Path("/search/{title}")
     @GET
+    @Path("/search/{page}/{size}/{title}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getResultMovies(@PathParam("title") String title) {
+    public Response getResultMovies(@PathParam("page") int page, @PathParam("size") int size, @PathParam("title") String title) {
         try {
-            List<Movie> tmp = service.getResultMovies(title);
+            Wrapper tmp = service.getResultMovies(page, size, title);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
