@@ -7,6 +7,8 @@ import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
+import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.comment.CommentDAO;
 import myapp.SzakdolgozatBE.rating.Rating;
 import myapp.SzakdolgozatBE.rating.RatingDAO;
 import myapp.SzakdolgozatBE.season.Season;
@@ -26,6 +28,9 @@ public class EpisodeService {
     
     @Inject
     RatingDAO ratingDao;
+    
+    @Inject
+    CommentDAO commentDao;
     
     MyValidator val = new MyValidator();
     
@@ -130,6 +135,10 @@ public class EpisodeService {
             Season tmp2 = seasonDao.getSeason(seasonId);
             if (tmp2 == null) {
                 throw new MyValidationException();
+            }
+            List<Comment> comments = commentDao.getAllEpisodeComments(tmp1);
+            for (Comment comment : comments) {
+                commentDao.deleteComment(comment.getId());
             }
             dao.deleteEpisode(id);
             tmp2.getEpisodes().remove(tmp1);

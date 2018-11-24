@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.Wrapper;
+import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.comment.CommentDAO;
 import myapp.SzakdolgozatBE.gender.GenderDAO;
 
 @Stateless
@@ -16,6 +18,9 @@ public class ActorService {
     
     @Inject
     GenderDAO genderDao;
+    
+    @Inject
+    CommentDAO commentDao;
     
     MyValidator val = new MyValidator();
 
@@ -68,6 +73,10 @@ public class ActorService {
         if (tmp == null || canBeDeleted(id) == false) {
             throw new MyValidationException();
         } else {
+            List<Comment> comments = commentDao.getAllActorComments(tmp);
+            for (Comment comment : comments) {
+                commentDao.deleteComment(comment.getId());
+            }
             dao.deleteActor(id);
         }
     }

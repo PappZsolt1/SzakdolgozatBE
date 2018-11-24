@@ -9,6 +9,8 @@ import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.actor.ActorDAO;
 import myapp.SzakdolgozatBE.ageClassification.AgeClassificationDAO;
+import myapp.SzakdolgozatBE.comment.Comment;
+import myapp.SzakdolgozatBE.comment.CommentDAO;
 import myapp.SzakdolgozatBE.genre.GenreDAO;
 import myapp.SzakdolgozatBE.rating.Rating;
 import myapp.SzakdolgozatBE.rating.RatingDAO;
@@ -30,6 +32,9 @@ public class MovieService {
     
     @Inject
     RatingDAO ratingDao;
+    
+    @Inject
+    CommentDAO commentDao;
     
     MyValidator val = new MyValidator();
     
@@ -129,6 +134,10 @@ public class MovieService {
         if (tmp == null || canBeDeleted(id) == false) {
             throw new MyValidationException();
         } else {
+            List<Comment> comments = commentDao.getAllMovieComments(tmp);
+            for (Comment comment : comments) {
+                commentDao.deleteComment(comment.getId());
+            }
             dao.deleteMovie(id);
         }
     }

@@ -32,6 +32,10 @@ public class CommentDAO {
                 .setFirstResult(offset).setMaxResults(limit).getResultList();
     }
     
+    public List<Comment> getAllMovieComments(Movie movie) {
+        return em.createNamedQuery("getMovieComments").setParameter("movie", movie).getResultList();
+    }
+    
     public long getNumberOfMovieComments(Movie movie) {
         return (long)em.createNamedQuery("getNumberOfMovieComments").setParameter("movie", movie).getSingleResult();
     }
@@ -41,6 +45,10 @@ public class CommentDAO {
                 .setFirstResult(offset).setMaxResults(limit).getResultList();
     }
     
+    public List<Comment> getAllEpisodeComments(Episode episode) {
+        return em.createNamedQuery("getEpisodeComments").setParameter("episode", episode).getResultList();
+    }
+    
     public long getNumberOfEpisodeComments(Episode episode) {
         return (long)em.createNamedQuery("getNumberOfEpisodeComments").setParameter("episode", episode).getSingleResult();
     }
@@ -48,6 +56,10 @@ public class CommentDAO {
     public List<Comment> getActorComments(int offset, int limit, Actor actor) {
         return em.createNamedQuery("getActorComments").setParameter("actor", actor)
                 .setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+    
+    public List<Comment> getAllActorComments(Actor actor) {
+        return em.createNamedQuery("getActorComments").setParameter("actor", actor).getResultList();
     }
     
     public long getNumberOfActorComments(Actor actor) {
@@ -69,7 +81,7 @@ public class CommentDAO {
     }
     
     public List<Comment> getAllTopicComments(Topic topic) {
-        return em.createNamedQuery("getAllTopicComments").setParameter("topic", topic).getResultList();
+        return em.createNamedQuery("getTopicComments").setParameter("topic", topic).getResultList();
     }
     
     public long getNumberOfTopicComments(Topic topic) {
