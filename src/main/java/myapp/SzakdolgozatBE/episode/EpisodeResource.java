@@ -44,7 +44,7 @@ public class EpisodeResource {
             Episode tmp = service.getEpisode(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -70,7 +70,7 @@ public class EpisodeResource {
             long tmp = service.getEpisodeSeasonId(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -84,7 +84,7 @@ public class EpisodeResource {
             List<Actor> tmp = service.getEpisodeActors(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -98,7 +98,7 @@ public class EpisodeResource {
             Actor tmp = service.addActorToEpisode(id, actorId);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -112,7 +112,7 @@ public class EpisodeResource {
             Actor tmp = service.removeActorFromEpisode(id, actorId);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -139,7 +139,7 @@ public class EpisodeResource {
             service.deleteEpisode(seasonId, id);
             return Response.ok().build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -181,7 +181,7 @@ public class EpisodeResource {
             boolean tmp = service.canBeDeleted(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

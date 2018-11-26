@@ -29,7 +29,7 @@ public class GenderResource {
             Gender tmp = service.getGender(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -67,7 +67,7 @@ public class GenderResource {
             service.deleteGender(id);
             return Response.ok().build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -95,7 +95,7 @@ public class GenderResource {
             boolean tmp = service.canBeDeleted(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

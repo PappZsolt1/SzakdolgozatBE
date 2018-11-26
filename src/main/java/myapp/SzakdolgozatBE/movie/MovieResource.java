@@ -44,7 +44,7 @@ public class MovieResource {
             Movie tmp = service.getMovie(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -70,7 +70,7 @@ public class MovieResource {
             List<Actor> tmp = service.getMovieActors(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -84,7 +84,7 @@ public class MovieResource {
             Actor tmp = service.addActorToMovie(id, actorId);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -98,7 +98,7 @@ public class MovieResource {
             Actor tmp = service.removeActorFromMovie(id, actorId);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -138,7 +138,7 @@ public class MovieResource {
             service.deleteMovie(id);
             return Response.ok().build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -151,7 +151,7 @@ public class MovieResource {
             Movie tmp = service.modifyMovie(movie);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -179,7 +179,7 @@ public class MovieResource {
             boolean tmp = service.canBeDeleted(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

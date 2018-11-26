@@ -83,7 +83,7 @@ public class ArticleResource {
             service.deleteArticle(id);
             return Response.ok().build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -97,7 +97,7 @@ public class ArticleResource {
             Article tmp = service.getArticle(id);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
