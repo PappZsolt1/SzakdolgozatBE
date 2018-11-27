@@ -49,9 +49,12 @@ public class Actor implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String bio;
     
-    @Lob
+    @Column(length = 2000)
+    private String imageUrl;
+    
+    /*@Lob
     @Column(columnDefinition = "BLOB")
-    private byte[] photo;
+    private byte[] photo;*/
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gender_id")
@@ -110,13 +113,21 @@ public class Actor implements Serializable {
         this.bio = bio;
     }
 
-    public byte[] getPhoto() {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    /*public byte[] getPhoto() {
         return photo;
     }
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
-    }
+    }*/
 
     public Gender getGender() {
         return gender;

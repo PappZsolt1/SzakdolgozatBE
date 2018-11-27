@@ -77,7 +77,7 @@ public class ArticleService {
     }
     
     public Wrapper getPublishedArticles(int page, int size) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;

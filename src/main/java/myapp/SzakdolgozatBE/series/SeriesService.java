@@ -30,7 +30,8 @@ public class SeriesService {
                 || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
                 || genreDao.getGenre(series.getGenre().getId()) == null
                 || val.validateText(series.getTitle(), 200) == false
-                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false) { //photo
+                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false
+                || val.validateText(series.getImageUrl(), 1000) == false) {
             throw new MyValidationException();
         } else {
             return dao.addSeries(series);
@@ -65,7 +66,7 @@ public class SeriesService {
     }
     
     public Wrapper getResultSeries(int page, int size, String title) throws MyValidationException {
-        if (page < 1 || size < 1 || val.validateText(title, 200) == false) {
+        if (page < 1 || val.validateSize(size) == false || val.validateText(title, 200) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;
@@ -91,7 +92,8 @@ public class SeriesService {
                 || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
                 || genreDao.getGenre(series.getGenre().getId()) == null
                 || val.validateText(series.getTitle(), 200) == false
-                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false) {
+                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false
+                || val.validateText(series.getImageUrl(), 1000) == false) {
             throw new MyValidationException();
         } else if (dao.getSeries(series.getId()) == null) {
             throw new MyValidationException();

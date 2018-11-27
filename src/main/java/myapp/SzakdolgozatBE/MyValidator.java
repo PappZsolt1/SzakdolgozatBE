@@ -74,4 +74,12 @@ public class MyValidator {
         }
         return true;
     }
+    
+    public boolean validateSize(int size) {
+        if (size == 10 || size == 20 || size == 30) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

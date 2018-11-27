@@ -46,9 +46,12 @@ public class Series implements Serializable {
     
     private int releaseYear;
     
-    @Lob
+    @Column(length = 2000)
+    private String imageUrl;
+    
+    /*@Lob
     @Column(columnDefinition = "BLOB")
-    private byte[] coverPicture;
+    private byte[] coverPicture;*/
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ageClassification_id")
@@ -96,13 +99,21 @@ public class Series implements Serializable {
         this.releaseYear = releaseYear;
     }
 
-    public byte[] getCoverPicture() {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    /*public byte[] getCoverPicture() {
         return coverPicture;
     }
 
     public void setCoverPicture(byte[] coverPicture) {
         this.coverPicture = coverPicture;
-    }
+    }*/
 
     public AgeClassification getAgeClassification() {
         return ageClassification;

@@ -44,7 +44,7 @@ public class MyUser implements Serializable {
     @JsonBackReference(value = "article-myUser")
     private List<Article> articles;*/
     
-    @OneToMany(mappedBy = "myUser")
+    /*@OneToMany(mappedBy = "myUser")
     @JsonBackReference(value = "comment-myUser")
     private List<Comment> comments;
     
@@ -58,7 +58,7 @@ public class MyUser implements Serializable {
     
     @OneToMany(mappedBy = "myUser")
     @JsonBackReference(value = "errorReport-myUser")
-    private List<ErrorReport> errorReports;
+    private List<ErrorReport> errorReports;*/
     
     @OneToMany(mappedBy = "sender")
     //@JsonManagedReference(value = "myUser-privateMessagesSent")
@@ -108,7 +108,7 @@ public class MyUser implements Serializable {
         this.articles = articles;
     }*/
 
-    public List<Comment> getComments() {
+    /*public List<Comment> getComments() {
         return comments;
     }
 
@@ -138,7 +138,7 @@ public class MyUser implements Serializable {
 
     public void setErrorReports(List<ErrorReport> errorReports) {
         this.errorReports = errorReports;
-    }
+    }*/
 
     public List<PrivateMessage> getPrivateMessagesSent() {
         return privateMessagesSent;

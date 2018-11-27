@@ -20,8 +20,8 @@ import myapp.SzakdolgozatBE.myUser.MyUser;
 @Entity
 @Table(name = "Rating")
 @NamedQueries({
-    @NamedQuery(name = "getMovieRating", query = "SELECT r FROM Rating r WHERE r.myUser = :user AND r.movie = :movie"),
-    @NamedQuery(name = "getEpisodeRating", query = "SELECT r FROM Rating r WHERE r.myUser = :user AND r.episode = :episode")
+    @NamedQuery(name = "getMovieRating", query = "SELECT r FROM Rating r WHERE r.username = :username AND r.movie = :movie"),
+    @NamedQuery(name = "getEpisodeRating", query = "SELECT r FROM Rating r WHERE r.username = :username AND r.episode = :episode")
 })
 public class Rating implements Serializable {
 
@@ -34,10 +34,12 @@ public class Rating implements Serializable {
     
     private byte rating;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String username;
+    
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
     @JsonBackReference(value = "myUser-rating")
-    private MyUser myUser;
+    private MyUser myUser;*/
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
@@ -65,13 +67,21 @@ public class Rating implements Serializable {
         this.rating = rating;
     }
 
-    public MyUser getMyUser() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /*public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
-    }
+    }*/
 
     public Movie getMovie() {
         return movie;

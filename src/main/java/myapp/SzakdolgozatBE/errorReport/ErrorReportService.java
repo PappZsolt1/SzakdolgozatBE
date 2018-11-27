@@ -32,7 +32,7 @@ public class ErrorReportService {
     }
     
     public Wrapper getAllErrorReports(int page, int size) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;
@@ -45,7 +45,7 @@ public class ErrorReportService {
     }
     
     public Wrapper getResolvedErrorReports(int page, int size) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;
@@ -58,7 +58,7 @@ public class ErrorReportService {
     }
     
     public Wrapper getNotResolvedErrorReports(int page, int size) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;

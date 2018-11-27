@@ -39,12 +39,14 @@ public class Topic implements Serializable {
     private String title;
     
     @Column(columnDefinition = "TEXT")
-    private String description;  
+    private String description;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String username;
+    
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
     //@JsonManagedReference(value = "topic-myUser")
-    private MyUser myUser;    
+    private MyUser myUser;*/  
     
     private String createDate;
     
@@ -76,13 +78,21 @@ public class Topic implements Serializable {
         this.description = description;
     }
 
-    public MyUser getMyUser() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /*public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
-    }
+    }*/
 
     public String getCreateDate() {
         return createDate;

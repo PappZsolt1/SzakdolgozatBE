@@ -44,6 +44,8 @@ public class Article implements Serializable {
     
     private String publishDate;
     
+    private String username;
+    
     /*@ManyToOne(fetch = FetchType.LAZY)
     //@JsonManagedReference(value = "article-myUser")
     @JoinColumn(name = "myUser_id")
@@ -87,6 +89,14 @@ public class Article implements Serializable {
 
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /*public MyUser getMyUser() {

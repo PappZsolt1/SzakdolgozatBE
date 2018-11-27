@@ -30,7 +30,8 @@ public class ActorService {
                 || val.validateText(actor.getBirthPlace(), 200) == false
                 || val.validateText(actor.getBio(), 60000) == false
                 || genderDao.getGender(actor.getGender().getId()) == null
-                || val.validateDate(actor.getBirthDate(), 1750, 2100) == false) { //photo
+                || val.validateDate(actor.getBirthDate(), 1750, 2100) == false
+                || val.validateText(actor.getImageUrl(), 1000) == false) {
             throw new MyValidationException();
         } else {
             return dao.addActor(actor);
@@ -52,7 +53,7 @@ public class ActorService {
     }
 
     public Wrapper getResultActors(int page, int size, String name) throws MyValidationException {
-        if (page < 1 || size < 1 || val.validateText(name, 200) == false) {
+        if (page < 1 || val.validateSize(size) == false || val.validateText(name, 200) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;
@@ -87,7 +88,8 @@ public class ActorService {
                 || val.validateText(actor.getBirthPlace(), 200) == false
                 || val.validateText(actor.getBio(), 60000) == false
                 || genderDao.getGender(actor.getGender().getId()) == null
-                || val.validateDate(actor.getBirthDate(), 1750, 2100) == false) { //photo
+                || val.validateDate(actor.getBirthDate(), 1750, 2100) == false
+                || val.validateText(actor.getImageUrl(), 1000) == false) {
             throw new MyValidationException();
         } else if (dao.getActor(actor.getId()) == null) {
             throw new MyValidationException();

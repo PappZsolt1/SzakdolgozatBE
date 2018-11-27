@@ -48,10 +48,12 @@ public class Comment implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String content;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String username;
+    
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "myUser_id")
     //@JsonManagedReference(value = "comment-myUser")
-    private MyUser myUser;
+    private MyUser myUser;*/
     
     private String postDate;
     
@@ -98,12 +100,20 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public MyUser getMyUser() {
+    /*public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
+    }*/
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPostDate() {

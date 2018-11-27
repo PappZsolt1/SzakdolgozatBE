@@ -46,7 +46,8 @@ public class MovieService {
                 || movie.getRatings() != null
                 || val.validateNumber(movie.getBudget(), 0, 2000000000) == false
                 || val.validateNumber(movie.getReleaseYear(), 1850, 2100) == false
-                || val.validateLength(movie.getmLength()) == false) {// pic
+                || val.validateLength(movie.getmLength()) == false
+                || val.validateText(movie.getImageUrl(), 1000) == false) {
             throw new MyValidationException();
         } else {
             return dao.addMovie(movie);
@@ -117,7 +118,7 @@ public class MovieService {
     }
     
     public Wrapper getResultMovies(int page, int size, String title) throws MyValidationException {
-        if (page < 1 || size < 1 || val.validateText(title, 200) == false) {
+        if (page < 1 || val.validateSize(size) == false || val.validateText(title, 200) == false) {
             throw new MyValidationException();
         }
         int offset = (page - 1) * size;
@@ -149,7 +150,8 @@ public class MovieService {
                 || genreDao.getGenre(movie.getGenre().getId()) == null
                 || val.validateNumber(movie.getBudget(), 0, 1000000000) == false
                 || val.validateNumber(movie.getReleaseYear(), 1850, 2100) == false
-                || val.validateLength(movie.getmLength()) == false) {// pic
+                || val.validateLength(movie.getmLength()) == false
+                || val.validateText(movie.getImageUrl(), 1000) == false) {
             throw new MyValidationException();
         } else if (dao.getMovie(movie.getId()) == null) {
             throw new MyValidationException();

@@ -38,10 +38,10 @@ public class ErrorReport implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String content;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MYUSER_ID")
     //@JsonManagedReference(value = "errorReport-myUser")
-    private MyUser myUser;
+    private MyUser myUser;*/
     
     private boolean resolved;
     
@@ -63,13 +63,13 @@ public class ErrorReport implements Serializable {
         this.content = content;
     }
 
-    public MyUser getMyUser() {
+    /*public MyUser getMyUser() {
         return myUser;
     }
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
-    }
+    }*/
 
     public boolean isResolved() {
         return resolved;

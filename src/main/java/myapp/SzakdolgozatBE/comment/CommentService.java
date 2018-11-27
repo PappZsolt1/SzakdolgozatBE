@@ -161,7 +161,7 @@ public class CommentService {
     }
     
     public Wrapper getMovieComments (int page, int size, long movieId) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         Movie tmp = movieDao.getMovie(movieId);
@@ -178,7 +178,7 @@ public class CommentService {
     }
     
     public Wrapper getEpisodeComments (int page, int size, long episodeId) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         Episode tmp = episodeDao.getEpisode(episodeId);
@@ -195,7 +195,7 @@ public class CommentService {
     }
     
     public Wrapper getActorComments (int page, int size, long actorId) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         Actor tmp = actorDao.getActor(actorId);
@@ -212,7 +212,7 @@ public class CommentService {
     }
     
     public Wrapper getArticleComments (int page, int size, long articleId) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         Article tmp = articleDao.getArticle(articleId);
@@ -229,7 +229,7 @@ public class CommentService {
     }
     
     public Wrapper getTopicComments (int page, int size, long topicId) throws MyValidationException {
-        if (page < 1 || size < 1) {
+        if (page < 1 || val.validateSize(size) == false) {
             throw new MyValidationException();
         }
         Topic tmp = TopicDao.getTopic(topicId);
