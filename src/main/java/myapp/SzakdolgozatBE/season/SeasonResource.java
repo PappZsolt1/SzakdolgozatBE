@@ -60,21 +60,6 @@ public class SeasonResource {
         }
     }
 
-    //not used
-    /*@GET
-    @Path("/series/{seriesId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getSeriesSeasons(@PathParam("seriesId") long seriesId) {
-        try {
-            List<Season> seasons = service.getSeriesSeasons(seriesId);
-            return Response.ok().entity(seasons).build();
-        } catch (MyValidationException m) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }*/
-
     @DELETE
     @Path("/{seriesId}/{id}")
     @Produces(MediaType.APPLICATION_JSON)

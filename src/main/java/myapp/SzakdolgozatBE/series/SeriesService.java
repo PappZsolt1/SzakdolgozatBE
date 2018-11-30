@@ -61,10 +61,6 @@ public class SeriesService {
         return (tmp != null);
     }
     
-    public List<Series> getAllSeries() {
-        return dao.getAllSeries();
-    }
-    
     public Wrapper getResultSeries(int page, int size, String title) throws MyValidationException {
         if (page < 1 || val.validateSize(size) == false || val.validateText(title, 200) == false) {
             throw new MyValidationException();

@@ -23,10 +23,6 @@ public class SeriesDAO {
     public Series getSeries(long id) {
         return em.find(Series.class, id);
     }
-
-    public List<Series> getAllSeries() {
-        return em.createNamedQuery("getAllMovies").getResultList();
-    }
     
     public List<Series> getResultSeries(int offset, int limit, String title) {
         return em.createNamedQuery("getResultSeries").setParameter("title", title)

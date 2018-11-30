@@ -1,7 +1,5 @@
 package myapp.SzakdolgozatBE.comment;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +17,6 @@ import myapp.SzakdolgozatBE.actor.Actor;
 import myapp.SzakdolgozatBE.article.Article;
 import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.movie.Movie;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 import myapp.SzakdolgozatBE.topic.Topic;
 
 @Entity
@@ -50,38 +47,28 @@ public class Comment implements Serializable {
     
     private String username;
     
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "myUser_id")
-    //@JsonManagedReference(value = "comment-myUser")
-    private MyUser myUser;*/
-    
     private String postDate;
     
     private boolean moderated;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    //@JsonManagedReference(value = "movie-comment")
     private Movie movie;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "episode_id")
-    //@JsonManagedReference(value = "episode-comment")
     private Episode episode;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_id")
-    //@JsonManagedReference(value = "actor-comment")
     private Actor actor;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
-    //@JsonManagedReference(value = "article-comment")
     private Article article;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
-    //@JsonManagedReference(value = "topic-comment")
     private Topic topic;
 
     public Long getId() {
@@ -99,15 +86,7 @@ public class Comment implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-
-    /*public MyUser getMyUser() {
-        return myUser;
-    }
-
-    public void setMyUser(MyUser myUser) {
-        this.myUser = myUser;
-    }*/
-
+    
     public String getUsername() {
         return username;
     }

@@ -50,15 +50,6 @@ public class SeasonSerivce {
         return (tmp != null);
     }
 
-    public List<Season> getSeriesSeasons(long seriesId) throws MyValidationException {
-        Series tmp = seriesDao.getSeries(seriesId);
-        if (tmp != null) {
-            return dao.getSeriesSeasons(tmp);
-        } else {
-            throw new MyValidationException();
-        }
-    }
-
     public void deleteSeason(long seriesId, long id) throws MyValidationException {
         Season tmp1 = dao.getSeason(id);
         if (tmp1 == null || canBeDeleted(id) == false) {

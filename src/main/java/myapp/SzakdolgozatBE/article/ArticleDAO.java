@@ -39,8 +39,7 @@ public class ArticleDAO {
         return article;
     }
 
-    public List<Article> getSavedArticles(/*long userId*/) {
-        //return em.createNamedQuery("getSavedArticles").setParameter("userId", userId).getResultList();
+    public List<Article> getSavedArticles() {
         return em.createNamedQuery("getSavedArticles").getResultList();
     }
 

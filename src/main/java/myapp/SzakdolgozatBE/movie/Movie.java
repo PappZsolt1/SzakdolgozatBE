@@ -1,7 +1,6 @@
 package myapp.SzakdolgozatBE.movie;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -29,7 +27,6 @@ import myapp.SzakdolgozatBE.rating.Rating;
 @Entity
 @Table(name = "Movie")
 @NamedQueries({
-    @NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m"),
     @NamedQuery(name = "getAgeClassificationMovies", query = "SELECT m FROM Movie m WHERE m.ageClassification = :ageClassification"),
     @NamedQuery(name = "getGenreMovies", query = "SELECT m FROM Movie m WHERE m.genre = :genre"),
     @NamedQuery(name = "getResultMovies", query = "SELECT m FROM Movie m WHERE m.title LIKE CONCAT('%', :title, '%') ORDER BY m.title ASC"),
@@ -40,7 +37,6 @@ public class Movie implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "gen")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
@@ -62,18 +58,12 @@ public class Movie implements Serializable {
     @Column(length = 2000)
     private String imageUrl;
 
-    /*@Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] coverPicture;*/
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ageClassification_id")
-    //@JsonManagedReference(value = "movie-ageClassification")
     private AgeClassification ageClassification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
-    //@JsonManagedReference(value = "movie-genre")
     private Genre genre;
 
     @ManyToMany
@@ -162,14 +152,6 @@ public class Movie implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-    /*public byte[] getCoverPicture() {
-        return coverPicture;
-    }
-
-    public void setCoverPicture(byte[] coverPicture) {
-        this.coverPicture = coverPicture;
-    }*/
 
     public AgeClassification getAgeClassification() {
         return ageClassification;

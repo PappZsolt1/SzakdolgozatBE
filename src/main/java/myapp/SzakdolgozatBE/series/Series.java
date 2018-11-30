@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.series;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,12 +22,10 @@ import myapp.SzakdolgozatBE.season.Season;
 @Entity
 @Table(name = "Series")
 @NamedQueries({
-    @NamedQuery(name = "getAllSeries", query = "SELECT s FROM Series s"),
     @NamedQuery(name = "getAgeClassificationSeries", query = "SELECT s FROM Series s WHERE s.ageClassification = :ageClassification"),
     @NamedQuery(name = "getGenreSeries", query = "SELECT s FROM Series s WHERE s.genre = :genre"),
     @NamedQuery(name = "getResultSeries", query = "SELECT s FROM Series s WHERE s.title LIKE CONCAT('%', :title, '%') ORDER BY s.title ASC"),
     @NamedQuery(name = "getNumberOfResultSeries", query = "SELECT COUNT(s.id) FROM Series s WHERE s.title LIKE CONCAT('%', :title, '%')")
-    //@NamedQuery(name = "getEpisodeRatings", query = "") // todo
 })
 public class Series implements Serializable {
 
@@ -48,23 +44,16 @@ public class Series implements Serializable {
     
     @Column(length = 2000)
     private String imageUrl;
-    
-    /*@Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] coverPicture;*/
-    
+        
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ageClassification_id")
-    //@JsonManagedReference(value = "series-ageClassification")
     private AgeClassification ageClassification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
-    //@JsonManagedReference(value = "series-genre")
     private Genre genre;
     
     @OneToMany(mappedBy = "series")
-    //@JsonManagedReference(value = "series-season")
     private List<Season> seasons;
 
     public Long getId() {
@@ -106,14 +95,6 @@ public class Series implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-    /*public byte[] getCoverPicture() {
-        return coverPicture;
-    }
-
-    public void setCoverPicture(byte[] coverPicture) {
-        this.coverPicture = coverPicture;
-    }*/
 
     public AgeClassification getAgeClassification() {
         return ageClassification;

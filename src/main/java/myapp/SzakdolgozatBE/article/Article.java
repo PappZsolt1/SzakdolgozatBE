@@ -1,29 +1,23 @@
 package myapp.SzakdolgozatBE.article;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.comment.Comment;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "Article")
 @NamedQueries({
-    //@NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE AND a.myUser = :userId ORDER BY a.publishDate DESC"),
     @NamedQuery(name = "getSavedArticles", query = "SELECT a FROM Article a WHERE a.saved = TRUE ORDER BY a.publishDate DESC"),
     @NamedQuery(name = "getPublishedArticles", query = "SELECT a FROM Article a WHERE a.published = TRUE ORDER BY a.publishDate DESC"),
     @NamedQuery(name = "getNumberOfPublishedArticles", query = "SELECT COUNT(a.id) FROM Article a WHERE a.published = TRUE")
@@ -45,11 +39,6 @@ public class Article implements Serializable {
     private String publishDate;
     
     private String username;
-    
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    //@JsonManagedReference(value = "article-myUser")
-    @JoinColumn(name = "myUser_id")
-    private MyUser myUser;*/
     
     private boolean published;
     
@@ -98,14 +87,6 @@ public class Article implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    /*public MyUser getMyUser() {
-        return myUser;
-    }
-
-    public void setMyUser(MyUser myUser) {
-        this.myUser = myUser;
-    }*/
     
     public boolean isPublished() {
         return published;

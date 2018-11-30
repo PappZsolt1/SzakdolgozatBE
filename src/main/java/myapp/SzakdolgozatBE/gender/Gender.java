@@ -15,7 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.actor.Actor;
 
-//enum
 @Entity
 @Table(name = "Gender")
 @NamedQueries({

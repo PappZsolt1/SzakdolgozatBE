@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.actor;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.DELETE;
@@ -74,12 +73,6 @@ public class ActorResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-    /*@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Actor> getxxxActors() {
-        //todo
-    }*/
     
     @DELETE
     @Path("/{id}")

@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 public class ErrorReportDAO {
 
     @PersistenceContext(unitName = "SzakdolgozatPU")
-    EntityManager em;// = Persistence.createEntityManagerFactory("SzakdolgozatPU").createEntityManager();
+    EntityManager em;
 
     public ErrorReport add(ErrorReport errorReport) {
         em.getTransaction().begin();

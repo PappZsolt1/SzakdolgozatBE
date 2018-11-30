@@ -33,7 +33,7 @@ public class RatingResource {
         return Response.ok().entity(tmp).build();
     }*/
 
-    @GET
+    /*@GET
     @Path("/movie")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMovieRating(long movieId) {
@@ -55,5 +55,5 @@ public class RatingResource {
         } catch (Throwable t) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-    }
+    }*/
 }

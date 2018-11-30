@@ -23,10 +23,6 @@ public class MovieDAO {
     public Movie getMovie(long id) {
         return em.find(Movie.class, id);
     }
-
-    public List<Movie> getAllMovies() {
-        return em.createNamedQuery("getAllMovies").getResultList();
-    }
     
     public List<Movie> getResultMovies(int offset, int limit, String title) {
         return em.createNamedQuery("getResultMovies").setParameter("title", title)

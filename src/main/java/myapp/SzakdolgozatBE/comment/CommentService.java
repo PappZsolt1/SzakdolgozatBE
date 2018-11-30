@@ -16,7 +16,6 @@ import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
 import myapp.SzakdolgozatBE.movie.Movie;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 import myapp.SzakdolgozatBE.topic.Topic;
 import myapp.SzakdolgozatBE.topic.TopicDAO;
 

@@ -31,10 +31,6 @@ public class ActorDAO {
     public long getNumberOfResultActors(String name) {
         return (long)em.createNamedQuery("getNumberOfResultActors").setParameter("name", name).getSingleResult();
     }
-
-    /*public List<Actor> getxxxActors() {
-        //todo
-    }*/
     
     public void deleteActor(long id) {
         em.getTransaction().begin();

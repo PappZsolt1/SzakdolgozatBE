@@ -1,24 +1,19 @@
 package myapp.SzakdolgozatBE.topic;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.comment.Comment;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 
 @Entity
@@ -42,11 +37,6 @@ public class Topic implements Serializable {
     private String description;
     
     private String username;
-    
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "myUser_id")
-    //@JsonManagedReference(value = "topic-myUser")
-    private MyUser myUser;*/  
     
     private String createDate;
     
@@ -85,14 +75,6 @@ public class Topic implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    /*public MyUser getMyUser() {
-        return myUser;
-    }
-
-    public void setMyUser(MyUser myUser) {
-        this.myUser = myUser;
-    }*/
 
     public String getCreateDate() {
         return createDate;

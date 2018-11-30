@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.errorReport;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;

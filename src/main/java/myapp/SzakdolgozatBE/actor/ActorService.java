@@ -65,10 +65,6 @@ public class ActorService {
         return new Wrapper(results, total);
     }
     
-    /*public List<Actor> getxxxActors() {
-        //todo
-    }*/
-    
     public void deleteActor(long id) throws MyValidationException {
         Actor tmp = dao.getActor(id);
         if (tmp == null || canBeDeleted(id) == false) {

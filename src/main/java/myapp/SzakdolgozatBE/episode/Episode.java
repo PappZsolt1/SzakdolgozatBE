@@ -1,7 +1,6 @@
 package myapp.SzakdolgozatBE.episode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -13,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,9 +22,6 @@ import myapp.SzakdolgozatBE.season.Season;
 
 @Entity
 @Table(name = "Episode")
-@NamedQueries({
-    @NamedQuery(name = "getSeasonEpisodes", query = "SELECT e FROM Episode e WHERE e.season = :season")
-})
 public class Episode implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -10,7 +10,6 @@ import myapp.SzakdolgozatBE.MyValidator;
 import myapp.SzakdolgozatBE.Wrapper;
 import myapp.SzakdolgozatBE.comment.Comment;
 import myapp.SzakdolgozatBE.comment.CommentDAO;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Stateless
 public class TopicService {

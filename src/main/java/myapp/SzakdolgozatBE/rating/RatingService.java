@@ -6,7 +6,6 @@ import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
 import myapp.SzakdolgozatBE.movie.Movie;
 import myapp.SzakdolgozatBE.movie.MovieDAO;
-import myapp.SzakdolgozatBE.myUser.MyUserDAO;
 
 @Stateless
 public class RatingService {
@@ -20,8 +19,8 @@ public class RatingService {
     @Inject
     EpisodeDAO episodeDao;
     
-    @Inject
-    MyUserDAO myUserDao;
+    //@Inject
+    //MyUserDAO myUserDao;
 
     public Rating addMovieRating(byte rating, long movieId) { //these needed?
         Rating tmp = new Rating();
@@ -39,7 +38,7 @@ public class RatingService {
         return dao.addRating(tmp);
     }
 
-    public Rating getMovieRating(long movieId) throws NullPointerException {
+    /*public Rating getMovieRating(long movieId) throws NullPointerException {
         Movie tmp = movieDao.getMovie(movieId);
         if (tmp != null) {
             return dao.getMovieRating(myUserDao.getMyUser(1), movieDao.getMovie(movieId));//todo
@@ -55,5 +54,5 @@ public class RatingService {
         } else {
             throw new NullPointerException();
         }
-    }
+    }*/
 }

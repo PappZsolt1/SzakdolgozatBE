@@ -112,10 +112,6 @@ public class MovieService {
             }
         }
     }
-
-    public List<Movie> getAllMovies() {
-        return dao.getAllMovies();
-    }
     
     public Wrapper getResultMovies(int page, int size, String title) throws MyValidationException {
         if (page < 1 || val.validateSize(size) == false || val.validateText(title, 200) == false) {

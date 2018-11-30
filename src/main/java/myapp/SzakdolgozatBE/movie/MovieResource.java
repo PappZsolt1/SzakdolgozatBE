@@ -103,18 +103,6 @@ public class MovieResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    //not used
-    /*@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllMovies() {
-        try {
-            List<Movie> tmp = service.getAllMovies();
-            return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }*/
     
     @GET
     @Path("/search/{page}/{size}/{title}")

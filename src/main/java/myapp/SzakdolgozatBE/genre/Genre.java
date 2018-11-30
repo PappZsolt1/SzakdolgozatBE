@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import myapp.SzakdolgozatBE.movie.Movie;
 import myapp.SzakdolgozatBE.series.Series;
 
-//enum
 @Entity
 @Table(name = "Genre")
 @NamedQueries({

@@ -1,6 +1,5 @@
 package myapp.SzakdolgozatBE.rating;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.movie.Movie;
-import myapp.SzakdolgozatBE.myUser.MyUser;
 
 @Entity
 @Table(name = "Rating")
@@ -35,20 +33,13 @@ public class Rating implements Serializable {
     private byte rating;
     
     private String username;
-    
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "myUser_id")
-    @JsonBackReference(value = "myUser-rating")
-    private MyUser myUser;*/
-    
+        
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    //@JsonBackReference(value = "movie-rating")
     private Movie movie;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "episode_id")
-    //@JsonBackReference(value = "episode-rating")
     private Episode episode;
 
     public Long getId() {
@@ -74,14 +65,6 @@ public class Rating implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    /*public MyUser getMyUser() {
-        return myUser;
-    }
-
-    public void setMyUser(MyUser myUser) {
-        this.myUser = myUser;
-    }*/
 
     public Movie getMovie() {
         return movie;

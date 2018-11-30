@@ -23,10 +23,6 @@ public class SeasonDAO {
         return em.find(Season.class, id);
     }
 
-    public List<Season> getSeriesSeasons(Series series) {
-        return em.createNamedQuery("getSeriesSeasons").setParameter("series", series).getResultList();
-    }
-
     public void deleteSeason(long id) {
         em.getTransaction().begin();
         em.remove(this.getSeason(id));

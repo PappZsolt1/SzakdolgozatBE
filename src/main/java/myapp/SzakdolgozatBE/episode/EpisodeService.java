@@ -122,10 +122,6 @@ public class EpisodeService {
             }
         }
     }
-    
-    public List<Episode> getSeasonEpisodes(long seasonId) {
-        return dao.getSeasonEpisodes(seasonDao.getSeason(seasonId));
-    }
 
     public void deleteEpisode(long seasonId, long id) throws MyValidationException {
         Episode tmp1 = dao.getEpisode(id);

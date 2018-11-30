@@ -118,19 +118,6 @@ public class EpisodeResource {
         }
     }
 
-    //not used
-    /*@GET
-    @Path("/season/{seasonId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getSeasonEpisodes(@PathParam("seasonId") long seasonId) {
-        try {
-            List<Episode> tmp = service.getSeasonEpisodes(seasonId);
-            return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }*/
-
     @DELETE
     @Path("/{seasonId}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
