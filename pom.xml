@@ -87,6 +87,12 @@
             <version>8.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>keycloak</artifactId>
+        </dependency>
+
         <!-- WildFly Swarm Fractions -->
     
     </dependencies>
