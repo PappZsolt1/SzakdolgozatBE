@@ -47,8 +47,10 @@ public class SeriesService {
             double sumOfRatings = 0;
             for (Season season : tmp.getSeasons()) {
                 for (Episode episode : season.getEpisodes()) {
+                    if (episode.getRating() > 0) {
                     numberOfRatings++;
                     sumOfRatings += episode.getRating();
+                    }
                 }
             }
             tmp.setRating(sumOfRatings / (double)numberOfRatings);

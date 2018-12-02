@@ -61,7 +61,7 @@ public class ArticleResource {
     }
 
     @GET
-    @Path("/{page}/{size}")
+    @Path("/public/{page}/{size}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPublishedArticles(@PathParam("page") int page, @PathParam("size") int size) {
         try {
@@ -89,7 +89,7 @@ public class ArticleResource {
     }
     
     @GET
-    @Path("/{id : \\d+}")
+    @Path("/public/{id : \\d+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getArticle(@PathParam("id") long id) {
         try {

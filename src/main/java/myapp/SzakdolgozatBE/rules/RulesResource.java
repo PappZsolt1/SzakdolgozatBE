@@ -18,6 +18,7 @@ public class RulesResource {
     RulesService service;
     
     @GET
+    @Path("/public")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRules() {
         try {

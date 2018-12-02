@@ -90,7 +90,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/movie/{page}/{size}/{movieId}")
+    @Path("/public/movie/{page}/{size}/{movieId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMovieComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("movieId") long movieId) {
         try {
@@ -104,7 +104,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/episode/{page}/{size}/{episodeId}")
+    @Path("/public/episode/{page}/{size}/{episodeId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEpisodeComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("episodeId") long episodeId) {
         try {
@@ -118,7 +118,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/actor/{page}/{size}/{actorId}")
+    @Path("/public/actor/{page}/{size}/{actorId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getActorComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("actorId") long actorId) {
         try {
@@ -132,7 +132,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/article/{page}/{size}/{articleId}")
+    @Path("/public/article/{page}/{size}/{articleId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getArticleComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("articleId") long articleId) {
         try {
@@ -146,7 +146,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/topic/{page}/{size}/{topicId}")
+    @Path("/public/topic/{page}/{size}/{topicId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopicComments(@PathParam("page") int page, @PathParam("size") int size, @PathParam("topicId") long topicId) {
         try {

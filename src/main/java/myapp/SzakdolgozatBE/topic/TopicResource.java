@@ -34,7 +34,7 @@ public class TopicResource {
     }
 
     @GET
-    @Path("/{page}/{size}")
+    @Path("/public/{page}/{size}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTopics(@PathParam("page") int page, @PathParam("size") int size) {
         try {
@@ -48,7 +48,7 @@ public class TopicResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/public/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopic(@PathParam("id") long id) {
         try {

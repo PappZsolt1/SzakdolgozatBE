@@ -35,7 +35,7 @@ public class SeriesResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/public/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeries(@PathParam("id") long id) {
         try {
@@ -61,7 +61,7 @@ public class SeriesResource {
     }
     
     @GET
-    @Path("/search/{page}/{size}/{title}")
+    @Path("/public/search/{page}/{size}/{title}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getResultSeries(@PathParam("page") int page, @PathParam("size") int size, @PathParam("title") String title) {
         try {

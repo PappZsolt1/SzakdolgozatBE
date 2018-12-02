@@ -2,6 +2,7 @@ package myapp.SzakdolgozatBE.rating;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.episode.Episode;
 import myapp.SzakdolgozatBE.episode.EpisodeDAO;
 import myapp.SzakdolgozatBE.movie.Movie;
@@ -9,7 +10,7 @@ import myapp.SzakdolgozatBE.movie.MovieDAO;
 
 @Stateless
 public class RatingService {
-
+    
     @Inject
     RatingDAO dao;
     
@@ -18,41 +19,22 @@ public class RatingService {
     
     @Inject
     EpisodeDAO episodeDao;
+
+    public boolean canRateThisMovie( long movieId, String username) throws MyValidationException {
+        if (username == null || movieDao.getMovie(movieId) == null) {
+            throw new MyValidationException();
+        } else {
+            Movie tmp = movieDao.getMovie(movieId);
+            return dao.canRateThisMovie(username, tmp);
+        }
+    }
     
-    //@Inject
-    //MyUserDAO myUserDao;
-
-    public Rating addMovieRating(byte rating, long movieId) { //these needed?
-        Rating tmp = new Rating();
-        tmp.setRating(rating);
-        tmp.setMovie(movieDao.getMovie(movieId));
-        //tmp.setMyUser(myUser);
-        return dao.addRating(tmp);
-    }
-
-    public Rating addEpisodeRating(byte rating, long episodeId) {
-        Rating tmp = new Rating();
-        tmp.setRating(rating);
-        tmp.setEpisode(episodeDao.getEpisode(episodeId));
-        //tmp.setMyUser(myUser);
-        return dao.addRating(tmp);
-    }
-
-    /*public Rating getMovieRating(long movieId) throws NullPointerException {
-        Movie tmp = movieDao.getMovie(movieId);
-        if (tmp != null) {
-            return dao.getMovieRating(myUserDao.getMyUser(1), movieDao.getMovie(movieId));//todo
+    public boolean canRateThisEpisode(long episodeId, String username) throws MyValidationException {
+        if (username == null || episodeDao.getEpisode(episodeId) == null) {
+            throw new MyValidationException();
         } else {
-            throw new NullPointerException();
+            Episode tmp = episodeDao.getEpisode(episodeId);
+            return dao.canRateThisEpisode(username, tmp);
         }
     }
-
-    public Rating getEpisodeRating(long episodeId) throws NullPointerException {
-        Episode tmp = episodeDao.getEpisode(episodeId);
-        if (tmp != null) {
-            return dao.getEpisodeRating(myUserDao.getMyUser(1), episodeDao.getEpisode(episodeId));//todo
-        } else {
-            throw new NullPointerException();
-        }
-    }*/
 }

@@ -172,9 +172,9 @@ public class EpisodeService {
         }
     }
 
-    public void changeRating(long id, byte rating) throws MyValidationException {//todo
+    public void changeRating(long id, byte rating, String username) throws MyValidationException {
         Episode tmp = dao.getEpisode(id);
-        if (tmp == null || val.validateNumber(rating, 1, 10) == false) {
+        if (tmp == null || val.validateNumber(rating, 1, 10) == false || username == null) {
             throw new MyValidationException();
         } else {
             tmp.setNumberOfRatings(tmp.getNumberOfRatings() + 1);
@@ -184,7 +184,7 @@ public class EpisodeService {
             Rating r = new Rating();
             r.setRating(rating);
             r.setEpisode(tmp);
-            //r.setMyUser(myUser);
+            r.setUsername(username);
             ratingDao.addRating(r);
         }
     }

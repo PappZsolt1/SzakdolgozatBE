@@ -19,13 +19,13 @@ public class RatingDAO {
         return rating;
     }
 
-    /*public Rating getMovieRating(MyUser user, Movie movie) {
-        return (Rating) em.createNamedQuery("getMovieRating")
-                .setParameter("user", user).setParameter("movie", movie).getSingleResult();
+    public boolean canRateThisMovie(String username, Movie movie) {
+        return em.createNamedQuery("canRateThisMovie")
+                .setParameter("username", username).setParameter("movie", movie).getResultList().isEmpty();
     }
 
-    public Rating getEpisodeRating(MyUser user, Episode episode) {
-        return (Rating) em.createNamedQuery("getEpisodeRating")
-                .setParameter("user", user).setParameter("episode", episode).getSingleResult();
-    }*/
+    public boolean canRateThisEpisode(String username, Episode episode) {
+        return em.createNamedQuery("canRateThisEpisode")
+                .setParameter("username", username).setParameter("episode", episode).getResultList().isEmpty();
+    }
 }

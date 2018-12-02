@@ -46,6 +46,7 @@ public class CommentService {
 
     public Comment addMovieComment(long movieId, Comment comment) throws MyValidationException {
         if (comment.getId() != null
+                || comment.getUsername() == null
                 || comment.getPostDate() != null
                 || comment.getActor() != null
                 || comment.getArticle()!= null 
@@ -57,7 +58,6 @@ public class CommentService {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
-            //tmp.setMyUser(myUser);
             Movie tmp = movieDao.getMovie(movieId);
             if (tmp == null) {
                 throw new MyValidationException();
@@ -69,6 +69,7 @@ public class CommentService {
     
     public Comment addActorComment(long actorId, Comment comment) throws MyValidationException {
         if (comment.getId() != null
+                || comment.getUsername() == null
                 || comment.getPostDate() != null
                 || comment.getActor() != null
                 || comment.getArticle()!= null 
@@ -80,7 +81,6 @@ public class CommentService {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
-            //tmp.setMyUser(myUser);
             Actor tmp = actorDao.getActor(actorId);
             if (tmp == null) {
                 throw new MyValidationException();
@@ -92,6 +92,7 @@ public class CommentService {
     
     public Comment addArticleComment(long articleId, Comment comment) throws MyValidationException {
         if (comment.getId() != null
+                || comment.getUsername() == null
                 || comment.getPostDate() != null
                 || comment.getActor() != null
                 || comment.getArticle()!= null 
@@ -103,7 +104,6 @@ public class CommentService {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
-            //tmp.setMyUser(myUser);
             Article tmp = articleDao.getArticle(articleId);
             if (tmp == null) {
                 throw new MyValidationException();
@@ -115,6 +115,7 @@ public class CommentService {
     
     public Comment addEpisodeComment(long episodeId, Comment comment) throws MyValidationException {
         if (comment.getId() != null
+                || comment.getUsername() == null
                 || comment.getPostDate() != null
                 || comment.getActor() != null
                 || comment.getArticle()!= null 
@@ -126,7 +127,6 @@ public class CommentService {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
-            //tmp.setMyUser(myUser);
             Episode tmp = episodeDao.getEpisode(episodeId);
             if (tmp == null) {
                 throw new MyValidationException();
@@ -138,6 +138,7 @@ public class CommentService {
     
     public Comment addTopicComment(long topicId, Comment comment) throws MyValidationException {
         if (comment.getId() != null
+                || comment.getUsername() == null
                 || comment.getPostDate() != null
                 || comment.getActor() != null
                 || comment.getArticle()!= null 
@@ -149,7 +150,6 @@ public class CommentService {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
-            //tmp.setMyUser(myUser);
             Topic tmp = TopicDao.getTopic(topicId);
             if (tmp == null) {
                 throw new MyValidationException();

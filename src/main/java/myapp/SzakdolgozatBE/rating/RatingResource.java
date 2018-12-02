@@ -3,11 +3,12 @@ package myapp.SzakdolgozatBE.rating;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/rating")
 @ApplicationScoped
@@ -16,44 +17,31 @@ public class RatingResource {
     @EJB
     RatingService service;
 
-    //not used
-    /*@POST
-    @Path("/movie")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addMovieRating(byte rating, long movieId) {
-        Rating tmp = service.addMovieRating(rating, movieId);
-        return Response.ok().entity(tmp).build();
-    }
-
-    @POST
-    @Path("/episode")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addEpisodeRating(byte rating, long episodeId) {
-        Rating tmp = service.addEpisodeRating(rating, episodeId);
-        return Response.ok().entity(tmp).build();
-    }*/
-
-    /*@GET
-    @Path("/movie")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovieRating(long movieId) {
-        try {
-            Rating tmp = service.getMovieRating(movieId);
-            return Response.ok().entity(tmp).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
     @GET
-    @Path("/episode")
+    @Path("/movie/{movieId}/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEpisodeRating(long episodeId) {
+    public Response canRateThisMovie(@PathParam("movieId") long movieId, @PathParam("username") String username) {
         try {
-            Rating tmp = service.getEpisodeRating(episodeId);
+            boolean tmp = service.canRateThisMovie(movieId, username);
             return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
         } catch (Throwable t) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-    }*/
+    }
+    
+    @GET
+    @Path("/episode/{episodeId}/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response canRateThisEpisode(@PathParam("episodeId") long episodeId, @PathParam("username") String username) {
+        try {
+            boolean tmp = service.canRateThisEpisode(episodeId, username);
+            return Response.ok().entity(tmp).build();
+        } catch (MyValidationException m) {
+            return Response.status(Response.Status.CONFLICT).build();
+        } catch (Throwable t) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

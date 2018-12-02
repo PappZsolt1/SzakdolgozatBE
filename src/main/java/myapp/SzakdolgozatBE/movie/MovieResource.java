@@ -37,7 +37,7 @@ public class MovieResource {
     }
     
     @GET
-    @Path("/{id}")
+    @Path("/public/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMovie(@PathParam("id") long id) {
         try {
@@ -63,7 +63,7 @@ public class MovieResource {
     }
     
     @GET
-    @Path("/actors/{id}")
+    @Path("/public/actors/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMovieActors(@PathParam("id") long id) {
         try {
@@ -105,7 +105,7 @@ public class MovieResource {
     }
     
     @GET
-    @Path("/search/{page}/{size}/{title}")
+    @Path("/public/search/{page}/{size}/{title}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getResultMovies(@PathParam("page") int page, @PathParam("size") int size, @PathParam("title") String title) {
         try {
@@ -146,11 +146,11 @@ public class MovieResource {
     }
 
     @PUT
-    @Path("/rating/{id}")
+    @Path("/rating/{id}/{rating}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeRating(@PathParam("id") long id, byte rating) {
+    public Response changeRating(@PathParam("id") long id, @PathParam("rating") byte rating, String username) {
         try {
-            service.changeRating(id, rating);
+            service.changeRating(id, rating, username);
             return Response.ok().build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();

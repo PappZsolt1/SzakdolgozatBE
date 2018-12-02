@@ -26,13 +26,13 @@ public class TopicService {
 
     public Topic addTopic(Topic topic) throws MyValidationException {
         if (topic.getId() != null
+                || topic.getUsername() == null
                 || topic.getCreateDate() != null
                 || val.validateText(topic.getTitle(), 200) == false
                 || val.validateText(topic.getDescription(), 60000) == false) {
             throw new MyValidationException();
         } else {
             topic.setCreateDate(sdf.format(new Date()));
-            //tmp.setMyUser(myUser);
             return dao.addTopic(topic);
         }
     }

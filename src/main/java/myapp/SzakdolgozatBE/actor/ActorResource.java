@@ -35,7 +35,7 @@ public class ActorResource {
     }
     
     @GET
-    @Path("/{id}")
+    @Path("/public/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getActor(@PathParam("id") long id) {
         try {
@@ -61,7 +61,7 @@ public class ActorResource {
     }
     
     @GET
-    @Path("/search/{page}/{size}/{name}")
+    @Path("/public/search/{page}/{size}/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getResultActors(@PathParam("page") int page, @PathParam("size") int size, @PathParam("name") String name) {
         try {

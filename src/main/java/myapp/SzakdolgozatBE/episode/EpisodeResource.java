@@ -37,7 +37,7 @@ public class EpisodeResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/public/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEpisode(@PathParam("id") long id) {
         try {
@@ -77,7 +77,7 @@ public class EpisodeResource {
     }
     
     @GET
-    @Path("/actors/{id}")
+    @Path("/public/actors/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEpisodeActors(@PathParam("id") long id) {
         try {
@@ -147,11 +147,11 @@ public class EpisodeResource {
     }
 
     @PUT
-    @Path("/rating/{id}")
+    @Path("/rating/{id}/{rating}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeRating(@PathParam("id") long id, byte rating) {
+    public Response changeRating(@PathParam("id") long id, @PathParam("rating") byte rating, String username) {
         try {
-            service.changeRating(id, rating);
+            service.changeRating(id, rating, username);
             return Response.ok().build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();

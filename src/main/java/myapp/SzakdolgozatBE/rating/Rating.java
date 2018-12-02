@@ -18,8 +18,8 @@ import myapp.SzakdolgozatBE.movie.Movie;
 @Entity
 @Table(name = "Rating")
 @NamedQueries({
-    @NamedQuery(name = "getMovieRating", query = "SELECT r FROM Rating r WHERE r.username = :username AND r.movie = :movie"),
-    @NamedQuery(name = "getEpisodeRating", query = "SELECT r FROM Rating r WHERE r.username = :username AND r.episode = :episode")
+    @NamedQuery(name = "canRateThisMovie", query = "SELECT r FROM Rating r WHERE r.username = :username AND r.movie = :movie"),
+    @NamedQuery(name = "canRateThisEpisode", query = "SELECT r FROM Rating r WHERE r.username = :username AND r.episode = :episode")
 })
 public class Rating implements Serializable {
 

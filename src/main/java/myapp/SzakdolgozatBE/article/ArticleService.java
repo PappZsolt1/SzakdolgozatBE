@@ -26,7 +26,6 @@ public class ArticleService {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {
             article.setSaved(true);
-            //tmp.setMyUser(myUser);
             return dao.saveArticle(article);
         } else if (article.getId() != null && article.isSaved() == true) {
             Article tmp = dao.getArticle(article.getId());
@@ -44,7 +43,8 @@ public class ArticleService {
 
     
     public Article publishArticle(Article article) throws MyValidationException {
-        if (val.validateText(article.getTitle(), 200) == false
+        if (article.getUsername() == null
+                || val.validateText(article.getTitle(), 200) == false
                 || val.validateText(article.getContent(), 60000) == false
                 || article.getPublishDate() != null
                 || article.isPublished() == true) {
@@ -52,13 +52,13 @@ public class ArticleService {
         } else if (article.getId() == null && article.isSaved() == false) {
             article.setPublishDate(sdf.format(new Date()));
             article.setPublished(true);
-            //tmp.setMyUser(myUser);
             return dao.publishNewArticle(article);
         } else if (article.getId() != null && article.isSaved() == true) {
             Article tmp = dao.getArticle(article.getId());
             if (tmp == null) {
                 throw new MyValidationException();
             } else {
+                tmp.setUsername(article.getUsername());
                 tmp.setTitle(article.getTitle());
                 tmp.setContent(article.getContent());
                 tmp.setPublishDate(sdf.format(new Date()));
