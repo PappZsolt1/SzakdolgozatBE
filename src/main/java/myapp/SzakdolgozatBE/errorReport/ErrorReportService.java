@@ -50,7 +50,7 @@ public class ErrorReportService {
         }
         int offset = (page - 1) * size;
         List<ErrorReport> results = dao.getResolvedErrorReports(offset, size);
-        long total = dao.getNumberOfAllErrorReports();
+        long total = dao.getNumberOfResolvedErrorReports();
         if (total > 0 && offset >= total) {
             throw new MyValidationException();
         }
@@ -63,7 +63,7 @@ public class ErrorReportService {
         }
         int offset = (page - 1) * size;
         List<ErrorReport> results = dao.getNotResolvedErrorReports(offset, size);
-        long total = dao.getNumberOfAllErrorReports();
+        long total = dao.getNumberOfNotResolvedErrorReports();
         if (total > 0 && offset >= total) {
             throw new MyValidationException();
         }
