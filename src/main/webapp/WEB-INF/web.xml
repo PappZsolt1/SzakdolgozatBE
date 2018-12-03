@@ -37,7 +37,7 @@
         <realm-name>SzakdolgozatRealm</realm-name>
     </login-config>
     
-<!--    <security-role>
+<!--   <security-role>
         <role-name>admin</role-name>
     </security-role>
     <security-role>
