@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.actor;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -9,13 +11,16 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/actor")
 @ApplicationScoped
+@PermitAll
 public class ActorResource {
     
     @Inject
@@ -23,7 +28,8 @@ public class ActorResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addActor(Actor actor) {
+    @RolesAllowed("Admin")
+    public Response addActor(@Context SecurityContext sc, Actor actor) {
         try {
             Actor tmp = service.addActor(actor);
             return Response.ok().entity(tmp).build();
