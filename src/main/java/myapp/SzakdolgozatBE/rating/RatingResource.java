@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.rating;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -12,6 +13,7 @@ import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/rating")
 @ApplicationScoped
+@RolesAllowed({"RegisteredUser", "Moderator"})
 public class RatingResource {
 
     @Inject

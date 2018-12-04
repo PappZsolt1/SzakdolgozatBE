@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.topic;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -15,6 +17,7 @@ import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/topic")
 @ApplicationScoped
+@PermitAll
 public class TopicResource {
 
     @Inject
@@ -22,6 +25,7 @@ public class TopicResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response addTopic(Topic topic) {
         try {
             Topic tmp = service.addTopic(topic);
@@ -64,6 +68,7 @@ public class TopicResource {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Moderator")
     public Response deleteTopic(@PathParam("id") long id) {
         try {
             service.deleteTopic(id);

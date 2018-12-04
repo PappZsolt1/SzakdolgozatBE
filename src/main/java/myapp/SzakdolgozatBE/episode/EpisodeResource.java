@@ -1,6 +1,8 @@
 package myapp.SzakdolgozatBE.episode;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -17,6 +19,7 @@ import myapp.SzakdolgozatBE.actor.Actor;
 
 @Path("/episode")
 @ApplicationScoped
+@PermitAll
 public class EpisodeResource {
 
     @Inject
@@ -25,6 +28,7 @@ public class EpisodeResource {
     @POST
     @Path("/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response addEpisode(@PathParam("seasonId") long seasonId, Episode episode) {
         try {
             Episode tmp = service.addEpisode(seasonId, episode);
@@ -53,6 +57,7 @@ public class EpisodeResource {
     @GET
     @Path("/check/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response checkIfExists(@PathParam("id") long id) {
         try {
             boolean tmp = service.checkIfExists(id);
@@ -65,6 +70,7 @@ public class EpisodeResource {
     @GET
     @Path("/season/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response getEpisodeSeasonId(@PathParam("id") long id) {
         try {
             long tmp = service.getEpisodeSeasonId(id);
@@ -93,6 +99,7 @@ public class EpisodeResource {
     @POST
     @Path("/add/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response addActorToEpisode(@PathParam("id") long id, long actorId) {
         try {
             Actor tmp = service.addActorToEpisode(id, actorId);
@@ -107,6 +114,7 @@ public class EpisodeResource {
     @POST
     @Path("/remove/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response removeActorFromEpisode(@PathParam("id") long id, long actorId) {
         try {
             Actor tmp = service.removeActorFromEpisode(id, actorId);
@@ -121,6 +129,7 @@ public class EpisodeResource {
     @DELETE
     @Path("/{seasonId}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response deleteEpisode(@PathParam("seasonId") long seasonId, @PathParam("id") long id) {
         try {
             service.deleteEpisode(seasonId, id);
@@ -135,6 +144,7 @@ public class EpisodeResource {
     @PUT
     @Path("/{seasonId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response modifyEpisode(@PathParam("seasonId") long seasonId, Episode episode) {
         try {
             Episode tmp = service.modifyEpisode(seasonId, episode);
@@ -149,6 +159,7 @@ public class EpisodeResource {
     @PUT
     @Path("/rating/{id}/{rating}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response changeRating(@PathParam("id") long id, @PathParam("rating") byte rating, String username) {
         try {
             service.changeRating(id, rating, username);
@@ -163,6 +174,7 @@ public class EpisodeResource {
     @GET
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response canBeDeleted(@PathParam("id") long id) {
         try {
             boolean tmp = service.canBeDeleted(id);

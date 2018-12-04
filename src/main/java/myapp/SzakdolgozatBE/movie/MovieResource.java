@@ -1,6 +1,8 @@
 package myapp.SzakdolgozatBE.movie;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -18,6 +20,7 @@ import myapp.SzakdolgozatBE.actor.Actor;
 
 @Path("/movie")
 @ApplicationScoped
+@PermitAll
 public class MovieResource {
 
     @Inject
@@ -25,6 +28,7 @@ public class MovieResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response addMovie(Movie movie) {
         try {
             Movie tmp = service.addMovie(movie);
@@ -53,6 +57,7 @@ public class MovieResource {
     @GET
     @Path("/check/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response checkIfExists(@PathParam("id") long id) {
         try {
             boolean tmp = service.checkIfExists(id);
@@ -79,6 +84,7 @@ public class MovieResource {
     @POST
     @Path("/add/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response addActorToMovie(@PathParam("id") long id, long actorId) {
         try {
             Actor tmp = service.addActorToMovie(id, actorId);
@@ -93,6 +99,7 @@ public class MovieResource {
     @POST
     @Path("/remove/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response removeActorFromMovie(@PathParam("id") long id, long actorId) {
         try {
             Actor tmp = service.removeActorFromMovie(id, actorId);
@@ -121,6 +128,7 @@ public class MovieResource {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response deleteMovie(@PathParam("id") long id) {
         try {
             service.deleteMovie(id);
@@ -134,6 +142,7 @@ public class MovieResource {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response modifyMovie(Movie movie) {
         try {
             Movie tmp = service.modifyMovie(movie);
@@ -148,6 +157,7 @@ public class MovieResource {
     @PUT
     @Path("/rating/{id}/{rating}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response changeRating(@PathParam("id") long id, @PathParam("rating") byte rating, String username) {
         try {
             service.changeRating(id, rating, username);
@@ -162,6 +172,7 @@ public class MovieResource {
     @GET
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response canBeDeleted(@PathParam("id") long id) {
         try {
             boolean tmp = service.canBeDeleted(id);

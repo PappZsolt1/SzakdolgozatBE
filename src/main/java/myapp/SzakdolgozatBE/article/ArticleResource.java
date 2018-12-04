@@ -1,6 +1,8 @@
 package myapp.SzakdolgozatBE.article;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -16,6 +18,7 @@ import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/article")
 @ApplicationScoped
+@PermitAll
 public class ArticleResource {
 
     @Inject
@@ -24,6 +27,7 @@ public class ArticleResource {
     @POST
     @Path("/save")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ArticleWriter")
     public Response saveArticle(Article article) {
         try {
             Article tmp = service.saveArticle(article);
@@ -37,6 +41,7 @@ public class ArticleResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ArticleWriter")
     public Response publishArticle(Article article) {
         try {
             Article tmp = service.publishArticle(article);
@@ -49,8 +54,9 @@ public class ArticleResource {
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/save")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ArticleWriter")
     public Response getSavedArticles() {
         try {
             List<Article> tmp = service.getSavedArticles();
@@ -77,6 +83,7 @@ public class ArticleResource {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ArticleWriter")
     public Response deleteArticle(@PathParam("id") long id) {
         try {
             service.deleteArticle(id);

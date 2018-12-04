@@ -11,10 +11,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import myapp.SzakdolgozatBE.MyValidationException;
 import myapp.SzakdolgozatBE.Wrapper;
 
@@ -29,7 +27,7 @@ public class ActorResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("Admin")
-    public Response addActor(@Context SecurityContext sc, Actor actor) {
+    public Response addActor(Actor actor) {
         try {
             Actor tmp = service.addActor(actor);
             return Response.ok().entity(tmp).build();
@@ -57,6 +55,7 @@ public class ActorResource {
     @GET
     @Path("/check/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response checkIfExists(@PathParam("id") long id) {
         try {
             boolean tmp = service.checkIfExists(id);
@@ -83,6 +82,7 @@ public class ActorResource {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response deleteActor(@PathParam("id") long id) {
         try {
             service.deleteActor(id);
@@ -96,6 +96,7 @@ public class ActorResource {
     
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response modifyActor(Actor actor) {
         try {
             Actor tmp = service.modifyActor(actor);
@@ -110,6 +111,7 @@ public class ActorResource {
     @GET
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response canBeDeleted(@PathParam("id") long id) {
         try {
             boolean tmp = service.canBeDeleted(id);

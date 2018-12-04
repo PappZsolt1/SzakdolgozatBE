@@ -1,6 +1,7 @@
 package myapp.SzakdolgozatBE.genre;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -16,6 +17,7 @@ import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/genre")
 @ApplicationScoped
+@RolesAllowed("Admin")
 public class GenreResource {
 
     @Inject

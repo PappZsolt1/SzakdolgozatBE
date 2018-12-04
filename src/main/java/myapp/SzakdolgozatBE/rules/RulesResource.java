@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.rules;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -12,6 +14,7 @@ import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/rules")
 @ApplicationScoped
+@PermitAll
 public class RulesResource {
     
     @Inject
@@ -31,6 +34,7 @@ public class RulesResource {
     
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response modifyRules(String content) {
         try {
             Rules tmp = service.modifyRules(content);

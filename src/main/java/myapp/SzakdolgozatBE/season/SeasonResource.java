@@ -1,5 +1,6 @@
 package myapp.SzakdolgozatBE.season;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -15,6 +16,7 @@ import myapp.SzakdolgozatBE.MyValidationException;
 
 @Path("/season")
 @ApplicationScoped
+@RolesAllowed("Admin")
 public class SeasonResource {
 
     @Inject

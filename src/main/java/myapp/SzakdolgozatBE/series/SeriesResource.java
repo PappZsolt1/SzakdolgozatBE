@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.series;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -16,6 +18,7 @@ import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/series")
 @ApplicationScoped
+@PermitAll
 public class SeriesResource {
 
     @Inject
@@ -23,6 +26,7 @@ public class SeriesResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response addSeries(Series series) {
         try {
             Series tmp = service.addSeries(series);
@@ -51,6 +55,7 @@ public class SeriesResource {
     @GET
     @Path("/check/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response checkIfExists(@PathParam("id") long id) {
         try {
             boolean tmp = service.checkIfExists(id);
@@ -77,6 +82,7 @@ public class SeriesResource {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response deleteSeries(@PathParam("id") long id) {
         try {
             service.deleteSeries(id);
@@ -90,6 +96,7 @@ public class SeriesResource {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response modifySeries(Series series) {
         try {
             Series tmp = service.modifySeries(series);
@@ -104,6 +111,7 @@ public class SeriesResource {
     @GET
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
     public Response canBeDeleted(@PathParam("id") long id) {
         try {
             boolean tmp = service.canBeDeleted(id);

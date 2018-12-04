@@ -1,5 +1,7 @@
 package myapp.SzakdolgozatBE.comment;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -15,6 +17,7 @@ import myapp.SzakdolgozatBE.Wrapper;
 
 @Path("/comment")
 @ApplicationScoped
+@PermitAll
 public class CommentResource {
     
     @Inject
@@ -23,6 +26,7 @@ public class CommentResource {
     @POST
     @Path("/movie/{movieId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response addMovieComment(@PathParam("movieId") long movieId, Comment comment) {
         try {
             Comment tmp = service.addMovieComment(movieId, comment);
@@ -37,6 +41,7 @@ public class CommentResource {
     @POST
     @Path("/actor/{actorId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response addActorComment(@PathParam("actorId") long actorId, Comment comment) {
         try {
             Comment tmp = service.addActorComment(actorId, comment);
@@ -51,6 +56,7 @@ public class CommentResource {
     @POST
     @Path("/article/{articleId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response addArticleComment(@PathParam("articleId") long articleId, Comment comment) {
         try {
             Comment tmp = service.addArticleComment(articleId, comment);
@@ -65,6 +71,7 @@ public class CommentResource {
     @POST
     @Path("/episode/{episodeId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response addEpisodeComment(@PathParam("episodeId") long episodeId, Comment comment) {
         try {
             Comment tmp = service.addEpisodeComment(episodeId, comment);
@@ -79,6 +86,7 @@ public class CommentResource {
     @POST
     @Path("/topic/{topicId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"RegisteredUser", "Moderator"})
     public Response addTopicComment(@PathParam("topicId") long topicId, Comment comment) {
         try {
             Comment tmp = service.addTopicComment(topicId, comment);
@@ -163,6 +171,7 @@ public class CommentResource {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Moderator")
     public Response moderateComment(@PathParam("id") long id) {
         try {
             Comment tmp = service.moderateComment(id);
