@@ -1,7 +1,7 @@
 package myapp.SzakdolgozatBE.comment;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,7 +17,8 @@ import myapp.SzakdolgozatBE.Wrapper;
 @ApplicationScoped
 public class CommentResource {
     
-    @EJB CommentService service;
+    @Inject
+    CommentService service;
     
     @POST
     @Path("/movie/{movieId}")

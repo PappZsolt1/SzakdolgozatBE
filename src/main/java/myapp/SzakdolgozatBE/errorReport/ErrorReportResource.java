@@ -1,7 +1,7 @@
 package myapp.SzakdolgozatBE.errorReport;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,7 +17,7 @@ import myapp.SzakdolgozatBE.Wrapper;
 @ApplicationScoped
 public class ErrorReportResource {
 
-    @EJB
+    @Inject
     ErrorReportService service;
 
     @POST

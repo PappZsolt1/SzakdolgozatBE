@@ -1,7 +1,7 @@
 package myapp.SzakdolgozatBE.rating;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,7 +14,7 @@ import myapp.SzakdolgozatBE.MyValidationException;
 @ApplicationScoped
 public class RatingResource {
 
-    @EJB
+    @Inject
     RatingService service;
 
     @GET

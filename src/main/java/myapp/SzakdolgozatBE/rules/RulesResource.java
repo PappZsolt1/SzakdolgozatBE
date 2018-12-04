@@ -1,7 +1,7 @@
 package myapp.SzakdolgozatBE.rules;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -14,7 +14,7 @@ import myapp.SzakdolgozatBE.MyValidationException;
 @ApplicationScoped
 public class RulesResource {
     
-    @EJB
+    @Inject
     RulesService service;
     
     @GET

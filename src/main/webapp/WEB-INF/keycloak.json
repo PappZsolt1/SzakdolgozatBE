@@ -1,13 +1,7 @@
 {
   "realm": "SzakdolgozatRealm",
-  "bearer-only": true,
   "auth-server-url": "http://localhost:8081/auth",
   "ssl-required": "external",
   "resource": "SzakdolgozatBE",
-  "verify-token-audience": true,
-  "credentials": {
-    "secret": "b31af73f-8c64-48a2-a371-3104a488270e"
-  },
-  "confidential-port": 0,
-  "policy-enforcer": {}
+  "public-client": true
 }

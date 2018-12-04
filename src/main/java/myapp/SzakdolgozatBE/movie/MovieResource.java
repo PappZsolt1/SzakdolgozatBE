@@ -1,8 +1,8 @@
 package myapp.SzakdolgozatBE.movie;
 
 import java.util.List;
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,7 +20,7 @@ import myapp.SzakdolgozatBE.actor.Actor;
 @ApplicationScoped
 public class MovieResource {
 
-    @EJB
+    @Inject
     MovieService service;
 
     @POST
