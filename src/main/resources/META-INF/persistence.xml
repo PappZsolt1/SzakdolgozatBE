@@ -24,7 +24,7 @@
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="1234"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-      <property name="javax.persistence.sql-load-script-source" value="META-INF/data.sql"/>
+      <!--<property name="javax.persistence.sql-load-script-source" value="META-INF/data.sql"/>-->
     </properties>
   </persistence-unit>
 </persistence>
