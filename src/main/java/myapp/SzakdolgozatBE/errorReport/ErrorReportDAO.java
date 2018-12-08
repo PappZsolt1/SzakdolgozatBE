@@ -11,7 +11,7 @@ public class ErrorReportDAO {
     @PersistenceContext(unitName = "SzakdolgozatPU")
     EntityManager em;
 
-    public ErrorReport add(ErrorReport errorReport) {
+    public ErrorReport addErrorReport(ErrorReport errorReport) {
         em.getTransaction().begin();
         em.persist(errorReport);
         em.getTransaction().commit();

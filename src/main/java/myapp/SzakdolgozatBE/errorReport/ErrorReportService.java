@@ -19,7 +19,7 @@ public class ErrorReportService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
-    public ErrorReport add(String content) throws MyValidationException {
+    public ErrorReport addErrorReport(String content) throws MyValidationException {
         if (val.validateText(content, 60000) == false) {
             throw new MyValidationException();
         } else {
@@ -27,7 +27,7 @@ public class ErrorReportService {
             tmp.setContent(content);
             tmp.setSendingDate(sdf.format(new Date()));
             tmp.setResolved(false);
-            return dao.add(tmp);
+            return dao.addErrorReport(tmp);
         }
     }
     

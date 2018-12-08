@@ -20,7 +20,7 @@ public class RatingService {
     @Inject
     EpisodeDAO episodeDao;
 
-    public boolean canRateThisMovie( long movieId, String username) throws MyValidationException {
+    public boolean canRateThisMovie(long movieId, String username) throws MyValidationException {
         if (username == null || movieDao.getMovie(movieId) == null) {
             throw new MyValidationException();
         } else {

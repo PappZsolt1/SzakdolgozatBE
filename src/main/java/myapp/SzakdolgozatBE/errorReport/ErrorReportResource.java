@@ -28,7 +28,7 @@ public class ErrorReportResource {
     @RolesAllowed({"RegisteredUser", "Moderator", "ArticleWriter"})
     public Response addErrorReport(String content) {
         try {
-            ErrorReport tmp = service.add(content);
+            ErrorReport tmp = service.addErrorReport(content);
             return Response.ok().entity(tmp).build();
         } catch (MyValidationException m) {
             return Response.status(Response.Status.CONFLICT).build();
