@@ -35,11 +35,7 @@ public class EpisodeService {
     MyValidator val = new MyValidator();
     
     public Episode addEpisode(long seasonId, Episode episode) throws MyValidationException {
-        if (episode.getId() != null
-                || val.validateText(episode.getTitle(), 200) == false
-                || episode.getRatings() != null
-                || val.validateDate(episode.getReleaseDate(), 1850, 2100) == false
-                || val.validateLength(episode.geteLength()) == false) {
+        if (episode.getId() != null || validateEpisode(episode) == false) {
             throw new MyValidationException();
         } else {
             Season tmp = seasonDao.getSeason(seasonId);
@@ -143,10 +139,7 @@ public class EpisodeService {
     }
 
     public Episode modifyEpisode(long seasonId, Episode episode) throws MyValidationException {
-        if (episode.getId() == null
-                || val.validateText(episode.getTitle(), 200) == false
-                || val.validateDate(episode.getReleaseDate(), 1850, 2100) == false
-                || val.validateLength(episode.geteLength()) == false) {
+        if (episode.getId() == null || validateEpisode(episode) == false) {
             throw new MyValidationException();
         } else {
             Episode tmp1 = dao.getEpisode(episode.getId());
@@ -196,5 +189,11 @@ public class EpisodeService {
         } else {
             return tmp.getActors().isEmpty();
         }
+    }
+    
+    public boolean validateEpisode(Episode episode) {
+        return (val.validateText(episode.getTitle(), 200) == true
+                && val.validateDate(episode.getReleaseDate(), 1850, 2100) == true
+                && val.validateLength(episode.geteLength()) == true);
     }
 }

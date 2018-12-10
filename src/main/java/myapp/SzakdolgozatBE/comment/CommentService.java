@@ -45,16 +45,7 @@ public class CommentService {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
     public Comment addMovieComment(long movieId, Comment comment) throws MyValidationException {
-        if (comment.getId() != null
-                || comment.getUsername() == null
-                || comment.getPostDate() != null
-                || comment.getActor() != null
-                || comment.getArticle()!= null 
-                || comment.getMovie()!= null
-                || comment.getEpisode()!= null
-                || comment.getTopic()!= null
-                || comment.isModerated() == true
-                || val.validateText(comment.getContent(), 60000) == false) {
+        if (validateComment(comment) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
@@ -68,16 +59,7 @@ public class CommentService {
     }
     
     public Comment addActorComment(long actorId, Comment comment) throws MyValidationException {
-        if (comment.getId() != null
-                || comment.getUsername() == null
-                || comment.getPostDate() != null
-                || comment.getActor() != null
-                || comment.getArticle()!= null 
-                || comment.getMovie()!= null
-                || comment.getEpisode()!= null
-                || comment.getTopic()!= null
-                || comment.isModerated() == true
-                || val.validateText(comment.getContent(), 60000) == false) {
+        if (validateComment(comment) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
@@ -91,16 +73,7 @@ public class CommentService {
     }
     
     public Comment addArticleComment(long articleId, Comment comment) throws MyValidationException {
-        if (comment.getId() != null
-                || comment.getUsername() == null
-                || comment.getPostDate() != null
-                || comment.getActor() != null
-                || comment.getArticle()!= null 
-                || comment.getMovie()!= null
-                || comment.getEpisode()!= null
-                || comment.getTopic()!= null
-                || comment.isModerated() == true
-                || val.validateText(comment.getContent(), 60000) == false) {
+        if (validateComment(comment) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
@@ -114,16 +87,7 @@ public class CommentService {
     }
     
     public Comment addEpisodeComment(long episodeId, Comment comment) throws MyValidationException {
-        if (comment.getId() != null
-                || comment.getUsername() == null
-                || comment.getPostDate() != null
-                || comment.getActor() != null
-                || comment.getArticle()!= null 
-                || comment.getMovie()!= null
-                || comment.getEpisode()!= null
-                || comment.getTopic()!= null
-                || comment.isModerated() == true
-                || val.validateText(comment.getContent(), 60000) == false) {
+        if (validateComment(comment) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
@@ -137,16 +101,7 @@ public class CommentService {
     }
     
     public Comment addTopicComment(long topicId, Comment comment) throws MyValidationException {
-        if (comment.getId() != null
-                || comment.getUsername() == null
-                || comment.getPostDate() != null
-                || comment.getActor() != null
-                || comment.getArticle()!= null 
-                || comment.getMovie()!= null
-                || comment.getEpisode()!= null
-                || comment.getTopic()!= null
-                || comment.isModerated() == true
-                || val.validateText(comment.getContent(), 60000) == false) {
+        if (validateComment(comment) == false) {
             throw new MyValidationException();
         } else {
             comment.setPostDate(sdf.format(new Date()));
@@ -253,5 +208,18 @@ public class CommentService {
             tmp.setModerated(true);
             return dao.moderateComment(tmp);
         }        
+    }
+    
+    public boolean validateComment(Comment comment) {
+        return (comment.getId() == null
+                && comment.getUsername() != null
+                && comment.getPostDate() == null
+                && comment.isModerated() == false
+                && val.validateText(comment.getContent(), 60000) == true
+                && comment.getActor() == null
+                && comment.getArticle() == null 
+                && comment.getMovie() == null
+                && comment.getEpisode() == null
+                && comment.getTopic() == null);
     }
 }

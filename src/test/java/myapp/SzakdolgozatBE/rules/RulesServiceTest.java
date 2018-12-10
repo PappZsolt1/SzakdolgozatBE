@@ -45,8 +45,13 @@ public class RulesServiceTest {
     }
     
     @Test(expected = MyValidationException.class)
-    public void testModifyRulesException() throws Exception {
+    public void testModifyRulesException1() throws Exception {
         when(daoMock.getRules()).thenReturn(null);
         service.modifyRules("Új szabályzat.");
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testModifyRulesException2() throws Exception {
+        service.modifyRules("");
     }
 }

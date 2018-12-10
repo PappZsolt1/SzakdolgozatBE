@@ -34,6 +34,12 @@ public class ErrorReportServiceTest {
         when(daoMock.getAllErrorReports(any(int.class), any(int.class))).thenReturn(new ArrayList<>());
         when(daoMock.getNumberOfAllErrorReports()).thenReturn(20L);
         when(daoMock.getErrorReport(any(long.class))).thenReturn(new ErrorReport());
+        
+        when(daoMock.getResolvedErrorReports(any(int.class), any(int.class))).thenReturn(new ArrayList<>());
+        when(daoMock.getNumberOfResolvedErrorReports()).thenReturn(35L);
+        
+        when(daoMock.getNotResolvedErrorReports(any(int.class), any(int.class))).thenReturn(new ArrayList<>());
+        when(daoMock.getNumberOfNotResolvedErrorReports()).thenReturn(53L);
     }
     
     @Test
@@ -41,6 +47,11 @@ public class ErrorReportServiceTest {
         ErrorReport tmp = service.addErrorReport("Hiba.");
         assertEquals(tmp.getId(), null);
         assertEquals(tmp.getContent(), "Hiba.");
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testAddErrorReportException() throws Exception {
+        service.addErrorReport(" Hiba.");
     }
 
     @Test
@@ -59,16 +70,55 @@ public class ErrorReportServiceTest {
     public void testGetAllErrorReportsException2() throws Exception {
         service.getAllErrorReports(3, 10);
     }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetAllErrorReportsException3() throws Exception {
+        service.getAllErrorReports(1, 11);
+    }
 
-//    @Test
-//    public void testGetResolvedErrorReports() throws Exception {
-//        
-//    }
+    @Test
+    public void testGetResolvedErrorReports() throws Exception {
+        Wrapper tmp = service.getResolvedErrorReports(2, 20);
+        assertEquals(tmp.getTotal(), 35);
+        assertNotNull(tmp.getResults());
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetResolvedErrorReportsException1() throws Exception {
+        service.getResolvedErrorReports(0, 20);
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetResolvedErrorReportsException2() throws Exception {
+        service.getResolvedErrorReports(1, 21);
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetResolvedErrorReportsException3() throws Exception {
+        service.getResolvedErrorReports(3, 20);
+    }
 
-//    @Test
-//    public void testGetNotResolvedErrorReports() throws Exception {
-//        
-//    }
+    @Test
+    public void testGetNotResolvedErrorReports() throws Exception {
+        Wrapper tmp = service.getNotResolvedErrorReports(2, 30);
+        assertEquals(tmp.getTotal(), 53);
+        assertNotNull(tmp.getResults());
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetNotResolvedErrorReportsException1() throws Exception {
+        service.getNotResolvedErrorReports(0, 30);
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetNotResolvedErrorReportsException2() throws Exception {
+        service.getNotResolvedErrorReports(1, 40);
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testGetNotResolvedErrorReportsException3() throws Exception {
+        service.getNotResolvedErrorReports(3, 30);
+    }
 
     @Test
     public void testMakeResolved() throws Exception {

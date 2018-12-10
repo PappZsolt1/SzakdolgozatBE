@@ -12,17 +12,15 @@ import myapp.SzakdolgozatBE.Wrapper;
 @Stateless
 public class ArticleService {
     
-    @Inject ArticleDAO dao;
+    @Inject
+    ArticleDAO dao;
     
     MyValidator val = new MyValidator();
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
     
     public Article saveArticle(Article article) throws MyValidationException {
-        if (val.validateText(article.getTitle(), 200) == false
-                || val.validateText(article.getContent(), 60000) == false
-                || article.getPublishDate() != null
-                || article.isPublished() == true) {
+        if (validateArticle(article) == false || article.getUsername() != null) {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {
             article.setSaved(true);
@@ -43,11 +41,7 @@ public class ArticleService {
 
     
     public Article publishArticle(Article article) throws MyValidationException {
-        if (article.getUsername() == null
-                || val.validateText(article.getTitle(), 200) == false
-                || val.validateText(article.getContent(), 60000) == false
-                || article.getPublishDate() != null
-                || article.isPublished() == true) {
+        if (validateArticle(article) == false || article.getUsername() == null) {
             throw new MyValidationException();
         } else if (article.getId() == null && article.isSaved() == false) {
             article.setPublishDate(sdf.format(new Date()));
@@ -104,5 +98,12 @@ public class ArticleService {
         } else {
             throw new MyValidationException();
         }
+    }
+    
+    public boolean validateArticle(Article article) {
+        return (val.validateText(article.getTitle(), 200) == true
+                && val.validateText(article.getContent(), 60000) == true
+                && article.getPublishDate() == null
+                && article.isPublished() == false);
     }
 }

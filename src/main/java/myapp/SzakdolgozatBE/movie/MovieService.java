@@ -39,15 +39,7 @@ public class MovieService {
     MyValidator val = new MyValidator();
     
     public Movie addMovie(Movie movie) throws MyValidationException {
-        if (movie.getId() != null
-                || val.validateText(movie.getTitle(), 200) == false
-                || ageClassificationDao.getAgeClassification(movie.getAgeClassification().getId()) == null
-                || genreDao.getGenre(movie.getGenre().getId()) == null
-                || movie.getRatings() != null
-                || val.validateNumber(movie.getBudget(), 0, 2000000000) == false
-                || val.validateNumber(movie.getReleaseYear(), 1850, 2100) == false
-                || val.validateLength(movie.getmLength()) == false
-                || val.validateText(movie.getImageUrl(), 1000) == false) {
+        if (movie.getId() != null || validateMovie(movie) == false) {
             throw new MyValidationException();
         } else {
             return dao.addMovie(movie);
@@ -141,15 +133,8 @@ public class MovieService {
 
     public Movie modifyMovie(Movie movie) throws MyValidationException {
         if (movie.getId() == null
-                || val.validateText(movie.getTitle(), 200) == false
-                || ageClassificationDao.getAgeClassification(movie.getAgeClassification().getId()) == null
-                || genreDao.getGenre(movie.getGenre().getId()) == null
-                || val.validateNumber(movie.getBudget(), 0, 1000000000) == false
-                || val.validateNumber(movie.getReleaseYear(), 1850, 2100) == false
-                || val.validateLength(movie.getmLength()) == false
-                || val.validateText(movie.getImageUrl(), 1000) == false) {
-            throw new MyValidationException();
-        } else if (dao.getMovie(movie.getId()) == null) {
+                || validateMovie(movie) == false
+                || dao.getMovie(movie.getId()) == null) {
             throw new MyValidationException();
         } else {
             return dao.modifyMovie(movie);
@@ -181,5 +166,15 @@ public class MovieService {
         } else {
             return tmp.getActors().isEmpty();
         }
+    }
+    
+    public boolean validateMovie(Movie movie) {
+        return (val.validateText(movie.getTitle(), 200) == true
+                && ageClassificationDao.getAgeClassification(movie.getAgeClassification().getId()) != null
+                && genreDao.getGenre(movie.getGenre().getId()) != null
+                && val.validateNumber(movie.getBudget(), 0, 1000000000) == true
+                && val.validateNumber(movie.getReleaseYear(), 1850, 2100) == true
+                && val.validateLength(movie.getmLength()) == true
+                && val.validateText(movie.getImageUrl(), 1000) == true);
     }
 }

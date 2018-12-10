@@ -25,13 +25,7 @@ public class ActorService {
     MyValidator val = new MyValidator();
 
     public Actor addActor(Actor actor) throws MyValidationException {
-        if (actor.getId() != null
-                || val.validateText(actor.getName(), 200) == false
-                || val.validateText(actor.getBirthPlace(), 200) == false
-                || val.validateText(actor.getBio(), 60000) == false
-                || genderDao.getGender(actor.getGender().getId()) == null
-                || val.validateDate(actor.getBirthDate(), 1750, 2100) == false
-                || val.validateText(actor.getImageUrl(), 1000) == false) {
+        if (actor.getId() != null || validateActor(actor) == false) {
             throw new MyValidationException();
         } else {
             return dao.addActor(actor);
@@ -80,14 +74,8 @@ public class ActorService {
 
     public Actor modifyActor(Actor actor) throws MyValidationException {
         if (actor.getId() == null
-                || val.validateText(actor.getName(), 200) == false
-                || val.validateText(actor.getBirthPlace(), 200) == false
-                || val.validateText(actor.getBio(), 60000) == false
-                || genderDao.getGender(actor.getGender().getId()) == null
-                || val.validateDate(actor.getBirthDate(), 1750, 2100) == false
-                || val.validateText(actor.getImageUrl(), 1000) == false) {
-            throw new MyValidationException();
-        } else if (dao.getActor(actor.getId()) == null) {
+                || validateActor(actor) == false
+                || dao.getActor(actor.getId()) == null) {
             throw new MyValidationException();
         } else {
             return dao.modifyActor(actor);
@@ -101,5 +89,14 @@ public class ActorService {
         } else {
             return (tmp.getMovies().isEmpty() && tmp.getEpisodes().isEmpty());
         }
+    }
+    
+    public boolean validateActor(Actor actor) {
+        return (val.validateText(actor.getName(), 200) == true
+                && val.validateText(actor.getBirthPlace(), 200) == true
+                && val.validateText(actor.getBio(), 60000) == true
+                && val.validateDate(actor.getBirthDate(), 1750, 2100) == true
+                && val.validateText(actor.getImageUrl(), 1000) == true
+                && genderDao.getGender(actor.getGender().getId()) != null);
     }
 }

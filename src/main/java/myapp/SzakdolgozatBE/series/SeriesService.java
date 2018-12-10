@@ -26,12 +26,7 @@ public class SeriesService {
     MyValidator val = new MyValidator();
 
     public Series addSeries(Series series) throws MyValidationException {
-        if (series.getId() != null
-                || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
-                || genreDao.getGenre(series.getGenre().getId()) == null
-                || val.validateText(series.getTitle(), 200) == false
-                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false
-                || val.validateText(series.getImageUrl(), 1000) == false) {
+        if (series.getId() != null || validateSeries(series) == false) {
             throw new MyValidationException();
         } else {
             return dao.addSeries(series);
@@ -87,13 +82,8 @@ public class SeriesService {
 
     public Series modifySeries(Series series) throws MyValidationException {
         if (series.getId() == null
-                || ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) == null
-                || genreDao.getGenre(series.getGenre().getId()) == null
-                || val.validateText(series.getTitle(), 200) == false
-                || val.validateNumber(series.getReleaseYear(), 1850, 2100) == false
-                || val.validateText(series.getImageUrl(), 1000) == false) {
-            throw new MyValidationException();
-        } else if (dao.getSeries(series.getId()) == null) {
+                || validateSeries(series) == false
+                || dao.getSeries(series.getId()) == null) {
             throw new MyValidationException();
         } else {
             return dao.modifySeries(series);
@@ -107,5 +97,13 @@ public class SeriesService {
         } else {
             return tmp.getSeasons().isEmpty();
         }
+    }
+    
+    public boolean validateSeries(Series series) {
+        return (ageClassificationDao.getAgeClassification(series.getAgeClassification().getId()) != null
+                && genreDao.getGenre(series.getGenre().getId()) != null
+                && val.validateText(series.getTitle(), 200) == true
+                && val.validateNumber(series.getReleaseYear(), 1850, 2100) == true
+                && val.validateText(series.getImageUrl(), 1000) == true);
     }
 }

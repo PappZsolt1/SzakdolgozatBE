@@ -20,7 +20,7 @@ public class SeasonSerivce {
     MyValidator val = new MyValidator();
 
     public Season addSeason(long seriesId, Season season) throws MyValidationException {
-        if (season.getId() != null || val.validateNumber(season.getNumber(), 0, 100) == false) {
+        if (season.getId() != null || val.validateNumber(season.getNumber(), 1, 100) == false) {
             throw new MyValidationException();
         } else {
             Series tmp = seriesDao.getSeries(seriesId);
@@ -66,7 +66,7 @@ public class SeasonSerivce {
     }
 
     public Season modifySeason(long seriesId, Season season) throws MyValidationException {
-        if (season.getId() == null || val.validateNumber(season.getNumber(), 0, 100) == false) {
+        if (season.getId() == null || val.validateNumber(season.getNumber(), 1, 100) == false) {
             throw new MyValidationException();
         } else {
             Season tmp1 = dao.getSeason(season.getId());

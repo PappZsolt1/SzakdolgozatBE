@@ -66,6 +66,11 @@ public class AgeClassificationServiceTest {
         AgeClassification tmp = service.addAgeClassification("18+");
         assertEquals(tmp.getName(), "18+");
     }
+    
+    @Test(expected = MyValidationException.class)
+    public void testAddAgeClassificationException() throws Exception {
+        service.addAgeClassification("18+\n");
+    }
 
     @Test
     public void testDeleteAgeClassification() throws Exception {
@@ -93,9 +98,14 @@ public class AgeClassificationServiceTest {
     }
     
     @Test(expected = MyValidationException.class)
-    public void testModifyAgeClassificationException() throws Exception {
+    public void testModifyAgeClassificationException1() throws Exception {
         when(daoMock.getAgeClassification(any(long.class))).thenReturn(null);
         service.modifyAgeClassification(1, "16+");
+    }
+    
+    @Test(expected = MyValidationException.class)
+    public void testModifyAgeClassificationException2() throws Exception {
+        service.modifyAgeClassification(1, "\n16+");
     }
 
     @Test
